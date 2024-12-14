@@ -113,6 +113,29 @@ class DatabaseHelper {
     return List.generate(maps.length, (i) => Category.fromMap(maps[i]));
   }
 
+  // Delete category
+  Future<void> deleteCategory(int categoryId) async {
+    final db = await instance.database;
+
+    // Begin a transaction to ensure data consistency
+    await db.transaction((txn) async {
+      // First, remove category_id from any transactions that use this category
+      await txn.update(
+        'transactions',
+        {'category_id': null},
+        where: 'category_id = ?',
+        whereArgs: [categoryId],
+      );
+
+      // Then delete the category
+      await txn.delete(
+        'categories',
+        where: 'id = ?',
+        whereArgs: [categoryId],
+      );
+    });
+  }
+
   // Transaction operations
   Future<int> insertTransaction(FinanceTransaction transaction) async {
     final db = await instance.database;
