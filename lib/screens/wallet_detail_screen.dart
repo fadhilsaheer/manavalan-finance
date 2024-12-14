@@ -15,6 +15,14 @@ class WalletDetailScreen extends StatefulWidget {
 class _WalletDetailScreenState extends State<WalletDetailScreen> {
   int _currentIndex = 0;
 
+  final _refreshNotifier = ValueNotifier<bool>(false);
+
+  @override
+  void dispose() {
+    _refreshNotifier.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +32,10 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          TransactionsTab(wallet: widget.wallet),
+          TransactionsTab(
+            wallet: widget.wallet,
+            refreshNotifier: _refreshNotifier,
+          ),
           // CategoriesTab(wallet: widget.wallet),
           // ChartTab(wallet: widget.wallet),
         ],
@@ -49,9 +60,9 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
+        onPressed: () async {
           if (_currentIndex == 0) {
-            Navigator.push(
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => AddTransactionScreen(
@@ -59,6 +70,11 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
                 ),
               ),
             );
+
+            // If transaction was added successfully, notify the transactions tab to refresh
+            if (result == true) {
+              _refreshNotifier.value = !_refreshNotifier.value;
+            }
           } else if (_currentIndex == 1) {
             // Show dialog to add category
           }

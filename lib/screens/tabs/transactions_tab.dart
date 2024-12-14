@@ -5,26 +5,67 @@ import 'package:manavalan_finance/models/transaction.dart';
 import 'package:manavalan_finance/database/database_helper.dart';
 import 'package:manavalan_finance/screens/transaction_detail_screen.dart';
 
-class TransactionsTab extends StatelessWidget {
+class TransactionsTab extends StatefulWidget {
   final Wallet wallet;
+  final ValueNotifier<bool> refreshNotifier;
 
-  TransactionsTab({required this.wallet});
+  TransactionsTab({
+    required this.wallet,
+    required this.refreshNotifier,
+  });
+
+  @override
+  State<TransactionsTab> createState() => _TransactionsTabState();
+}
+
+class _TransactionsTabState extends State<TransactionsTab> {
+  late Future<List<FinanceTransaction>> _transactionsFuture;
+  late Wallet _currentWallet;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentWallet = widget.wallet;
+    _loadTransactions();
+
+    // Listen to refresh notifications
+    widget.refreshNotifier.addListener(_loadTransactions);
+  }
+
+  @override
+  void dispose() {
+    widget.refreshNotifier.removeListener(_loadTransactions);
+    super.dispose();
+  }
+
+  Future<void> _loadTransactions() async {
+    // Refresh wallet data first
+    final updatedWallet =
+        await DatabaseHelper.instance.getWallet(widget.wallet.id!);
+    if (updatedWallet != null) {
+      setState(() {
+        _currentWallet = updatedWallet;
+        _transactionsFuture =
+            DatabaseHelper.instance.getTransactionsByWallet(widget.wallet.id!);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        // This will trigger a rebuild of FutureBuilder
-        await Future.delayed(Duration(milliseconds: 500));
-      },
+      onRefresh: _loadTransactions,
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: WalletSummaryCard(wallet: wallet),
+            child: WalletSummaryCard(wallet: _currentWallet),
           ),
           SliverPadding(
             padding: EdgeInsets.all(8.0),
-            sliver: TransactionsList(walletId: wallet.id!),
+            sliver: TransactionsList(
+              walletId: widget.wallet.id!,
+              transactionsFuture: _transactionsFuture,
+            ),
           ),
         ],
       ),
@@ -99,13 +140,17 @@ class WalletSummaryCard extends StatelessWidget {
 
 class TransactionsList extends StatelessWidget {
   final int walletId;
+  final Future<List<FinanceTransaction>> transactionsFuture;
 
-  TransactionsList({required this.walletId});
+  TransactionsList({
+    required this.walletId,
+    required this.transactionsFuture,
+  });
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<FinanceTransaction>>(
-      future: DatabaseHelper.instance.getTransactionsByWallet(walletId),
+      future: transactionsFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SliverToBoxAdapter(
