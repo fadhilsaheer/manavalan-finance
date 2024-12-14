@@ -38,30 +38,54 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   Future<void> _saveTransaction() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final amount = double.parse(_amountController.text);
-    final currentBalance = widget.wallet.balance;
-    final balanceAfter =
-        _type == 'credit' ? currentBalance + amount : currentBalance - amount;
+    try {
+      final amount = double.parse(_amountController.text);
+      final currentBalance = widget.wallet.balance;
+      final balanceAfter =
+          _type == 'credit' ? currentBalance + amount : currentBalance - amount;
 
-    final transaction = FinanceTransaction(
-      walletId: widget.wallet.id!,
-      categoryId: _selectedCategory?.id,
-      amount: amount,
-      type: _type,
-      note: _noteController.text.isEmpty ? null : _noteController.text,
-      balanceBefore: currentBalance,
-      balanceAfter: balanceAfter,
-      date: DateTime.now(),
-    );
+      final transaction = FinanceTransaction(
+        walletId: widget.wallet.id!,
+        categoryId: _selectedCategory?.id,
+        amount: amount,
+        type: _type,
+        note: _noteController.text.isEmpty ? null : _noteController.text,
+        balanceBefore: currentBalance,
+        balanceAfter: balanceAfter,
+        date: DateTime.now(),
+      );
 
-    await DatabaseHelper.instance.insertTransaction(transaction);
+      // Wrap all database operations in a single async block
+      await Future.wait([
+        // Insert the transaction
+        DatabaseHelper.instance.insertTransaction(transaction),
+        // Update the wallet balance
+        DatabaseHelper.instance
+            .updateWalletBalance(widget.wallet.id!, balanceAfter),
+      ]);
 
-    // Update wallet balance
-    widget.wallet.balance = balanceAfter;
-    // TODO: Update wallet balance in database
-
-    if (mounted) {
-      Navigator.pop(context, true);
+      if (mounted) {
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Transaction added successfully'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        // Pop and return true to indicate success
+        Navigator.pop(context, true);
+      }
+    } catch (e) {
+      // Show error message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error adding transaction'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
     }
   }
 
