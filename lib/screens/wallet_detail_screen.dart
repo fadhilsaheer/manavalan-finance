@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manavalan_finance/models/wallet.dart';
+import 'package:manavalan_finance/screens/add_transaction_screen.dart';
+import 'package:manavalan_finance/screens/tabs/transactions_tab.dart';
 
 class WalletDetailScreen extends StatefulWidget {
   final Wallet wallet;
@@ -21,8 +23,8 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
       ),
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
-          // TransactionsTab(wallet: widget.wallet),
+        children: [
+          TransactionsTab(wallet: widget.wallet),
           // CategoriesTab(wallet: widget.wallet),
           // ChartTab(wallet: widget.wallet),
         ],
@@ -49,7 +51,14 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
         child: const Icon(Icons.add),
         onPressed: () {
           if (_currentIndex == 0) {
-            // Navigate to add transaction screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddTransactionScreen(
+                  wallet: widget.wallet,
+                ),
+              ),
+            );
           } else if (_currentIndex == 1) {
             // Show dialog to add category
           }
