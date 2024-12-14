@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:manavalan_finance/database/database_helper.dart';
+import 'package:manavalan_finance/models/category.dart';
 import 'package:manavalan_finance/models/wallet.dart';
 import 'package:manavalan_finance/screens/add_transaction_screen.dart';
+import 'package:manavalan_finance/screens/tabs/categories_tab.dart';
 import 'package:manavalan_finance/screens/tabs/transactions_tab.dart';
 
 class WalletDetailScreen extends StatefulWidget {
@@ -23,6 +26,67 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
     super.dispose();
   }
 
+  Future<void> _addCategory() async {
+    final nameController = TextEditingController();
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add Category'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(
+                labelText: 'Category Name',
+                border: OutlineInputBorder(),
+              ),
+              textCapitalization: TextCapitalization.words,
+              autofocus: true,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () async {
+              if (nameController.text.isEmpty) {
+                return;
+              }
+
+              final category = Category(
+                walletId: widget.wallet.id!,
+                name: nameController.text.trim(),
+              );
+
+              await DatabaseHelper.instance.insertCategory(category);
+              if (context.mounted) {
+                Navigator.pop(context, true);
+              }
+            },
+            child: Text('Add'),
+          ),
+        ],
+      ),
+    );
+
+    if (result == true) {
+      _refreshNotifier.value = !_refreshNotifier.value;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Category added successfully'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +100,10 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
             wallet: widget.wallet,
             refreshNotifier: _refreshNotifier,
           ),
-          // CategoriesTab(wallet: widget.wallet),
+          CategoriesTab(
+            wallet: widget.wallet,
+            refreshNotifier: _refreshNotifier,
+          ),
           // ChartTab(wallet: widget.wallet),
         ],
       ),
@@ -76,7 +143,7 @@ class _WalletDetailScreenState extends State<WalletDetailScreen> {
               _refreshNotifier.value = !_refreshNotifier.value;
             }
           } else if (_currentIndex == 1) {
-            // Show dialog to add category
+            await _addCategory();
           }
         },
       ),
