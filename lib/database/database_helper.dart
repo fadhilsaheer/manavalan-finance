@@ -86,6 +86,17 @@ class DatabaseHelper {
     return Wallet.fromMap(maps.first);
   }
 
+  // Update wallet balance
+  Future<void> updateWalletBalance(int walletId, double newBalance) async {
+    final db = await instance.database;
+    await db.update(
+      'wallets',
+      {'balance': newBalance},
+      where: 'id = ?',
+      whereArgs: [walletId],
+    );
+  }
+
   // Category operations
   Future<int> insertCategory(Category category) async {
     final db = await instance.database;
