@@ -13,3 +13,11 @@ Wallet balance = opening amount + all signed cash movements. Income/expense summ
 ## Scope
 
 Android and iOS. All persistence is local. No automatic network requests. Backups and exports are written only to user-selected destinations. Budgets, scheduled entries, receipt storage, interest calculations and exchange rates are future work.
+
+## Completed
+
+- Milestone 1: modern mobile templates, precise ledger and 13 initial domain tests (`ed05028`).
+- Milestone 2: complete app, original icons, local backup/export, Swift Package Manager migration and release builds (`df5ef0d`).
+- Final milestone: native splash assets, reproducible icon tooling, setup/accounting documentation and recorded validation. Current suite: 24 tests.
+
+All independent design review material findings are resolved; disposition: ship. See `docs/VALIDATION.md` for check results and device-verification limits.

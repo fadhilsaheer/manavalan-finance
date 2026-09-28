@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T05:21:46.338696+00:00",
+  "title": "Design System: Manavalan Finance",
+  "extensions": {
+    "colorMeta": {
+      "base": {
+        "role": "neutral",
+        "displayName": "Base",
+        "tonalRamp": [
+          "oklch(15% 0.03036 283.91)",
+          "oklch(26.43% 0.03036 283.91)",
+          "oklch(37.86% 0.03036 283.91)",
+          "oklch(49.29% 0.03036 283.91)",
+          "oklch(60.71% 0.03036 283.91)",
+          "oklch(72.14% 0.03036 283.91)",
+          "oklch(83.57% 0.03036 283.91)",
+          "oklch(95% 0.03036 283.91)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "mantle": {
+        "role": "neutral",
+        "displayName": "Mantle",
+        "tonalRamp": [
+          "oklch(15% 0.02542 284.06)",
+          "oklch(26.43% 0.02542 284.06)",
+          "oklch(37.86% 0.02542 284.06)",
+          "oklch(49.29% 0.02542 284.06)",
+          "oklch(60.71% 0.02542 284.06)",
+          "oklch(72.14% 0.02542 284.06)",
+          "oklch(83.57% 0.02542 284.06)",
+          "oklch(95% 0.02542 284.06)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.03188 281.98)",
+          "oklch(26.43% 0.03188 281.98)",
+          "oklch(37.86% 0.03188 281.98)",
+          "oklch(49.29% 0.03188 281.98)",
+          "oklch(60.71% 0.03188 281.98)",
+          "oklch(72.14% 0.03188 281.98)",
+          "oklch(83.57% 0.03188 281.98)",
+          "oklch(95% 0.03188 281.98)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "overlay": {
+        "role": "neutral",
+        "displayName": "Overlay",
+        "tonalRamp": [
+          "oklch(15% 0.03399 278.64)",
+          "oklch(26.43% 0.03399 278.64)",
+          "oklch(37.86% 0.03399 278.64)",
+          "oklch(49.29% 0.03399 278.64)",
+          "oklch(60.71% 0.03399 278.64)",
+          "oklch(72.14% 0.03399 278.64)",
+          "oklch(83.57% 0.03399 278.64)",
+          "oklch(95% 0.03399 278.64)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Text",
+        "tonalRamp": [
+          "oklch(15% 0.04255 272.28)",
+          "oklch(26.43% 0.04255 272.28)",
+          "oklch(37.86% 0.04255 272.28)",
+          "oklch(49.29% 0.04255 272.28)",
+          "oklch(60.71% 0.04255 272.28)",
+          "oklch(72.14% 0.04255 272.28)",
+          "oklch(83.57% 0.04255 272.28)",
+          "oklch(95% 0.04255 272.28)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.03956 273.93)",
+          "oklch(26.43% 0.03956 273.93)",
+          "oklch(37.86% 0.03956 273.93)",
+          "oklch(49.29% 0.03956 273.93)",
+          "oklch(60.71% 0.03956 273.93)",
+          "oklch(72.14% 0.03956 273.93)",
+          "oklch(83.57% 0.03956 273.93)",
+          "oklch(95% 0.03956 273.93)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "mauve": {
+        "role": "primary",
+        "displayName": "Mauve",
+        "tonalRamp": [
+          "oklch(15% 0.11867 304.77)",
+          "oklch(26.43% 0.11867 304.77)",
+          "oklch(37.86% 0.11867 304.77)",
+          "oklch(49.29% 0.11867 304.77)",
+          "oklch(60.71% 0.11867 304.77)",
+          "oklch(72.14% 0.11867 304.77)",
+          "oklch(83.57% 0.11867 304.77)",
+          "oklch(95% 0.11867 304.77)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "green": {
+        "role": "secondary",
+        "displayName": "Green",
+        "tonalRamp": [
+          "oklch(15% 0.10923 142.72)",
+          "oklch(26.43% 0.10923 142.72)",
+          "oklch(37.86% 0.10923 142.72)",
+          "oklch(49.29% 0.10923 142.72)",
+          "oklch(60.71% 0.10923 142.72)",
+          "oklch(72.14% 0.10923 142.72)",
+          "oklch(83.57% 0.10923 142.72)",
+          "oklch(95% 0.10923 142.72)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "red": {
+        "role": "secondary",
+        "displayName": "Red",
+        "tonalRamp": [
+          "oklch(15% 0.12970 2.76)",
+          "oklch(26.43% 0.12970 2.76)",
+          "oklch(37.86% 0.12970 2.76)",
+          "oklch(49.29% 0.12970 2.76)",
+          "oklch(60.71% 0.12970 2.76)",
+          "oklch(72.14% 0.12970 2.76)",
+          "oklch(83.57% 0.12970 2.76)",
+          "oklch(95% 0.12970 2.76)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "peach": {
+        "role": "tertiary",
+        "displayName": "Peach",
+        "tonalRamp": [
+          "oklch(15% 0.10146 52.63)",
+          "oklch(26.43% 0.10146 52.63)",
+          "oklch(37.86% 0.10146 52.63)",
+          "oklch(49.29% 0.10146 52.63)",
+          "oklch(60.71% 0.10146 52.63)",
+          "oklch(72.14% 0.10146 52.63)",
+          "oklch(83.57% 0.10146 52.63)",
+          "oklch(95% 0.10146 52.63)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "Blue",
+        "tonalRamp": [
+          "oklch(15% 0.11134 259.88)",
+          "oklch(26.43% 0.11134 259.88)",
+          "oklch(37.86% 0.11134 259.88)",
+          "oklch(49.29% 0.11134 259.88)",
+          "oklch(60.71% 0.11134 259.88)",
+          "oklch(72.14% 0.11134 259.88)",
+          "oklch(83.57% 0.11134 259.88)",
+          "oklch(95% 0.11134 259.88)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      },
+      "yellow": {
+        "role": "tertiary",
+        "displayName": "Yellow",
+        "tonalRamp": [
+          "oklch(15% 0.07041 86.53)",
+          "oklch(26.43% 0.07041 86.53)",
+          "oklch(37.86% 0.07041 86.53)",
+          "oklch(49.29% 0.07041 86.53)",
+          "oklch(60.71% 0.07041 86.53)",
+          "oklch(72.14% 0.07041 86.53)",
+          "oklch(83.57% 0.07041 86.53)",
+          "oklch(95% 0.07041 86.53)"
+        ],
+        "rampPurpose": "Synthesized OKLCH panel exploration only; not an implemented theme scale."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Loan outstanding value; platform Material displaySmall."
+      },
+      "balance": {
+        "displayName": "Balance",
+        "purpose": "Overview wallet balance with the app's semibold override."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Top-level headings and entry-detail cash amounts."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Sections, statistics, month headings, and app bars."
+      },
+      "entry-title": {
+        "displayName": "Entry Title",
+        "purpose": "Ledger titles and signed amounts."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explanations and ordinary content."
+      },
+      "detail": {
+        "displayName": "Detail",
+        "purpose": "Transaction metadata and running balances."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Native action controls."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "rail",
+        "value": "760px"
+      },
+      {
+        "name": "stats-three-columns",
+        "value": "520px",
+        "condition": "Content width > 520 and native text scale < 1.4."
+      },
+      {
+        "name": "ledger-stack",
+        "value": "360px",
+        "condition": "Content width < 360 or native text scale > 1.3."
+      }
+    ],
+    "native": {
+      "framework": "Flutter Material 3",
+      "units": "Logical pixels; CSS px previews approximate logical dimensions.",
+      "typeface": "Roboto on Android; Apple system family on iOS; no custom font override.",
+      "elevation": "FAB 0 at rest and 1 in hover, focus, or highlight; popup elevation inherited.",
+      "motion": "MaterialPageRoute and framework interaction feedback; no project motion tokens.",
+      "previewFidelity": "HTML/CSS snippets demonstrate the native look. SVG navigation drawings and CSS interaction states approximate framework rendering; implement native widgets from lib/ui, not these web snippets.",
+      "componentsOmitted": "No card primitive is implemented: open sections and ledger rows are the recurring containers."
+    }
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "description": "Native Material action translated for the panel; Flutter handles interaction feedback and disabled behavior.",
+      "html": "<button class=\"ds-button-primary\">Save</button>",
+      "css": ".ds-button-primary{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;background:#cba6f7;color:#181825;min-width:48px;min-height:50px;padding:0 24px;border:none;border-radius:12px;cursor:pointer} .ds-button-primary:hover{background-image:linear-gradient(#cdd6f414,#cdd6f414)} .ds-button-primary:focus-visible{outline:2px solid #cba6f7;outline-offset:3px} .ds-button-primary:active{background-image:linear-gradient(#cdd6f41f,#cdd6f41f)} .ds-button-primary:disabled{opacity:.38;cursor:default}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Outlined action",
+      "kind": "button",
+      "description": "Native Material action translated for the panel; Flutter handles interaction feedback and disabled behavior.",
+      "html": "<button class=\"ds-button-outlined\">Lend more</button>",
+      "css": ".ds-button-outlined{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;background:transparent;color:#cba6f7;min-width:48px;min-height:48px;padding:0 24px;border:1px solid #585b70;border-radius:12px;cursor:pointer} .ds-button-outlined:hover{background-image:linear-gradient(#cdd6f414,#cdd6f414)} .ds-button-outlined:focus-visible{outline:2px solid #cba6f7;outline-offset:3px} .ds-button-outlined:active{background-image:linear-gradient(#cdd6f41f,#cdd6f41f)} .ds-button-outlined:disabled{opacity:.38;cursor:default}",
+      "refersTo": "button-outlined"
+    },
+    {
+      "name": "Destructive confirmation",
+      "kind": "button",
+      "description": "Native Material action translated for the panel; Flutter handles interaction feedback and disabled behavior.",
+      "html": "<button class=\"ds-button-destructive\">Delete</button>",
+      "css": ".ds-button-destructive{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;background:#f38ba8;color:#181825;min-width:48px;min-height:50px;padding:0 24px;border:none;border-radius:12px;cursor:pointer} .ds-button-destructive:hover{background-image:linear-gradient(#cdd6f414,#cdd6f414)} .ds-button-destructive:focus-visible{outline:2px solid #cba6f7;outline-offset:3px} .ds-button-destructive:active{background-image:linear-gradient(#cdd6f41f,#cdd6f41f)} .ds-button-destructive:disabled{opacity:.38;cursor:default}",
+      "refersTo": "button-destructive"
+    },
+    {
+      "name": "Amount field",
+      "kind": "input",
+      "description": "Filled currency-labelled field; actual focus, validation, and keyboard come from Flutter.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-amount\">Amount (INR)</label><input class=\"ds-field\" id=\"ds-amount\" inputmode=\"decimal\" placeholder=\"0.00\" />",
+      "css": ".ds-field-label{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;display:block;color:#a6adc8;margin-bottom:8px} .ds-field{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;color:#cdd6f4;background:#181825;border:1px solid #313244;border-radius:12px;padding:16px;width:calc(100% - 34px)} .ds-field::placeholder{color:#a6adc8} .ds-field:hover{border-color:#585b70} .ds-field:focus-visible{outline:2px solid #cba6f7;outline-offset:-2px} .ds-field:invalid{border-color:#f38ba8}",
+      "refersTo": "field"
+    },
+    {
+      "name": "Mobile navigation",
+      "kind": "nav",
+      "description": "Four native destinations; the wide shell replaces this with a labelled rail at 760 logical pixels.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Wallet workspace\"><button class=\"ds-nav-item\" aria-current=page><span class=\"ds-nav-icon\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 7H5a2 2 0 0 1 0-4h13v4M5 7H3v13h17V7m0 4h-7v5h7\"/><path d=\"M16 13h1\"/></svg></span>Overview</button><button class=\"ds-nav-item\" ><span class=\"ds-nav-icon\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2V3Z M9 7h6M9 11h6M9 15h6\"/></svg></span>Transactions</button><button class=\"ds-nav-item\" ><span class=\"ds-nav-icon\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 6h7l2 2h9v12H3V6Z\"/></svg></span>Groups</button><button class=\"ds-nav-item\" ><span class=\"ds-nav-icon\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m2 9 5-5 5 2 5-2 5 5-4 4-4-4-3 2-4-3-3 5m3 0 7 7 3-3 3-3\"/></svg></span>Lending</button></nav>",
+      "css": ".ds-nav{display:flex;background:#181825;min-height:76px} .ds-nav-item{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:12px;letter-spacing:.4px;flex:1;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:transparent;border:0;color:#a6adc8;cursor:pointer} .ds-nav-icon{display:flex;align-items:center;justify-content:center;width:64px;height:32px;border-radius:99px} .ds-nav-item[aria-current]{color:#cdd6f4} .ds-nav-item[aria-current] .ds-nav-icon{background:#cba6f72e;color:#181825} .ds-nav-item:hover .ds-nav-icon{background:#cba6f714} .ds-nav-item:focus-visible{outline:2px solid #cba6f7;outline-offset:-2px} .ds-nav-item:active .ds-nav-icon{background:#cba6f733}",
+      "refersTo": "navigation-mobile"
+    },
+    {
+      "name": "Lending status choices",
+      "kind": "chip",
+      "description": "Open, Settled, Archived with the inherited blue selected container.",
+      "html": "<div class=\"ds-choices\"><button class=\"ds-choice\" aria-pressed=\"true\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m5 12 4 4 10-10\"/></svg>Open</button><button class=\"ds-choice\" aria-pressed=\"false\">Settled</button><button class=\"ds-choice\" aria-pressed=\"false\">Archived</button></div>",
+      "css": ".ds-choices{display:flex;flex-wrap:wrap;gap:8px} .ds-choice{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;display:flex;align-items:center;gap:8px;border:1px solid #313244;background:#1e1e2e;color:#a6adc8;border-radius:8px;padding:8px 12px;min-height:36px;cursor:pointer} .ds-choice[aria-pressed=true]{background:#89b4fa;color:#181825;border-color:transparent} .ds-choice:hover{background-image:linear-gradient(#cdd6f414,#cdd6f414)} .ds-choice:focus-visible{outline:2px solid #cba6f7;outline-offset:3px} .ds-choice:active{background-image:linear-gradient(#cdd6f41f,#cdd6f41f)}",
+      "refersTo": "choice-selected"
+    },
+    {
+      "name": "Direction selector",
+      "kind": "custom",
+      "description": "Native segmented direction selector, inheriting blue secondary selection.",
+      "html": "<div class=\"ds-segments\" role=\"group\" aria-label=\"Transaction direction\"><button class=\"ds-segment\" aria-pressed=\"true\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m5 12 4 4 10-10\"/></svg>Expense</button><button class=\"ds-segment\" aria-pressed=\"false\">Income</button></div>",
+      "css": ".ds-segments{display:flex;border:1px solid #585b70;border-radius:99px;overflow:hidden} .ds-segment{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;font-weight:500;line-height:1.43;letter-spacing:.1px;display:flex;align-items:center;justify-content:center;gap:8px;flex:1;min-height:40px;background:#1e1e2e;color:#cdd6f4;border:0;cursor:pointer} .ds-segment+.ds-segment{border-left:1px solid #585b70} .ds-segment[aria-pressed=true]{background:#89b4fa;color:#181825} .ds-segment:hover{background-image:linear-gradient(#cdd6f414,#cdd6f414)} .ds-segment:focus-visible{outline:2px solid #cba6f7;outline-offset:-3px} .ds-segment:active{background-image:linear-gradient(#cdd6f41f,#cdd6f41f)}"
+    },
+    {
+      "name": "Cash ledger row",
+      "kind": "custom",
+      "description": "Exact signed cash with explicit loan movement metadata; row stacks at narrow widths.",
+      "html": "<button class=\"ds-ledger\"><span class=\"ds-ledger-icon\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M20 7H5a2 2 0 0 1 0-4h13v4M5 7H3v13h17V7m0 4h-7v5h7\"/><path d=\"M16 13h1\"/></svg></span><span class=\"ds-ledger-copy\"><strong>Arjun</strong><span>Repayment received \u00b7 28 Sep 2026</span><span class=\"ds-running\">Running balance \u2212\u20b93,500.00</span></span><strong class=\"ds-cash\">+\u20b91,500.00</strong></button>",
+      "css": ".ds-ledger{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;width:100%;display:flex;align-items:flex-start;gap:14px;padding:14px 4px;text-align:left;border:0;border-bottom:1px solid #313244;border-radius:12px;background:#1e1e2e;color:#cdd6f4;cursor:pointer} .ds-ledger-icon{color:#a6adc8;margin-top:4px} .ds-ledger-copy{display:flex;flex:1;flex-direction:column;gap:4px} .ds-ledger-copy strong,.ds-cash{font-size:16px;font-weight:500;line-height:1.5;letter-spacing:.15px} .ds-ledger-copy span{font-size:12px;line-height:1.33;letter-spacing:.4px;color:#a6adc8} .ds-ledger-copy .ds-running{color:#cdd6f4;margin-top:4px;white-space:nowrap} .ds-cash{color:#a6e3a1;white-space:nowrap} .ds-ledger:hover{background:#cba6f70a} .ds-ledger:focus-visible{outline:2px solid #cba6f7;outline-offset:2px} .ds-ledger:active{background:#cba6f714} @media(max-width:359px){.ds-ledger{flex-wrap:wrap}.ds-cash{margin-left:38px}}",
+      "refersTo": "ledger-row"
+    },
+    {
+      "name": "Spending breakdown",
+      "kind": "custom",
+      "description": "A labelled amount accompanies the six-unit category share bar.",
+      "html": "<div class=\"ds-breakdown\"><div class=\"ds-breakdown-label\"><span>Food &amp; drink</span><span>\u20b91,850.50</span></div><div class=\"ds-track\" role=\"img\" aria-label=\"Food and drink: 35 percent of monthly spending\"><span></span></div></div>",
+      "css": ".ds-breakdown{font-family:Roboto,-apple-system,BlinkMacSystemFont,sans-serif;color:#cdd6f4} .ds-breakdown-label{display:flex;justify-content:space-between;gap:12px;font-size:14px;line-height:1.43} .ds-track{height:6px;margin-top:10px;border-radius:3px;background:#313244;overflow:hidden} .ds-track span{display:block;width:35%;height:100%;background:#cba6f7}",
+      "refersTo": "spending-bar"
+    },
+    {
+      "name": "Original brand mark",
+      "kind": "custom",
+      "description": "Preview uses the exact authored icon SVG; the native app draws matching geometry.",
+      "html": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"64\" height=\"64\" viewBox=\"0 0 1024 1024\">\n<rect width=\"64\" height=\"64\" rx=\"224\" fill=\"#1e1e2e\"/>\n<rect x=\"200\" y=\"270\" width=\"624\" height=\"490\" rx=\"90\" fill=\"#cba6f7\"/>\n<rect x=\"200\" y=\"220\" width=\"548\" height=\"126\" rx=\"60\" fill=\"#89b4fa\"/>\n<rect x=\"650\" y=\"430\" width=\"216\" height=\"168\" rx=\"48\" fill=\"#181825\"/>\n<circle cx=\"710\" cy=\"514\" r=\"22\" fill=\"#fab387\"/>\n<g fill=\"#181825\"><rect x=\"290\" y=\"580\" width=\"50\" height=\"80\" rx=\"20\"/><rect x=\"380\" y=\"520\" width=\"50\" height=\"140\" rx=\"20\"/><rect x=\"470\" y=\"460\" width=\"50\" height=\"200\" rx=\"20\"/></g>\n</svg>\n",
+      "css": ".ds-brand-mark{display:block}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Wallet Workspace",
+    "overview": "The Wallet Workspace describes the built app: an operational space for manual finance entries, wallet balances, group ledgers, and lending. Catppuccin Mocha gives the dark canvas a quiet character; labels, exact amounts, and native controls carry the information. The selected wallet is persistent context, and cash direction stays explicit.\n\nThe implementation is Flutter Material 3 for Android and iOS. Open sections and divided ledger rows establish the main spatial grammar. Navigation, date pickers, dialogs, focus feedback, and route transitions retain their native behavior. The original geometric wallet and rising bars supply the identity. There is no approved external comp or quality board; this record follows the finished source and supplied QA captures.",
+    "keyCharacteristics": [
+      "Dark tonal surfaces with mauve actions and semantic cash colors.",
+      "Open financial sections, labelled statistics, and divided ledger rows.",
+      "Four mobile destinations, adapting to a labelled rail on wider screens.",
+      "System typography, text scaling, and platform navigation behavior.",
+      "Original wallet and bar-chart identity; no illustrative stock artwork."
+    ],
+    "rules": [
+      {
+        "name": "The Cash Direction Rule",
+        "body": "For cash entries, green means cash entering the wallet and red means cash leaving it. Keep the signed amount and the movement description visible together; loan advances and repayments use their actual wallet direction.",
+        "section": "colors"
+      },
+      {
+        "name": "The Exact Amount Rule",
+        "body": "Keep currency, sign, and amount together. Format the wallet currency to two decimal places. A cash entry has an explicit plus or minus; a balance uses its actual sign. Avoid abbreviation or truncation of financial values.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal Workspace Rule",
+        "body": "Use base for the reading canvas, mantle for navigation and filled fields, and surface for dividers and tracks. Keep the principal ledger layout open; use native popup elevation when an interaction requires it.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do preserve the selected wallet context in the app bar and money-entry forms.",
+      "Do use the shared page body, section title, statistics, and ledger-row patterns for new surfaces.",
+      "Do show loan cash movements with explicit descriptions such as Lent, Borrowed, Repayment received, and Repayment paid.",
+      "Do preserve the difference between cash balance, ordinary income/spending, and outstanding debt.",
+      "Do retain native keyboard, date-picker, focus, Back, and iOS swipe-back behavior.",
+      "Do allow labels and supporting text to wrap; move amounts below row text on narrow or enlarged-text layouts.",
+      "Do explain destructive effects in a confirmation dialog and show inline validation or actionable snackbar errors."
+    ],
+    "donts": [
+      "Don't replace the Catppuccin palette or original wallet/bar-chart identity with a new visual direction.",
+      "Don't use color as the only indication of cash direction; retain signs and movement labels.",
+      "Don't turn ordinary ledger content into a stack of dashboard cards.",
+      "Don't abbreviate money, separate a negative sign onto another line, or ellipsize a cash amount.",
+      "Don't treat loan principal, repayments, or transfers as ordinary income or spending.",
+      "Don't introduce a custom display font, decorative motion, or web-style navigation into this native system."
+    ]
+  }
+}
