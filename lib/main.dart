@@ -67,7 +67,7 @@ class _BootstrapState extends State<Bootstrap> {
   Widget build(BuildContext context) {
     if (app != null) return FinanceApp(controller: app!);
     return MaterialApp(
-      theme: Mocha.theme,
+      theme: AppTheme.theme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SafeArea(

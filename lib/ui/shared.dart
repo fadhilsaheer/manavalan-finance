@@ -52,7 +52,7 @@ Future<bool> confirm(
           ),
           FilledButton(
             style: destructive
-                ? FilledButton.styleFrom(backgroundColor: Mocha.red)
+                ? FilledButton.styleFrom(backgroundColor: AppTheme.red)
                 : null,
             onPressed: () => Navigator.pop(context, true),
             child: Text(action),
@@ -73,7 +73,7 @@ class PageBody extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 820),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 110),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
         children: children,
       ),
     ),
@@ -117,7 +117,7 @@ class EmptyState extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 52, color: Mocha.muted),
+        Icon(icon, size: 52, color: AppTheme.muted),
         const SizedBox(height: 20),
         Text(
           title,
@@ -127,7 +127,7 @@ class EmptyState extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           detail,
-          style: const TextStyle(color: Mocha.muted),
+          style: const TextStyle(color: AppTheme.muted),
           textAlign: TextAlign.center,
         ),
         if (onAction != null)
@@ -140,22 +140,63 @@ class EmptyState extends StatelessWidget {
   );
 }
 
+class SurfacePanel extends StatelessWidget {
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  const SurfacePanel({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(18),
+  });
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: padding,
+    decoration: BoxDecoration(
+      color: AppTheme.mantle,
+      borderRadius: BorderRadius.circular(24),
+    ),
+    child: child,
+  );
+}
+
+class IconBadge extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  const IconBadge({
+    super.key,
+    required this.icon,
+    this.color = AppTheme.accent,
+  });
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 42,
+    height: 42,
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .08),
+      borderRadius: BorderRadius.circular(14),
+    ),
+    child: Icon(icon, size: 21, color: color),
+  );
+}
+
 class Stat extends StatelessWidget {
   final String label, value;
   final Color? color;
   const Stat(this.label, this.value, {super.key, this.color});
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(label, style: const TextStyle(color: Mocha.muted)),
-      const SizedBox(height: 8),
-      Text(
-        value,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
-        softWrap: true,
-      ),
-    ],
+  Widget build(BuildContext context) => SurfacePanel(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(color: AppTheme.muted)),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
+          softWrap: true,
+        ),
+      ],
+    ),
   );
 }
 
@@ -166,8 +207,11 @@ class Stats extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
       final columns =
-          constraints.maxWidth > 520 &&
-              MediaQuery.textScalerOf(context).scale(1) < 1.4
+          constraints.maxWidth < 340 ||
+              MediaQuery.textScalerOf(context).scale(1) >= 1.4
+          ? 1
+          : constraints.maxWidth > 520 &&
+                MediaQuery.textScalerOf(context).scale(1) < 1.4
           ? 3
           : 2;
       final width = (constraints.maxWidth - (columns - 1) * 20) / columns;
@@ -214,14 +258,13 @@ class EntryTile extends StatelessWidget {
       ?movement,
       prettyDay(entry.date),
       if (entry.groupId != null) s.group(entry.groupId)?.name ?? '',
-      if (entry.note.isNotEmpty) entry.note,
     ].join(' · ');
     final amount = Text(
       '${entry.sign > 0 ? '+' : '−'}${money(entry.amount, wallet.currency)}',
       textAlign: TextAlign.end,
       softWrap: false,
       style: Theme.of(context).textTheme.titleMedium
-          ?.copyWith(color: entry.sign > 0 ? Mocha.green : Mocha.red),
+          ?.copyWith(color: entry.sign > 0 ? AppTheme.green : AppTheme.red),
     );
     return Semantics(
       button: onTap != null,
@@ -229,11 +272,11 @@ class EntryTile extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final stacked =
-                  constraints.maxWidth < 360 ||
+                  constraints.maxWidth < 300 ||
                   MediaQuery.textScalerOf(context).scale(1) > 1.3;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,14 +285,16 @@ class EntryTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 4, right: 14),
-                        child: Icon(
-                          loan != null
+                        padding: const EdgeInsets.only(right: 12),
+                        child: IconBadge(
+                          icon: loan != null
                               ? Icons.handshake_outlined
                               : entry.kind.ordinary
                               ? iconFor(category?.icon ?? 'wallet')
                               : Icons.swap_horiz_rounded,
-                          color: Mocha.muted,
+                          color: entry.sign > 0
+                              ? AppTheme.green
+                              : AppTheme.accent,
                         ),
                       ),
                       Expanded(
@@ -263,19 +308,24 @@ class EntryTile extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: Mocha.muted),
+                                  ?.copyWith(color: AppTheme.muted),
                             ),
                           ],
                         ),
                       ),
                       if (!stacked) ...[
                         const SizedBox(width: 12),
-                        Flexible(
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
+                        Expanded(
+                          child: Align(
                             alignment: Alignment.centerRight,
-                            child: amount,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: amount,
+                            ),
                           ),
                         ),
                       ],
@@ -283,12 +333,12 @@ class EntryTile extends StatelessWidget {
                   ),
                   if (stacked)
                     Padding(
-                      padding: const EdgeInsets.only(left: 38, top: 8),
+                      padding: const EdgeInsets.only(left: 54, top: 8),
                       child: FittedBox(fit: BoxFit.scaleDown, child: amount),
                     ),
                   if (running != null)
                     Padding(
-                      padding: const EdgeInsets.only(left: 38, top: 8),
+                      padding: const EdgeInsets.only(left: 54, top: 8),
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: Alignment.centerLeft,
@@ -373,23 +423,35 @@ class IconPicker extends StatelessWidget {
   final ValueChanged<String> onChanged;
   const IconPicker({super.key, required this.value, required this.onChanged});
   @override
-  Widget build(BuildContext context) => Wrap(
-    spacing: 4,
-    runSpacing: 4,
-    children: appIcons.entries
-        .map(
-          (e) => IconButton.filledTonal(
-            tooltip: e.key,
-            isSelected: value == e.key,
-            style: IconButton.styleFrom(
-              backgroundColor: value == e.key ? Mocha.mauve : Mocha.mantle,
-              foregroundColor: value == e.key ? Mocha.mantle : Mocha.muted,
-            ),
-            onPressed: () => onChanged(e.key),
-            icon: Icon(e.value),
-          ),
-        )
-        .toList(),
+  Widget build(BuildContext context) => ExpansionTile(
+    shape: const Border(),
+    collapsedShape: const Border(),
+    title: const Text('Icon', style: TextStyle(fontSize: 14)),
+    leading: IconBadge(icon: iconFor(value)),
+    children: [
+      Wrap(
+        spacing: 4,
+        runSpacing: 4,
+        children: appIcons.entries
+            .map(
+              (e) => IconButton.filledTonal(
+                tooltip: e.key,
+                isSelected: value == e.key,
+                style: IconButton.styleFrom(
+                  backgroundColor: value == e.key
+                      ? AppTheme.accent
+                      : AppTheme.mantle,
+                  foregroundColor: value == e.key
+                      ? AppTheme.mantle
+                      : AppTheme.muted,
+                ),
+                onPressed: () => onChanged(e.key),
+                icon: Icon(e.value),
+              ),
+            )
+            .toList(),
+      ),
+    ],
   );
 }
 

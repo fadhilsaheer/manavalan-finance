@@ -35,6 +35,12 @@ TextFormField nameField(
   decoration: InputDecoration(labelText: label),
   textCapitalization: TextCapitalization.words,
   maxLength: 80,
+  buildCounter: (
+    _, {
+    required currentLength,
+    required isFocused,
+    required maxLength,
+  }) => null,
   validator: nameValidator,
 );
 TextFormField amountField(
@@ -48,15 +54,42 @@ TextFormField amountField(
   decoration: InputDecoration(
     labelText: '$label ($currency)',
     hintText: '0.00',
+    hintStyle: const TextStyle(
+      fontSize: 40,
+      fontWeight: FontWeight.w600,
+      color: AppTheme.muted,
+    ),
+    floatingLabelBehavior: FloatingLabelBehavior.always,
+    fillColor: AppTheme.base,
+    border: InputBorder.none,
+    enabledBorder: InputBorder.none,
+    focusedBorder: InputBorder.none,
+    contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
+  ),
+  textAlign: TextAlign.center,
+  style: const TextStyle(
+    fontSize: 40,
+    fontWeight: FontWeight.w600,
+    letterSpacing: -1,
   ),
   keyboardType: TextInputType.numberWithOptions(decimal: true, signed: signed),
   validator: (value) => amountValidator(value, signed: signed, zero: zero),
 );
-TextFormField noteField(TextEditingController controller) => TextFormField(
-  controller: controller,
-  decoration: const InputDecoration(labelText: 'Note (optional)'),
-  maxLines: 3,
-  maxLength: 1000,
+Widget noteField(TextEditingController controller) => ExpansionTile(
+  initiallyExpanded: controller.text.isNotEmpty,
+  tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+  shape: const Border(),
+  collapsedShape: const Border(),
+  leading: const Icon(Icons.notes_rounded, size: 20),
+  title: const Text('Note', style: TextStyle(fontSize: 14)),
+  children: [
+    TextFormField(
+      controller: controller,
+      decoration: const InputDecoration(hintText: 'Add a note'),
+      maxLines: 3,
+      maxLength: 1000,
+    ),
+  ],
 );
 
 class FormScreen extends StatelessWidget {
@@ -77,29 +110,51 @@ class FormScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(title)),
-    body: Form(
-      key: formKey,
-      child: PageBody(
+    appBar: AppBar(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(title),
           if (app.wallet != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Text(
-                app.wallet!.name,
-                style: const TextStyle(color: Mocha.mauve),
+            Text(
+              app.wallet!.name,
+              style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+            ),
+        ],
+      ),
+    ),
+    body: SafeArea(
+      top: false,
+      child: Column(
+        children: [
+          Expanded(
+            child: Form(
+              key: formKey,
+              child: PageBody(
+                children: [
+                  for (final field in fields)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: field,
+                    ),
+                ],
               ),
             ),
-          for (final field in fields)
-            Padding(padding: const EdgeInsets.only(bottom: 20), child: field),
-          FilledButton(
-            onPressed: saving ? null : onSave,
-            child: saving
-                ? const SizedBox.square(
-                    dimension: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Text('Save'),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+            child: SizedBox(
+              width: 780,
+              child: FilledButton(
+                onPressed: saving ? null : onSave,
+                child: saving
+                    ? const SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Text('Save'),
+              ),
+            ),
           ),
         ],
       ),
@@ -177,20 +232,20 @@ class _WalletFormState extends State<WalletForm> {
         zero: true,
       ),
       const Text(
-        'Opening balance is your starting amount. Changing it adjusts the wallet balance. Currency is locked after entries or loans exist.',
-        style: TextStyle(color: Mocha.muted),
+        'Starting balance before your first entry.',
+        style: TextStyle(color: AppTheme.muted),
       ),
       IconPicker(value: icon, onChanged: (v) => setState(() => icon = v)),
       Wrap(
         spacing: 8,
         children: List.generate(
-          Mocha.accents.length,
+          AppTheme.accents.length,
           (i) => IconButton(
             tooltip: 'Wallet colour ${i + 1}',
             onPressed: () => setState(() => color = i),
             icon: Icon(
               color == i ? Icons.check_circle : Icons.circle,
-              color: Mocha.accents[i],
+              color: AppTheme.accents[i],
               size: 32,
             ),
           ),
@@ -599,7 +654,7 @@ class _LoanFormState extends State<LoanForm> {
               : direction == 'lent'
               ? 'Wallet cash decreases. This is excluded from spending.'
               : 'Wallet cash increases. This is excluded from income.',
-          style: const TextStyle(color: Mocha.muted),
+          style: const TextStyle(color: AppTheme.muted),
         ),
       ],
       DateField(
@@ -682,7 +737,7 @@ class _LoanMovementFormState extends State<LoanMovementForm> {
       ),
       Text(
         'Outstanding ${money(widget.app.data.outstanding(widget.loan), widget.app.wallet!.currency)}',
-        style: const TextStyle(color: Mocha.muted),
+        style: const TextStyle(color: AppTheme.muted),
       ),
       Text(
         widget.repayment
@@ -692,11 +747,7 @@ class _LoanMovementFormState extends State<LoanMovementForm> {
             : (widget.loan.lent
                   ? 'Money lent · wallet cash decreases.'
                   : 'Money borrowed · wallet cash increases.'),
-        style: const TextStyle(color: Mocha.muted),
-      ),
-      const Text(
-        'This movement is excluded from income and spending.',
-        style: TextStyle(color: Mocha.muted),
+        style: const TextStyle(color: AppTheme.muted),
       ),
       amountField(amount, widget.app.wallet!.currency),
       DateField(value: date, onChanged: (v) => setState(() => date = v!)),
@@ -745,14 +796,14 @@ class _TransferFormState extends State<TransferForm> {
   @override
   Widget build(BuildContext context) => FormScreen(
     app: widget.app,
-    title: 'Transfer between wallets',
+    title: 'Transfer',
     formKey: key,
     onSave: save,
     saving: saving,
     fields: [
       const Text(
-        'Moves cash between wallets without changing income or spending.',
-        style: TextStyle(color: Mocha.muted),
+        'Between wallets in the same currency.',
+        style: TextStyle(color: AppTheme.muted),
       ),
       DropdownButtonFormField<int>(
         initialValue: destination,

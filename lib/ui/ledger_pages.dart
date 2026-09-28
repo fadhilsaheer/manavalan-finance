@@ -42,38 +42,53 @@ class _OverviewPageState extends State<OverviewPage> {
       ..sort((a, b) => b.value.compareTo(a.value));
     return PageBody(
       children: [
-        Text('Overview', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 28),
-        Row(
-          children: [
-            Expanded(
-              child: Text(
+        Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: AppTheme.accent,
+            borderRadius: BorderRadius.circular(28),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
                 'Wallet balance',
-                style: Theme.of(context).textTheme.titleMedium,
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
-            ),
-            TextButton.icon(
-              onPressed: () => push(context, TransferForm(app: app)),
-              icon: const Icon(Icons.swap_horiz),
-              label: const Text('Transfer'),
-            ),
-          ],
+              const SizedBox(height: 12),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  money(s.balance(w), w.currency),
+                  style: const TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: -1.2,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 22),
+              OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  side: const BorderSide(color: Color(0xff91b3f2)),
+                ),
+                onPressed: () => push(context, TransferForm(app: app)),
+                icon: const Icon(Icons.swap_horiz_rounded, size: 19),
+                label: const Text('Transfer'),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: 6),
-        Text(
-          money(s.balance(w), w.currency),
-          style: Theme.of(context).textTheme.displaySmall
-              ?.copyWith(color: Mocha.text, fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 28),
-        const Divider(),
-        const SizedBox(height: 16),
+        const SizedBox(height: 18),
         Row(
           children: [
             Expanded(
               child: Text(
                 DateFormat('MMMM yyyy').format(month),
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             IconButton(
@@ -90,33 +105,82 @@ class _OverviewPageState extends State<OverviewPage> {
             ),
           ],
         ),
-        const SizedBox(height: 20),
-        Stats(
-          children: [
-            Stat('Income', money(income, w.currency), color: Mocha.green),
-            Stat('Spending', money(expenses, w.currency), color: Mocha.red),
-            Stat('Net income', money(income - expenses, w.currency)),
-          ],
+        const SizedBox(height: 8),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final compact =
+                constraints.maxWidth < 300 ||
+                MediaQuery.textScalerOf(context).scale(1) > 1.3;
+            final items = [
+              _MonthlyTotal(
+                'Income',
+                money(income, w.currency),
+                Icons.south_west_rounded,
+                AppTheme.green,
+              ),
+              _MonthlyTotal(
+                'Spending',
+                money(expenses, w.currency),
+                Icons.north_east_rounded,
+                AppTheme.red,
+              ),
+            ];
+            return compact
+                ? Column(
+                    children: [items[0], const SizedBox(height: 12), items[1]],
+                  )
+                : Row(
+                    children: [
+                      Expanded(child: items[0]),
+                      const SizedBox(width: 12),
+                      Expanded(child: items[1]),
+                    ],
+                  );
+          },
         ),
-        const SectionTitle('Lending balances'),
-        Stats(
-          children: [
-            Stat('Owed to you', money(owed, w.currency), color: Mocha.green),
-            Stat('You owe', money(owe, w.currency), color: Mocha.peach),
-          ],
-        ),
-        const Padding(
-          padding: EdgeInsets.only(top: 12),
+        Padding(
+          padding: const EdgeInsets.only(top: 14),
           child: Text(
-            'Loan movements and transfers affect wallet cash, and are excluded from income and spending.',
-            style: TextStyle(color: Mocha.muted),
+            'Net income  ${money(income - expenses, w.currency)}',
+            style: const TextStyle(color: AppTheme.muted, fontSize: 13),
           ),
+        ),
+        const SectionTitle('Recent activity'),
+        if (app.entries.isEmpty)
+          EmptyState(
+            icon: Icons.receipt_long_outlined,
+            title: 'Your ledger starts here',
+            detail: 'Add your first transaction.',
+            action: 'New transaction',
+            onAction: () => push(context, TransactionForm(app: app)),
+          )
+        else
+          SurfacePanel(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              children: [
+                for (final e in app.entries.take(5))
+                  EntryTile(
+                    app: app,
+                    entry: e,
+                    onTap: () =>
+                        push(context, EntryDetail(app: app, entryId: e.id)),
+                  ),
+              ],
+            ),
+          ),
+        const SectionTitle('Lending'),
+        Stats(
+          children: [
+            Stat('Owed to you', money(owed, w.currency), color: AppTheme.green),
+            Stat('You owe', money(owe, w.currency), color: AppTheme.peach),
+          ],
         ),
         const SectionTitle('Spending by category'),
         if (sorted.isEmpty)
           const Text(
             'No spending recorded for this month.',
-            style: TextStyle(color: Mocha.muted),
+            style: TextStyle(color: AppTheme.muted),
           ),
         for (final item in sorted)
           Padding(
@@ -128,7 +192,7 @@ class _OverviewPageState extends State<OverviewPage> {
                     Icon(
                       iconFor(s.category(item.key)?.icon ?? 'wallet'),
                       size: 20,
-                      color: Mocha.muted,
+                      color: AppTheme.muted,
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -151,27 +215,12 @@ class _OverviewPageState extends State<OverviewPage> {
                   child: LinearProgressIndicator(
                     value: item.value / expenses,
                     minHeight: 6,
-                    backgroundColor: Mocha.surface,
-                    color: Mocha.mauve,
+                    backgroundColor: AppTheme.surface,
+                    color: AppTheme.accent,
                   ),
                 ),
               ],
             ),
-          ),
-        const SectionTitle('Recent activity'),
-        if (app.entries.isEmpty)
-          EmptyState(
-            icon: Icons.receipt_long_outlined,
-            title: 'Your ledger starts here',
-            detail: 'Record your first expense or income in ${w.name}.',
-            action: 'New transaction',
-            onAction: () => push(context, TransactionForm(app: app)),
-          ),
-        for (final e in app.entries.take(5))
-          EntryTile(
-            app: app,
-            entry: e,
-            onTap: () => push(context, EntryDetail(app: app, entryId: e.id)),
           ),
       ],
     );
@@ -187,6 +236,7 @@ class TransactionsPage extends StatefulWidget {
 
 class _TransactionsPageState extends State<TransactionsPage> {
   String query = '';
+  bool showFilters = false;
   EntryKind? kind;
   int? categoryId, groupId;
   DateTimeRange? range;
@@ -218,95 +268,110 @@ class _TransactionsPageState extends State<TransactionsPage> {
         const SizedBox(height: 20),
         TextField(
           decoration: const InputDecoration(
-            hintText: 'Search notes, categories, people…',
+            hintText: 'Search transactions',
             prefixIcon: Icon(Icons.search),
           ),
           onChanged: (v) => setState(() => query = v),
         ),
-        const SizedBox(height: 16),
-        DropdownButtonFormField<EntryKind>(
-          initialValue: kind,
-          decoration: const InputDecoration(labelText: 'Type'),
-          isExpanded: true,
-          items: [
-            const DropdownMenuItem<EntryKind>(
-              value: null,
-              child: Text('All cash movements'),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: () => setState(() => showFilters = !showFilters),
+            icon: const Icon(Icons.tune_rounded, size: 19),
+            label: Text(
+              'Filters${[kind, categoryValue, groupValue, range].where((v) => v != null).isEmpty ? '' : ' · ${[kind, categoryValue, groupValue, range].where((v) => v != null).length}'}',
             ),
-            ...EntryKind.values.map(
-              (k) => DropdownMenuItem(value: k, child: Text(k.label)),
-            ),
-          ],
-          onChanged: (v) => setState(() => kind = v),
+          ),
         ),
-        const SizedBox(height: 12),
-        DropdownButtonFormField<int>(
-          key: ValueKey('filter-category-$categoryValue'),
-          initialValue: categoryValue,
-          decoration: const InputDecoration(labelText: 'Category'),
-          isExpanded: true,
-          items: [
-            const DropdownMenuItem<int>(
-              value: null,
-              child: Text('All categories'),
-            ),
-            ...app.categories.map(
-              (c) => DropdownMenuItem(
-                value: c.id,
-                child: Text(
-                  app.data.categoryName(c.id),
-                  overflow: TextOverflow.ellipsis,
+        if (showFilters) ...[
+          const SizedBox(height: 16),
+          DropdownButtonFormField<EntryKind>(
+            initialValue: kind,
+            decoration: const InputDecoration(labelText: 'Type'),
+            isExpanded: true,
+            items: [
+              const DropdownMenuItem<EntryKind>(
+                value: null,
+                child: Text('All cash movements'),
+              ),
+              ...EntryKind.values.map(
+                (k) => DropdownMenuItem(value: k, child: Text(k.label)),
+              ),
+            ],
+            onChanged: (v) => setState(() => kind = v),
+          ),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<int>(
+            key: ValueKey('filter-category-$categoryValue'),
+            initialValue: categoryValue,
+            decoration: const InputDecoration(labelText: 'Category'),
+            isExpanded: true,
+            items: [
+              const DropdownMenuItem<int>(
+                value: null,
+                child: Text('All categories'),
+              ),
+              ...app.categories.map(
+                (c) => DropdownMenuItem(
+                  value: c.id,
+                  child: Text(
+                    app.data.categoryName(c.id),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
-            ),
-          ],
-          onChanged: (v) => setState(() => categoryId = v),
-        ),
-        const SizedBox(height: 12),
-        DropdownButtonFormField<int>(
-          key: ValueKey('filter-group-$groupValue'),
-          initialValue: groupValue,
-          decoration: const InputDecoration(labelText: 'Group'),
-          isExpanded: true,
-          items: [
-            const DropdownMenuItem<int>(value: null, child: Text('All groups')),
-            ...app.groups.map(
-              (g) => DropdownMenuItem(value: g.id, child: Text(g.name)),
-            ),
-          ],
-          onChanged: (v) => setState(() => groupId = v),
-        ),
-        const SizedBox(height: 12),
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          children: [
-            OutlinedButton.icon(
-              icon: const Icon(Icons.date_range),
-              label: Text(
-                range == null
-                    ? 'All dates'
-                    : '${DateFormat('d MMM').format(range!.start)} – ${DateFormat('d MMM yyyy').format(range!.end)}',
+            ],
+            onChanged: (v) => setState(() => categoryId = v),
+          ),
+          const SizedBox(height: 12),
+          DropdownButtonFormField<int>(
+            key: ValueKey('filter-group-$groupValue'),
+            initialValue: groupValue,
+            decoration: const InputDecoration(labelText: 'Group'),
+            isExpanded: true,
+            items: [
+              const DropdownMenuItem<int>(
+                value: null,
+                child: Text('All groups'),
               ),
-              onPressed: () async {
-                final selected = await showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2200),
-                  initialDateRange: range,
-                );
-                if (selected != null && mounted) {
-                  setState(() => range = selected);
-                }
-              },
-            ),
-            if (range != null)
-              TextButton(
-                onPressed: () => setState(() => range = null),
-                child: const Text('Clear dates'),
+              ...app.groups.map(
+                (g) => DropdownMenuItem(value: g.id, child: Text(g.name)),
               ),
-          ],
-        ),
+            ],
+            onChanged: (v) => setState(() => groupId = v),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            children: [
+              OutlinedButton.icon(
+                icon: const Icon(Icons.date_range),
+                label: Text(
+                  range == null
+                      ? 'All dates'
+                      : '${DateFormat('d MMM').format(range!.start)} – ${DateFormat('d MMM yyyy').format(range!.end)}',
+                ),
+                onPressed: () async {
+                  final selected = await showDateRangePicker(
+                    context: context,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2200),
+                    initialDateRange: range,
+                  );
+                  if (selected != null && mounted) {
+                    setState(() => range = selected);
+                  }
+                },
+              ),
+              if (range != null)
+                TextButton(
+                  onPressed: () => setState(() => range = null),
+                  child: const Text('Clear dates'),
+                ),
+            ],
+          ),
+        ],
         SectionTitle(
           '${entries.length} ${entries.length == 1 ? 'transaction' : 'transactions'}',
         ),
@@ -345,11 +410,6 @@ class _GroupsPageState extends State<GroupsPage> {
     return PageBody(
       children: [
         Text('Groups', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 12),
-        const Text(
-          'Individual ledgers for a trip, project, person, or anything you want to keep together.',
-          style: TextStyle(color: Mocha.muted),
-        ),
         const SizedBox(height: 20),
         SegmentedButton<bool>(
           segments: const [
@@ -377,8 +437,15 @@ class _GroupsPageState extends State<GroupsPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: Icon(iconFor(g.icon), color: Mocha.mauve),
+              tileColor: AppTheme.mantle,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(22),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 10,
+              ),
+              leading: IconBadge(icon: iconFor(g.icon)),
               title: Text(g.name),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 6),
@@ -426,11 +493,6 @@ class _LendingPageState extends State<LendingPage> {
     return PageBody(
       children: [
         Text('Lending', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 12),
-        const Text(
-          'Track what is owed, one repayment at a time.',
-          style: TextStyle(color: Mocha.muted),
-        ),
         const SizedBox(height: 20),
         SegmentedButton<String>(
           segments: const [
@@ -455,6 +517,11 @@ class _LendingPageState extends State<LendingPage> {
               .map(
                 (s) => ChoiceChip(
                   label: Text(s[0].toUpperCase() + s.substring(1)),
+                  labelStyle: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 14,
+                    color: status == s ? Colors.white : AppTheme.muted,
+                  ),
                   selected: status == s,
                   onSelected: (_) => setState(() => status = s),
                 ),
@@ -475,8 +542,15 @@ class _LendingPageState extends State<LendingPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.person_outline, color: Mocha.mauve),
+              tileColor: AppTheme.mantle,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(22),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 10,
+              ),
+              leading: const IconBadge(icon: Icons.person_outline),
               title: Text(l.person),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 6),
@@ -487,8 +561,8 @@ class _LendingPageState extends State<LendingPage> {
                         l.due != null &&
                             l.due!.compareTo(dayKey(DateTime.now())) < 0 &&
                             app.data.outstanding(l) > 0
-                        ? Mocha.peach
-                        : Mocha.muted,
+                        ? AppTheme.peach
+                        : AppTheme.muted,
                   ),
                 ),
               ),
@@ -501,4 +575,38 @@ class _LendingPageState extends State<LendingPage> {
       ],
     );
   }
+}
+
+class _MonthlyTotal extends StatelessWidget {
+  final String label, value;
+  final IconData icon;
+  final Color color;
+  const _MonthlyTotal(this.label, this.value, this.icon, this.color);
+  @override
+  Widget build(BuildContext context) => SurfacePanel(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, color: color, size: 22),
+        const SizedBox(height: 18),
+        Text(
+          label,
+          style: const TextStyle(color: AppTheme.muted, fontSize: 13),
+        ),
+        const SizedBox(height: 5),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -.5,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

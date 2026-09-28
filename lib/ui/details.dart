@@ -39,7 +39,7 @@ class EntryDetail extends StatelessWidget {
             Text(
               '${e.sign > 0 ? '+' : '−'}${money(e.amount, w.currency)}',
               style: Theme.of(context).textTheme.headlineLarge
-                  ?.copyWith(color: e.sign > 0 ? Mocha.green : Mocha.red),
+                  ?.copyWith(color: e.sign > 0 ? AppTheme.green : AppTheme.red),
             ),
             const SizedBox(height: 12),
             Text(e.kind.label, style: Theme.of(context).textTheme.titleLarge),
@@ -81,7 +81,7 @@ class EntryDetail extends StatelessWidget {
             if (e.transferId != null) ...[
               const Text(
                 'This entry is linked to the other wallet. Removing it removes both sides of the transfer.',
-                style: TextStyle(color: Mocha.muted),
+                style: TextStyle(color: AppTheme.muted),
               ),
               for (final peer in app.data.entries.where(
                 (p) => p.transferId == e.transferId && p.id != e.id,
@@ -131,7 +131,7 @@ class EntryDetail extends StatelessWidget {
               ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
-              style: OutlinedButton.styleFrom(foregroundColor: Mocha.red),
+              style: OutlinedButton.styleFrom(foregroundColor: AppTheme.red),
               onPressed: app.busy
                   ? null
                   : () async {
@@ -270,7 +270,7 @@ class _GroupDetailState extends State<GroupDetail> {
                   value: 'delete',
                   child: Text(
                     'Delete group and transactions',
-                    style: TextStyle(color: Mocha.red),
+                    style: TextStyle(color: AppTheme.red),
                   ),
                 ),
               ],
@@ -284,7 +284,7 @@ class _GroupDetailState extends State<GroupDetail> {
                 padding: EdgeInsets.only(bottom: 16),
                 child: Text(
                   'Archived group',
-                  style: TextStyle(color: Mocha.peach),
+                  style: TextStyle(color: AppTheme.peach),
                 ),
               ),
             if (g.note.isNotEmpty)
@@ -292,22 +292,28 @@ class _GroupDetailState extends State<GroupDetail> {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: Text(g.note),
               ),
+            Text('Net balance', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Text(
+              money(income - expense, w.currency),
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+            const SizedBox(height: 24),
             Stats(
               children: [
-                Stat('Money in', money(income, w.currency), color: Mocha.green),
+                Stat(
+                  'Money in',
+                  money(income, w.currency),
+                  color: AppTheme.green,
+                ),
                 Stat(
                   'Total spending',
                   money(expense, w.currency),
-                  color: Mocha.red,
+                  color: AppTheme.red,
                 ),
-                Stat('Net balance', money(income - expense, w.currency)),
               ],
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Net balance is money in minus spending. Running balances include the full ledger.',
-              style: TextStyle(color: Mocha.muted),
-            ),
             const SizedBox(height: 24),
             if (!g.archived && !w.archived)
               FilledButton.icon(
@@ -460,7 +466,7 @@ class LoanDetail extends StatelessWidget {
                   value: 'delete',
                   child: Text(
                     'Delete loan and entries',
-                    style: TextStyle(color: Mocha.red),
+                    style: TextStyle(color: AppTheme.red),
                   ),
                 ),
               ],
@@ -477,7 +483,7 @@ class LoanDetail extends StatelessWidget {
             Text(
               money(outstanding, w.currency),
               style: Theme.of(context).textTheme.displaySmall
-                  ?.copyWith(color: l.lent ? Mocha.green : Mocha.peach),
+                  ?.copyWith(color: l.lent ? AppTheme.green : AppTheme.peach),
             ),
             const SizedBox(height: 12),
             Text(
@@ -486,7 +492,7 @@ class LoanDetail extends StatelessWidget {
                   : outstanding == 0
                   ? 'Settled'
                   : 'Open loan',
-              style: const TextStyle(color: Mocha.muted),
+              style: const TextStyle(color: AppTheme.muted),
             ),
             const SizedBox(height: 28),
             Stats(
@@ -495,7 +501,11 @@ class LoanDetail extends StatelessWidget {
                   'Total ${l.lent ? 'lent' : 'borrowed'}',
                   money(advanced, w.currency),
                 ),
-                Stat('Repaid', money(returned, w.currency), color: Mocha.green),
+                Stat(
+                  'Repaid',
+                  money(returned, w.currency),
+                  color: AppTheme.green,
+                ),
               ],
             ),
             const SizedBox(height: 24),
@@ -535,8 +545,8 @@ class LoanDetail extends StatelessWidget {
                       ? Icons.check_circle_outline
                       : Icons.add_circle_outline,
                   color: e.kind == EntryKind.loanRepayment
-                      ? Mocha.green
-                      : Mocha.mauve,
+                      ? AppTheme.green
+                      : AppTheme.accent,
                 ),
                 title: Text(
                   '${e.kind == EntryKind.loanRepayment ? 'Repayment' : 'Advance'} · ${money(e.amount, w.currency)}',
@@ -555,7 +565,7 @@ class LoanDetail extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
                   'Opening outstanding ${money(l.opening, w.currency)} · ${prettyDay(l.date)}\nNo wallet cash movement was created for this opening amount.',
-                  style: const TextStyle(color: Mocha.muted),
+                  style: const TextStyle(color: AppTheme.muted),
                 ),
               ),
           ],

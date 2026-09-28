@@ -1,90 +1,175 @@
 import 'package:flutter/material.dart';
 
-abstract final class Mocha {
-  static const base = Color(0xff1e1e2e);
-  static const mantle = Color(0xff181825);
-  static const surface = Color(0xff313244);
-  static const overlay = Color(0xff585b70);
-  static const text = Color(0xffcdd6f4);
-  static const muted = Color(0xffa6adc8);
-  static const mauve = Color(0xffcba6f7);
-  static const green = Color(0xffa6e3a1);
-  static const red = Color(0xfff38ba8);
-  static const peach = Color(0xfffab387);
-  static const blue = Color(0xff89b4fa);
-  static const yellow = Color(0xfff9e2af);
-  static const accents = [mauve, blue, green, peach, yellow, red];
+abstract final class AppTheme {
+  static const base = Color(0xfff6f7f9);
+  static const mantle = Colors.white;
+  static const surface = Color(0xffe9ecf1);
+  static const overlay = Color(0xffb9c1ce);
+  static const text = Color(0xff191c22);
+  static const muted = Color(0xff68717e);
+  static const accent = Color(0xff2866d8);
+  static const green = Color(0xff16764d);
+  static const red = Color(0xffbe3d47);
+  static const peach = Color(0xffa75d16);
+  static const blue = Color(0xff2866d8);
+  static const yellow = Color(0xff867016);
+  static const accents = [accent, green, peach, red, yellow, Color(0xff7854ad)];
   static ThemeData get theme => ThemeData(
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     useMaterial3: true,
+    fontFamily: 'Roboto',
     scaffoldBackgroundColor: base,
-    colorScheme: const ColorScheme.dark(
-      primary: mauve,
-      onPrimary: mantle,
+    colorScheme: const ColorScheme.light(
+      primary: accent,
+      onPrimary: Colors.white,
       secondary: blue,
-      onSecondary: mantle,
-      surface: base,
+      onSecondary: Colors.white,
+      surface: mantle,
       onSurface: text,
       onSurfaceVariant: muted,
       error: red,
-      onError: mantle,
+      onError: Colors.white,
       surfaceContainerHighest: surface,
       outline: overlay,
       outlineVariant: surface,
+    ),
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 30,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -.8,
+        color: text,
+      ),
+      titleLarge: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        letterSpacing: -.4,
+        color: text,
+      ),
+      titleMedium: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: text,
+      ),
+      bodyMedium: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: text),
     ),
     appBarTheme: const AppBarThemeData(
       backgroundColor: base,
       foregroundColor: text,
       surfaceTintColor: Colors.transparent,
       centerTitle: false,
-    ),
-    navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: mantle,
-      indicatorColor: mauve.withValues(alpha: .18),
-      height: 76,
+      titleTextStyle: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 19,
+        fontWeight: FontWeight.w600,
+        color: text,
+      ),
     ),
     navigationRailTheme: NavigationRailThemeData(
+      selectedIconTheme: const IconThemeData(color: accent),
       backgroundColor: mantle,
-      indicatorColor: mauve.withValues(alpha: .18),
+      indicatorColor: accent.withValues(alpha: .1),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: mantle,
+      labelStyle: const TextStyle(fontFamily: 'Roboto', color: muted),
+      hintStyle: const TextStyle(
+        fontFamily: 'Roboto',
+        color: muted,
+        fontSize: 14,
+      ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         borderSide: const BorderSide(color: surface),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         borderSide: const BorderSide(color: surface),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(18),
+        borderSide: const BorderSide(color: accent, width: 1.5),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+    ),
+    listTileTheme: const ListTileThemeData(
+      iconColor: muted,
+      titleTextStyle: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+        color: text,
+      ),
+      subtitleTextStyle: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 13,
+        color: muted,
+      ),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: mantle,
+      selectedColor: text,
+      side: const BorderSide(color: surface),
+      shape: const StadiumBorder(),
+      showCheckmark: false,
+      labelStyle: const TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        color: muted,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+    ),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+        side: const WidgetStatePropertyAll(BorderSide.none),
+        backgroundColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected) ? text : mantle,
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith(
+          (states) =>
+              states.contains(WidgetState.selected) ? Colors.white : muted,
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+        ),
+      ),
     ),
     snackBarTheme: const SnackBarThemeData(
-      backgroundColor: surface,
-      contentTextStyle: TextStyle(color: text),
+      backgroundColor: text,
+      contentTextStyle: TextStyle(fontFamily: 'Roboto', color: Colors.white),
       behavior: SnackBarBehavior.floating,
     ),
     dividerTheme: const DividerThemeData(color: surface, space: 1),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size(48, 50),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        minimumSize: const Size(48, 54),
+        shape: const StadiumBorder(),
+        textStyle: const TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         minimumSize: const Size(48, 48),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        side: const BorderSide(color: surface),
+        shape: const StadiumBorder(),
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: mauve,
-      foregroundColor: mantle,
+      backgroundColor: accent,
+      foregroundColor: Colors.white,
+      shape: CircleBorder(),
       elevation: 0,
-      focusElevation: 1,
-      hoverElevation: 1,
-      highlightElevation: 1,
+      focusElevation: 0,
+      hoverElevation: 0,
+      highlightElevation: 0,
     ),
   );
 }
@@ -113,7 +198,7 @@ const appIcons = <String, IconData>{
 };
 IconData iconFor(String key) => appIcons[key] ?? Icons.category_outlined;
 Color walletColor(int index) =>
-    Mocha.accents[index.abs() % Mocha.accents.length];
+    AppTheme.accents[index.abs() % AppTheme.accents.length];
 
 class BrandMark extends StatelessWidget {
   final double size;
@@ -138,37 +223,41 @@ class BrandPainter extends CustomPainter {
         const Rect.fromLTWH(0, 0, 1024, 1024),
         const Radius.circular(224),
       ),
-      Paint()..color = Mocha.base,
+      Paint()..color = AppTheme.base,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         const Rect.fromLTWH(200, 270, 624, 490),
         const Radius.circular(90),
       ),
-      Paint()..color = Mocha.mauve,
+      Paint()..color = AppTheme.accent,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         const Rect.fromLTWH(200, 220, 548, 126),
         const Radius.circular(60),
       ),
-      Paint()..color = Mocha.blue,
+      Paint()..color = const Color(0xff174da9),
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         const Rect.fromLTWH(650, 430, 216, 168),
         const Radius.circular(48),
       ),
-      Paint()..color = Mocha.mantle,
+      Paint()..color = AppTheme.mantle,
     );
-    canvas.drawCircle(const Offset(710, 514), 22, Paint()..color = Mocha.peach);
+    canvas.drawCircle(
+      const Offset(710, 514),
+      22,
+      Paint()..color = AppTheme.accent,
+    );
     for (final (x, top) in [(290.0, 580.0), (380.0, 520.0), (470.0, 460.0)]) {
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromLTRB(x, top, x + 50, 660),
           const Radius.circular(20),
         ),
-        Paint()..color = Mocha.mantle,
+        Paint()..color = AppTheme.mantle,
       );
     }
   }

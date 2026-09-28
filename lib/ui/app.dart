@@ -14,7 +14,7 @@ class FinanceApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'Manavalan Finance',
     debugShowCheckedModeBanner: false,
-    theme: Mocha.theme,
+    theme: AppTheme.theme,
     home: AppShell(app: controller),
   );
 }
@@ -56,8 +56,8 @@ class _AppShellState extends State<AppShell> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'A wallet for each part of your life. Transactions, group ledgers, and lending — all on your device.',
-                  style: TextStyle(color: Mocha.muted),
+                  'Every wallet. Every expense. Just on your device.',
+                  style: TextStyle(color: AppTheme.muted),
                 ),
                 const SizedBox(height: 32),
                 FilledButton.icon(
@@ -121,7 +121,7 @@ class _AppShellState extends State<AppShell> {
                             const SizedBox(width: 12),
                             Expanded(child: Text('${w.name} · ${w.currency}')),
                             if (w.id == wallet.id)
-                              const Icon(Icons.check, color: Mocha.mauve),
+                              const Icon(Icons.check, color: AppTheme.accent),
                           ],
                         ),
                       ),
@@ -194,43 +194,83 @@ class _AppShellState extends State<AppShell> {
           ),
         ),
         bottomNavigationBar: !expanded && wallet != null
-            ? NavigationBar(
-                selectedIndex: tab,
-                onDestinationSelected: (v) => setState(() => tab = v),
-                destinations: List.generate(
-                  4,
-                  (i) => NavigationDestination(
-                    icon: Icon(icons[i]),
-                    label: labels[i],
-                  ),
+            ? SafeArea(
+                top: false,
+                minimum: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 330),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: NavigationBarTheme(
+                            data: NavigationBarThemeData(
+                              backgroundColor: AppTheme.text,
+                              indicatorColor: Colors.white,
+                              indicatorShape: const CircleBorder(),
+                              iconTheme: WidgetStateProperty.resolveWith(
+                                (states) => IconThemeData(
+                                  color: states.contains(WidgetState.selected)
+                                      ? AppTheme.text
+                                      : const Color(0xffb9c1ce),
+                                  size: 23,
+                                ),
+                              ),
+                              overlayColor: WidgetStatePropertyAll(
+                                Colors.white.withValues(alpha: .12),
+                              ),
+                              height: 66,
+                              labelBehavior:
+                                  NavigationDestinationLabelBehavior.alwaysHide,
+                            ),
+                            child: NavigationBar(
+                              selectedIndex: tab,
+                              onDestinationSelected: (v) =>
+                                  setState(() => tab = v),
+                              destinations: List.generate(
+                                4,
+                                (i) => NavigationDestination(
+                                  icon: Icon(icons[i]),
+                                  label: labels[i],
+                                  tooltip: labels[i],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    SizedBox.square(dimension: 62, child: _addButton(app)),
+                  ],
                 ),
               )
             : null,
-        floatingActionButton: wallet == null
-            ? null
-            : FloatingActionButton.extended(
-                onPressed: app.busy
-                    ? null
-                    : () {
-                        push(
-                          context,
-                          tab == 2
-                              ? GroupForm(app: app)
-                              : tab == 3
-                              ? LoanForm(app: app)
-                              : TransactionForm(app: app),
-                        );
-                      },
-                icon: const Icon(Icons.add),
-                label: Text(
-                  tab == 2
-                      ? 'New group'
-                      : tab == 3
-                      ? 'New loan'
-                      : 'New transaction',
-                ),
-              ),
+        floatingActionButton: expanded && wallet != null
+            ? _addButton(app)
+            : null,
       );
     },
+  );
+
+  Widget _addButton(AppController app) => FloatingActionButton(
+    tooltip: tab == 2
+        ? 'New group'
+        : tab == 3
+        ? 'New loan'
+        : 'New transaction',
+    onPressed: app.busy
+        ? null
+        : () => push(
+            context,
+            tab == 2
+                ? GroupForm(app: app)
+                : tab == 3
+                ? LoanForm(app: app)
+                : TransactionForm(app: app),
+          ),
+    child: const Icon(Icons.add_rounded, size: 30),
   );
 }

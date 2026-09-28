@@ -21,7 +21,7 @@ Quick manual finance tracking with independent wallet workspaces and accurate, u
 - Backup/restore, export, and same-currency transfers are included practical additions from the accepted plan.
 
 ## Brand Commitments
-Catppuccin Mocha theme and an original app icon. Preserve the name Manavalan Finance.
+A clean light interface inspired by the user’s supplied finance-app references: blue balance area, white rounded surfaces, dark compact navigation, prominent amounts, and minimal explanatory copy. The user explicitly superseded Catppuccin Mocha. Preserve the name Manavalan Finance and its original wallet icon, recolored to match.
 
 ## Product Principles
 - Wallet context is visible wherever money is entered.

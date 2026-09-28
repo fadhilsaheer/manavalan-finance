@@ -25,6 +25,7 @@ void main() {
   final capture = Platform.environment['CAPTURE_QA'] == '1';
   final boundaryKey = GlobalKey();
   TestWidgetsFlutterBinding.ensureInitialized();
+  WidgetController.hitTestWarningShouldBeFatal = true;
   setUpAll(() async {
     sqfliteFfiInit();
     if (capture) {
@@ -79,7 +80,7 @@ void main() {
         child: page == null
             ? FinanceApp(controller: app)
             : MaterialApp(
-                theme: Mocha.theme,
+                theme: AppTheme.theme,
                 home: page,
                 debugShowCheckedModeBanner: false,
               ),
@@ -276,12 +277,7 @@ void main() {
     await seed(tester);
     await show(tester);
     for (final title in ['Transactions', 'Groups', 'Lending']) {
-      await tester.tap(
-        find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text(title),
-        ),
-      );
+      await tester.tap(find.byTooltip(title));
       await tester.pumpAndSettle();
       await screenshot(tester, title.toLowerCase());
       expect(tester.takeException(), isNull);
@@ -293,12 +289,9 @@ void main() {
   ) async {
     await seed(tester);
     await show(tester);
-    await tester.tap(
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('Transactions'),
-      ),
-    );
+    await tester.tap(find.byTooltip('Transactions'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Filters'));
     await tester.pumpAndSettle();
     final groupFilter = find.byType(DropdownButtonFormField<int>).last;
     await tester.ensureVisible(groupFilter);

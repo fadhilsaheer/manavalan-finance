@@ -11,7 +11,7 @@ A private Flutter finance tracker for Android and iOS, rebuilt on Flutter **3.47
 - Lent/borrowed ledgers with partial returns, additional advances, due dates, editable movements, and settled/archived views. Existing outstanding debts can be entered without inventing a cash movement.
 - Same-currency transfers with linked entries, monthly summaries and category spending.
 - Full JSON backup/restore with a private safety copy before replacement. CSV wallet/group exports and loan cash-movement exports.
-- Catppuccin Mocha, original vector launcher art, native splash screens, compact navigation and tablet rail, system text scaling.
+- Clean light theme with a blue balance area, white grouped surfaces, compact dark navigation and tablet rail. Original vector launcher art, matching native splash screens, and system text scaling.
 
 ## Run
 

@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(height: 4),
                       const Text(
                         'Your money. On your device.',
-                        style: TextStyle(color: Mocha.muted),
+                        style: TextStyle(color: AppTheme.muted),
                       ),
                     ],
                   ),
@@ -105,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.account_balance_wallet_outlined),
               title: const Text('Wallets'),
-              subtitle: const Text('Create, edit, archive, or switch'),
+              subtitle: const Text(''),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => push(context, WalletsPage(app: app)),
             ),
@@ -123,9 +123,7 @@ class _SettingsPageState extends State<SettingsPage> {
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.save_alt),
               title: const Text('Save full backup'),
-              subtitle: const Text(
-                'All wallets, groups, loans, and settings · JSON',
-              ),
+              subtitle: const Text('All wallets · JSON'),
               enabled: !working,
               onTap: () => fileAction(() async {
                 final saved = await FileService.save(
@@ -151,9 +149,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.undo),
                 title: const Text('Restore safety copy'),
-                subtitle: const Text(
-                  'Recover the data from before your last restore',
-                ),
+                subtitle: const Text('Before your last restore'),
                 enabled: !working,
                 onTap: () => fileAction(() async {
                   await restore(await File(safetyPath!).readAsString());
@@ -177,13 +173,13 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
             const SectionTitle('Local privacy'),
             const Text(
-              'Everything is stored locally. There is no account, server, analytics, or automatic sync. Keep a backup before changing devices or uninstalling the app. Files go only to the destination you choose.',
-              style: TextStyle(color: Mocha.muted),
+              'Stored only on this device. Back up before uninstalling or changing phones.',
+              style: TextStyle(color: AppTheme.muted),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Catppuccin Mocha · Version 2.0.0',
-              style: TextStyle(color: Mocha.muted),
+              'Version 2.0.0',
+              style: TextStyle(color: AppTheme.muted),
             ),
           ],
         ),
@@ -278,7 +274,7 @@ class WalletsPage extends StatelessWidget {
                     value: 'delete',
                     child: Text(
                       'Delete wallet',
-                      style: TextStyle(color: Mocha.red),
+                      style: TextStyle(color: AppTheme.red),
                     ),
                   ),
                 ],
@@ -321,7 +317,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           contentPadding: EdgeInsets.zero,
           leading: Icon(
             iconFor(c.icon),
-            color: child ? Mocha.muted : Mocha.mauve,
+            color: child ? AppTheme.muted : AppTheme.accent,
           ),
           title: Text(c.name),
           subtitle: child ? null : const Text('Main category'),
@@ -390,7 +386,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 value: 'delete',
                 child: Text(
                   'Delete category',
-                  style: TextStyle(color: Mocha.red),
+                  style: TextStyle(color: AppTheme.red),
                 ),
               ),
             ],
@@ -408,7 +404,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           children: [
             Text(
               app.wallet?.name ?? '',
-              style: const TextStyle(color: Mocha.mauve),
+              style: const TextStyle(color: AppTheme.accent),
             ),
             const SizedBox(height: 16),
             SegmentedButton<String>(
