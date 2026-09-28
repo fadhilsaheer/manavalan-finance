@@ -250,6 +250,60 @@ void main() {
     expect(s.outstanding(s.loan(id)!), 0);
     expect(s.balance(s.wallets.first), 110000);
   });
+
+  test(
+    'editing repayments updates cash and rejects invalid principal edits',
+    () async {
+      final loan = await store.createLoan(
+        walletId: wallet,
+        person: 'Alex',
+        direction: 'lent',
+        amount: 10000,
+        date: '2026-09-01',
+      );
+      await store.loanMovement(
+        loan,
+        amount: 5000,
+        repayment: true,
+        date: '2026-09-02',
+      );
+      var s = await store.snapshot();
+      final repayment = s.entries.first;
+      await store.loanMovement(
+        loan,
+        entryId: repayment.id,
+        amount: 3000,
+        repayment: true,
+        date: '2026-09-03',
+      );
+      s = await store.snapshot();
+      expect(s.outstanding(s.loan(loan)!), 7000);
+      expect(s.balance(s.wallets.first), 93000);
+      await expectLater(
+        store.loanMovement(
+          loan,
+          entryId: s.entries.last.id,
+          amount: 2000,
+          repayment: false,
+          date: '2026-09-01',
+        ),
+        throwsA(isA<LedgerError>()),
+      );
+      expect((await store.snapshot()).entries.last.amount, 10000);
+    },
+  );
+
+  test('category reordering is scoped to siblings', () async {
+    final before = (await store.snapshot()).categories
+        .where((c) => c.parentId == null && c.kind == 'expense')
+        .toList();
+    await store.moveCategory(before[1].id, -1);
+    final after = (await store.snapshot()).categories
+        .where((c) => c.parentId == null && c.kind == 'expense')
+        .toList();
+    expect(after.first.id, before[1].id);
+    expect(after[1].id, before.first.id);
+  });
   test(
     'transfers are paired, excluded from reports, and removed together',
     () async {

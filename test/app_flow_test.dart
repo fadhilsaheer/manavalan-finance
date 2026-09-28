@@ -1,0 +1,356 @@
+import 'dart:io';
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
+import 'dart:ui' as ui;
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:manavalan_finance/core/app_controller.dart';
+import 'package:manavalan_finance/core/models.dart';
+import 'package:manavalan_finance/data/file_service.dart';
+import 'package:manavalan_finance/data/ledger_store.dart';
+import 'package:manavalan_finance/ui/app.dart';
+import 'package:manavalan_finance/ui/details.dart';
+import 'package:manavalan_finance/ui/forms.dart';
+import 'package:manavalan_finance/ui/settings.dart';
+import 'package:manavalan_finance/ui/theme.dart';
+
+void main() {
+  late LedgerStore store;
+  late AppController app;
+  final capture = Platform.environment['CAPTURE_QA'] == '1';
+  final boundaryKey = GlobalKey();
+  TestWidgetsFlutterBinding.ensureInitialized();
+  setUpAll(() async {
+    sqfliteFfiInit();
+    if (capture) {
+      final config = jsonDecode(
+        await File('.dart_tool/package_config.json').readAsString(),
+      ) as Map<String, dynamic>;
+      final flutter = (config['packages'] as List)
+          .cast<Map<String, dynamic>>()
+          .firstWhere((p) => p['name'] == 'flutter');
+      final sdk = Directory.fromUri(Uri.parse(flutter['rootUri'] as String))
+          .parent
+          .parent;
+      final font = File(
+        '${sdk.path}/bin/cache/artifacts/material_fonts/Roboto-Regular.ttf',
+      );
+      final loader = FontLoader('Roboto')
+        ..addFont(Future.value(ByteData.sublistView(await font.readAsBytes())));
+      await loader.load();
+      final icons = FontLoader('MaterialIcons')
+        ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
+      await icons.load();
+    }
+  });
+  setUp(() async {
+    store = await LedgerStore.open(
+      factory: databaseFactoryFfiNoIsolate,
+      path: inMemoryDatabasePath,
+    );
+    app = AppController(store);
+    await app.init();
+  });
+  tearDown(() async {
+    app.dispose();
+    await store.db.close();
+  });
+
+  Future<void> show(
+    WidgetTester tester, {
+    Size size = const Size(390, 844),
+    Widget? page,
+    double textScale = 1,
+  }) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = size;
+    tester.platformDispatcher.textScaleFactorTestValue = textScale;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+    await tester.pumpWidget(
+      RepaintBoundary(
+        key: boundaryKey,
+        child: page == null
+            ? FinanceApp(controller: app)
+            : MaterialApp(
+                theme: Mocha.theme,
+                home: page,
+                debugShowCheckedModeBanner: false,
+              ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> screenshot(WidgetTester tester, String name) async {
+    if (!capture) return;
+    await tester.runAsync(() async {
+      final boundary =
+          boundaryKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
+      final image = await boundary.toImage(pixelRatio: 1);
+      final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+      await Directory('build/qa').create(recursive: true);
+      await File('build/qa/$name.png')
+          .writeAsBytes(bytes!.buffer.asUint8List());
+      image.dispose();
+    });
+  }
+
+  Future<void> seed(WidgetTester tester) async {
+    await tester.runAsync(() async {
+      final wallet = await store.saveWallet(
+        name: 'Personal',
+        currency: 'INR',
+        opening: 1250000,
+      );
+      app.walletId = wallet;
+      final category = (await store.snapshot()).categories.firstWhere(
+        (c) => c.name == 'Groceries',
+      );
+      final group = await store.saveGroup(
+        walletId: wallet,
+        name: 'Goa trip',
+        note: 'Test ledger for a weekend away.',
+      );
+      final today = dayKey(DateTime.now());
+      await store.saveEntry(
+        walletId: wallet,
+        amount: 2800000,
+        kind: EntryKind.income,
+        date: today,
+        note: 'Monthly salary',
+      );
+      await store.saveEntry(
+        walletId: wallet,
+        amount: 185050,
+        kind: EntryKind.expense,
+        date: today,
+        categoryId: category.id,
+        note: 'Weekly groceries',
+      );
+      await store.saveEntry(
+        walletId: wallet,
+        amount: 350000,
+        kind: EntryKind.expense,
+        date: today,
+        groupId: group,
+        note: 'Accommodation',
+      );
+      final loan = await store.createLoan(
+        walletId: wallet,
+        person: 'Arjun',
+        direction: 'lent',
+        amount: 500000,
+        date: today,
+      );
+      await store.loanMovement(
+        loan,
+        amount: 150000,
+        repayment: true,
+        date: today,
+        note: 'First partial return',
+      );
+      await store.saveWallet(
+        name: 'Savings',
+        currency: 'INR',
+        opening: 5000000,
+        icon: 'bank',
+        color: 1,
+      );
+      await app.reload();
+    });
+  }
+
+  testWidgets('first wallet can be created through onboarding', (tester) async {
+    await show(tester);
+    await screenshot(tester, 'onboarding');
+    await tester.tap(find.text('Create your first wallet'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField).at(0), 'Personal');
+    await tester.ensureVisible(find.text('Save'));
+    await tester.runAsync(() async {
+      await tester.tap(find.text('Save'));
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+    });
+    await tester.pumpAndSettle();
+    expect(app.wallet?.name, 'Personal');
+    expect(find.text('Wallet balance'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('wallet switch isolates ledger and survives reload', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(tester);
+    await screenshot(tester, 'overview-mobile');
+    await tester.tap(find.byTooltip('Switch wallet'));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() async {
+      await tester.tap(find.text('Savings · INR'));
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+    });
+    await tester.pumpAndSettle();
+    expect(app.wallet?.name, 'Savings');
+    expect(app.entries, isEmpty);
+    await tester.runAsync(() => app.init());
+    expect(app.wallet?.name, 'Savings');
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('transaction form validates amount and saves linked group', (
+    tester,
+  ) async {
+    await seed(tester);
+    final group = app.groups.first;
+    await show(
+      tester,
+      page: TransactionForm(app: app, groupId: group.id),
+    );
+    await screenshot(tester, 'new-transaction');
+    await tester.enterText(find.byType(TextFormField).first, '0');
+    await tester.ensureVisible(find.text('Save'));
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        'Enter an amount greater than zero and within the supported limit.',
+      ),
+      findsOneWidget,
+    );
+    await tester.enterText(find.byType(TextFormField).first, '125.50');
+    await tester.ensureVisible(find.text('Save'));
+    await tester.runAsync(() async {
+      await tester.tap(find.text('Save'));
+      await Future<void>.delayed(const Duration(milliseconds: 80));
+    });
+    await tester.pumpAndSettle();
+    expect(app.entries.first.amount, 12550);
+    expect(app.entries.first.groupId, group.id);
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('ledger detail pages render repayment and group totals', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(
+      tester,
+      page: GroupDetail(app: app, groupId: app.groups.first.id),
+    );
+    await screenshot(tester, 'group-ledger');
+    expect(find.text('Net balance'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await show(
+      tester,
+      page: LoanDetail(app: app, loanId: app.loans.first.id),
+    );
+    await screenshot(tester, 'loan-ledger');
+    expect(find.text('Record repayment'), findsOneWidget);
+    expect(find.text('₹3,500.00'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('tablet navigation and small-screen large text stay usable', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(tester, size: const Size(1100, 900));
+    await screenshot(tester, 'overview-tablet');
+    expect(find.byType(NavigationRail), findsOneWidget);
+    expect(tester.takeException(), isNull);
+    await show(tester, size: const Size(320, 740), textScale: 2);
+    expect(tester.takeException(), isNull);
+    await show(
+      tester,
+      size: const Size(320, 740),
+      textScale: 2,
+      page: SettingsPage(app: app),
+    );
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('all primary destinations render without errors', (tester) async {
+    await seed(tester);
+    await show(tester);
+    for (final title in ['Transactions', 'Groups', 'Lending']) {
+      await tester.tap(
+        find.descendant(
+          of: find.byType(NavigationBar),
+          matching: find.text(title),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await screenshot(tester, title.toLowerCase());
+      expect(tester.takeException(), isNull);
+    }
+  });
+
+  testWidgets('removed group filter no longer hides surviving transactions', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(tester);
+    await tester.tap(
+      find.descendant(
+        of: find.byType(NavigationBar),
+        matching: find.text('Transactions'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final groupFilter = find.byType(DropdownButtonFormField<int>).last;
+    await tester.ensureVisible(groupFilter);
+    await tester.tap(groupFilter);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Goa trip').last);
+    await tester.pumpAndSettle();
+    expect(find.text('1 transaction'), findsOneWidget);
+    await tester.runAsync(
+      () => app.change(
+        () => store.dissolveGroup(app.groups.first.id, deleteEntries: false),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('5 transactions'), findsOneWidget);
+    await tester.ensureVisible(find.text('5 transactions'));
+    await screenshot(tester, 'filtered-group-removed');
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('repayment form explains the cash direction', (tester) async {
+    await seed(tester);
+    await show(
+      tester,
+      page: LoanMovementForm(app: app, loan: app.loans.first),
+    );
+    expect(
+      find.text('Repayment received · wallet cash increases.'),
+      findsOneWidget,
+    );
+    await screenshot(tester, 'repayment-received');
+    expect(tester.takeException(), isNull);
+  });
+  test('CSV correctly escapes and neutralises spreadsheet formulas', () {
+    final data = LedgerSnapshot(
+      wallets: const [
+        Wallet({'id': 1, 'name': 'Personal', 'currency': 'INR'}),
+      ],
+      entries: const [
+        Entry({
+          'id': 1,
+          'wallet_id': 1,
+          'amount': 1234,
+          'sign': -1,
+          'kind': 'expense',
+          'date': '2026-09-28',
+          'note': '=SUM(A1,A2) "quoted"\nsecond line',
+        }),
+      ],
+    );
+    final csv = FileService.csv(data, data.entries);
+    expect(csv, contains('"12.34"'));
+    expect(csv, contains('"\'=SUM(A1,A2) ""quoted""\nsecond line"'));
+  });
+}

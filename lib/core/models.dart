@@ -39,18 +39,21 @@ int parseMoney(String text, {bool signed = false, bool allowZero = false}) {
 
 String moneyInput(int cents) =>
     '${cents < 0 ? '-' : ''}${cents.abs() ~/ 100}.${(cents.abs() % 100).toString().padLeft(2, '0')}';
-String money(int cents, String currency) => NumberFormat.currency(
-  locale: currency == 'INR' ? 'en_IN' : 'en_US',
-  symbol: switch (currency) {
+String money(int cents, String currency) {
+  final symbol = switch (currency) {
     'INR' => '₹',
     'USD' => '\$',
     'EUR' => '€',
     'GBP' => '£',
     'AED' => 'AED ',
     _ => '$currency ',
-  },
-  decimalDigits: 2,
-).format(cents / 100);
+  };
+  final whole = NumberFormat.decimalPattern(
+    currency == 'INR' ? 'en_IN' : 'en_US',
+  ).format(cents.abs() ~/ 100);
+  return '${cents < 0 ? '−' : ''}$symbol$whole.${(cents.abs() % 100).toString().padLeft(2, '0')}';
+}
+
 String dayKey(DateTime date) => DateFormat('yyyy-MM-dd').format(date);
 String prettyDay(String day) =>
     DateFormat('d MMM yyyy').format(DateTime.parse(day));

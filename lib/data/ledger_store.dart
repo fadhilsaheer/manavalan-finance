@@ -379,6 +379,41 @@ class LedgerStore {
     await db.delete('categories', where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<void> moveCategory(int id, int offset) async => db.transaction((
+    txn,
+  ) async {
+    final category = (await txn.query(
+      'categories',
+      where: 'id = ?',
+      whereArgs: [id],
+    )).first;
+    final rows = await txn.query(
+      'categories',
+      where:
+          "wallet_id = ? AND kind = ? AND ${category['parent_id'] == null ? 'parent_id IS NULL' : 'parent_id = ?'}",
+      whereArgs: [
+        category['wallet_id'],
+        category['kind'],
+        if (category['parent_id'] != null) category['parent_id'],
+      ],
+      orderBy: 'position, id',
+    );
+    final index = rows.indexWhere((row) => row['id'] == id);
+    final target = index + offset;
+    if (target < 0 || target >= rows.length) return;
+    final reordered = rows.toList();
+    final row = reordered.removeAt(index);
+    reordered.insert(target, row);
+    for (var i = 0; i < reordered.length; i++) {
+      await txn.update(
+        'categories',
+        {'position': i},
+        where: 'id = ?',
+        whereArgs: [reordered[i]['id']],
+      );
+    }
+  });
+
   Future<int> saveGroup({
     int? id,
     required int walletId,
@@ -564,6 +599,7 @@ class LedgerStore {
 
   Future<void> loanMovement(
     int loanId, {
+    int? entryId,
     required int amount,
     required bool repayment,
     required String date,
@@ -584,7 +620,7 @@ class LedgerStore {
           'An entry cannot be earlier than the loan date.',
         );
       }
-      await txn.insert('entries', {
+      final values = <String, Object?>{
         'wallet_id': loan.walletId,
         'loan_id': loanId,
         'amount': amount,
@@ -592,7 +628,18 @@ class LedgerStore {
         'sign': (loan.lent != repayment) ? -1 : 1,
         'date': date,
         'note': note.trim(),
-      });
+      };
+      if (entryId == null) {
+        await txn.insert('entries', values);
+      } else {
+        final changed = await txn.update(
+          'entries',
+          values,
+          where: 'id = ? AND loan_id = ?',
+          whereArgs: [entryId, loanId],
+        );
+        if (changed == 0) throw const LedgerError('Loan entry not found.');
+      }
       await _checkLoans(txn);
     });
   }
