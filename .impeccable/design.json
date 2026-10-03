@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-03T09:10:41.158055+00:00",
+  "generatedAt": "2026-10-03T09:34:58.479313+00:00",
   "title": "Design System: Manavalan Finance",
   "extensions": {
     "colorMeta": {
@@ -171,6 +171,132 @@
           "oklch(83.57% 0.13535 299.36)",
           "oklch(95.00% 0.13535 299.36)"
         ]
+      },
+      "category-food": {
+        "role": "tertiary",
+        "displayName": "Food family",
+        "tonalRamp": [
+          "oklch(15.00% 0.10585 51.98)",
+          "oklch(26.43% 0.10585 51.98)",
+          "oklch(37.86% 0.10585 51.98)",
+          "oklch(49.29% 0.10585 51.98)",
+          "oklch(60.71% 0.10585 51.98)",
+          "oklch(72.14% 0.10585 51.98)",
+          "oklch(83.57% 0.10585 51.98)",
+          "oklch(95.00% 0.10585 51.98)"
+        ]
+      },
+      "category-transport": {
+        "role": "tertiary",
+        "displayName": "Transport family",
+        "tonalRamp": [
+          "oklch(15.00% 0.07791 235.12)",
+          "oklch(26.43% 0.07791 235.12)",
+          "oklch(37.86% 0.07791 235.12)",
+          "oklch(49.29% 0.07791 235.12)",
+          "oklch(60.71% 0.07791 235.12)",
+          "oklch(72.14% 0.07791 235.12)",
+          "oklch(83.57% 0.07791 235.12)",
+          "oklch(95.00% 0.07791 235.12)"
+        ]
+      },
+      "category-home": {
+        "role": "tertiary",
+        "displayName": "Home family",
+        "tonalRamp": [
+          "oklch(15.00% 0.06253 160.10)",
+          "oklch(26.43% 0.06253 160.10)",
+          "oklch(37.86% 0.06253 160.10)",
+          "oklch(49.29% 0.06253 160.10)",
+          "oklch(60.71% 0.06253 160.10)",
+          "oklch(72.14% 0.06253 160.10)",
+          "oklch(83.57% 0.06253 160.10)",
+          "oklch(95.00% 0.06253 160.10)"
+        ]
+      },
+      "category-shopping": {
+        "role": "tertiary",
+        "displayName": "Shopping family",
+        "tonalRamp": [
+          "oklch(15.00% 0.11965 349.07)",
+          "oklch(26.43% 0.11965 349.07)",
+          "oklch(37.86% 0.11965 349.07)",
+          "oklch(49.29% 0.11965 349.07)",
+          "oklch(60.71% 0.11965 349.07)",
+          "oklch(72.14% 0.11965 349.07)",
+          "oklch(83.57% 0.11965 349.07)",
+          "oklch(95.00% 0.11965 349.07)"
+        ]
+      },
+      "category-entertainment": {
+        "role": "tertiary",
+        "displayName": "Entertainment family",
+        "tonalRamp": [
+          "oklch(15.00% 0.11903 304.91)",
+          "oklch(26.43% 0.11903 304.91)",
+          "oklch(37.86% 0.11903 304.91)",
+          "oklch(49.29% 0.11903 304.91)",
+          "oklch(60.71% 0.11903 304.91)",
+          "oklch(72.14% 0.11903 304.91)",
+          "oklch(83.57% 0.11903 304.91)",
+          "oklch(95.00% 0.11903 304.91)"
+        ]
+      },
+      "category-education": {
+        "role": "tertiary",
+        "displayName": "Education family",
+        "tonalRamp": [
+          "oklch(15.00% 0.10273 85.91)",
+          "oklch(26.43% 0.10273 85.91)",
+          "oklch(37.86% 0.10273 85.91)",
+          "oklch(49.29% 0.10273 85.91)",
+          "oklch(60.71% 0.10273 85.91)",
+          "oklch(72.14% 0.10273 85.91)",
+          "oklch(83.57% 0.10273 85.91)",
+          "oklch(95.00% 0.10273 85.91)"
+        ]
+      },
+      "category-travel": {
+        "role": "tertiary",
+        "displayName": "Travel family",
+        "tonalRamp": [
+          "oklch(15.00% 0.07000 200.40)",
+          "oklch(26.43% 0.07000 200.40)",
+          "oklch(37.86% 0.07000 200.40)",
+          "oklch(49.29% 0.07000 200.40)",
+          "oklch(60.71% 0.07000 200.40)",
+          "oklch(72.14% 0.07000 200.40)",
+          "oklch(83.57% 0.07000 200.40)",
+          "oklch(95.00% 0.07000 200.40)"
+        ]
+      },
+      "category-personal": {
+        "role": "tertiary",
+        "displayName": "Personal family",
+        "tonalRamp": [
+          "oklch(15.00% 0.10634 353.39)",
+          "oklch(26.43% 0.10634 353.39)",
+          "oklch(37.86% 0.10634 353.39)",
+          "oklch(49.29% 0.10634 353.39)",
+          "oklch(60.71% 0.10634 353.39)",
+          "oklch(72.14% 0.10634 353.39)",
+          "oklch(83.57% 0.10634 353.39)",
+          "oklch(95.00% 0.10634 353.39)"
+        ]
+      },
+      "category-other": {
+        "role": "tertiary",
+        "displayName": "Other family",
+        "tonalRamp": [
+          "oklch(15.00% 0.09435 301.00)",
+          "oklch(26.43% 0.09435 301.00)",
+          "oklch(37.86% 0.09435 301.00)",
+          "oklch(49.29% 0.09435 301.00)",
+          "oklch(60.71% 0.09435 301.00)",
+          "oklch(72.14% 0.09435 301.00)",
+          "oklch(83.57% 0.09435 301.00)",
+          "oklch(95.00% 0.09435 301.00)"
+        ]
       }
     },
     "typographyMeta": {
@@ -184,7 +310,38 @@
       }
     },
     "shadows": [],
-    "motion": [],
+    "motion": [
+      {
+        "name": "tab-and-indicator-duration",
+        "value": "280ms",
+        "purpose": "Navigation disc and icon color, flow-tab selection, and tab-page fade-through."
+      },
+      {
+        "name": "ease-out-cubic",
+        "value": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "purpose": "Flutter Curves.easeOutCubic for navigation and flow-tab indicators and tab translation."
+      },
+      {
+        "name": "tab-travel",
+        "value": "incoming: 5.5%; outgoing: 3.5%",
+        "purpose": "Horizontal movement follows destination order; pages remain mounted, with inactive pages excluded from interaction and semantics."
+      },
+      {
+        "name": "tab-fade-through",
+        "value": "outgoing: 0–32%; incoming: 18–100%",
+        "purpose": "Outgoing opacity falls linearly; incoming opacity follows easeOutCubic."
+      },
+      {
+        "name": "reduce-motion",
+        "value": "0ms",
+        "purpose": "MediaQuery.disableAnimations disables custom transitions and route motion."
+      },
+      {
+        "name": "route-transition",
+        "value": "Cupertino on iOS/macOS; FadeUpwards on Android",
+        "purpose": "Native page transitions retain platform behavior."
+      }
+    ],
     "breakpoints": [
       {
         "name": "navigation-rail",
@@ -237,9 +394,9 @@
       "name": "Mobile navigation",
       "kind": "nav",
       "refersTo": "navigation-selected",
-      "description": "Five compact destinations and one black selected circle.",
+      "description": "68px clipped glass bar with 14px backdrop blur, a 52px sliding black disc, and 280ms easeOutCubic motion; static selected-state preview.",
       "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><button aria-label=\"Overview\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z\"/></svg></button><button aria-label=\"Transactions\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 12h4l3-8 4 16 3-8h4\"/></svg></button><button aria-label=\"Groups\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4\"/></svg></button><button aria-label=\"Lending\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 5h6l2 2h10v13H3z\"/></svg></button><button aria-label=\"Settings\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 6h16M4 12h16M4 18h16\"/></svg></button></nav>",
-      "css": ".ds-nav{display:flex;justify-content:space-around;align-items:center;gap:8px;height:64px;padding:0 6px;background:#fff;border-radius:38px}.ds-nav button{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border:0;border-radius:50%;background:transparent;color:#171717;cursor:pointer}.ds-nav button[aria-current]{background:#171717;color:#fff}.ds-nav button:hover{opacity:.75}.ds-nav button:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-nav button:active{opacity:.6}"
+      "css": ".ds-nav{display:flex;justify-content:space-around;align-items:center;gap:8px;height:68px;padding:0 6px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.40));border:1px solid rgba(255,255,255,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:38px;overflow:hidden}.ds-nav button{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border:0;border-radius:50%;background:transparent;color:#171717;cursor:pointer;transition:color 280ms cubic-bezier(.215,.61,.355,1)}.ds-nav button[aria-current]{background:#171717;color:#fff}.ds-nav button:hover{opacity:.75}.ds-nav button:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-nav button:active{opacity:.6}@media(prefers-contrast:more){.ds-nav{background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(255,255,255,.90))}}@media(prefers-reduced-motion:reduce){.ds-nav button{transition:none}}"
     },
     {
       "name": "Surface panel",
@@ -254,31 +411,32 @@
       "kind": "card",
       "refersTo": "balance-panel",
       "description": "CSS approximation of the Flutter radial painter; color remains confined to the upper inset.",
-      "html": "<section class=\"ds-balance\"><div class=\"ds-glow\"><p>Wallet balance</p><strong>\u20b956,475.00</strong></div></section>",
+      "html": "<section class=\"ds-balance\"><div class=\"ds-glow\"><p>Wallet balance</p><strong>₹56,475.00</strong></div></section>",
       "css": ".ds-balance{font-family:Roboto,sans-serif;padding:12px;border-radius:24px;background:#fff;color:#171717}.ds-glow{padding:14px 18px 16px;border-radius:20px;background:radial-gradient(ellipse at 32% -20%,#f49ccd,transparent 70%),radial-gradient(ellipse at 69% -19%,#a183ea,transparent 68%),#fff}.ds-glow p{margin:0 0 8px;font-size:14px;font-weight:400}.ds-glow strong{font-size:42px;font-weight:500;letter-spacing:-1.3px}"
     },
     {
       "name": "Selection row",
       "kind": "custom",
       "refersTo": "selection-row",
-      "description": "Primary-label variant for category selection; normal form rows also show their chosen value.",
+      "description": "Category selection with a family-colored outline icon and soft 20% to 2.5% tint; normal form rows also show their chosen value.",
       "html": "<button class=\"ds-row\"><span class=\"ds-badge\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 7h12l3 14H3L6 7zM9 7V5a3 3 0 0 1 6 0v2\"/></svg></span><span>Groceries<small>Food &amp; drink</small></span><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 6 6 6-6 6\"/></svg></button>",
-      "css": ".ds-row{font-family:Roboto,sans-serif;display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:0;border-radius:18px;background:#fff;color:#171717;text-align:left;font-size:15px;cursor:pointer}.ds-badge{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#f6f6f6}.ds-row small{display:block;margin-top:5px;color:#686868;font-size:12px}.ds-row>svg{margin-left:auto;color:#686868}.ds-row:hover{background:#f6f6f6}.ds-row:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-row:active{background:#eee}"
+      "css": ".ds-row{font-family:Roboto,sans-serif;display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:0;border-radius:18px;background:#fff;color:#171717;text-align:left;font-size:15px;cursor:pointer}.ds-badge{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#eee0d7,#fdfbfA);color:#a86438}.ds-row small{display:block;margin-top:5px;color:#686868;font-size:12px}.ds-row>svg{margin-left:auto;color:#686868}.ds-row:hover{background:#f6f6f6}.ds-row:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-row:active{background:#eee}"
     }
   ],
   "narrative": {
     "northStar": "The Wallet Workspace",
-    "overview": "The Wallet Workspace uses a light neutral canvas, white rounded surfaces, black text and controls, and thin outline icons. Pink and violet light concentrate in the upper balance inset; everyday lists and forms remain neutral. The reference image supplied on 3 October 2026 supersedes the earlier violet-wide direction, including its prohibitions against black primary buttons and circular navigation selection.\n\nThis record is extracted from the Flutter implementation in lib/ui/theme.dart, reference_surfaces.dart, shared.dart, app.dart, ledger_pages.dart, forms.dart, category_picker.dart, details.dart, and settings.dart. Native Material behavior supplies focus, touch feedback, validation, and routing.",
+    "overview": "The Wallet Workspace uses a light neutral canvas, white rounded surfaces, black text and controls, and thin outline icons. Pink and violet light concentrate in the upper balance inset; everyday lists and forms retain neutral surfaces, with green/red cash values and soft category-family gradients. Translucent navigation and short directional transitions add depth and continuity. The reference image supplied on 3 October 2026 supersedes the earlier violet-wide direction, including its prohibitions against black primary buttons and circular navigation selection.\n\nThis record is extracted from the Flutter implementation in lib/ui/theme.dart, reference_surfaces.dart, shared.dart, navigation.dart, app.dart, ledger_pages.dart, forms.dart, category_picker.dart, details.dart, and settings.dart. Native Material behavior supplies focus, touch feedback, and validation. Routes use platform transitions and respect Reduce Motion.",
     "keyCharacteristics": [
       "Neutral chrome with white cards and black interaction anchors.",
       "Localized pink-violet glow and immersive patterned onboarding.",
       "Regular headings, prominent exact amounts, and compact metadata.",
-      "Consistent Lucide 300 outline icons and adaptive navigation."
+      "Consistent Lucide 300 outline icons and adaptive glass navigation.",
+      "Semantic cash colors, soft category tints, and state-preserving motion."
     ],
     "rules": [
       {
         "name": "The Localized Light Rule",
-        "body": "Keep balance color inside the upper inset, fading into white before the neutral action row. Reserve immersive color and diamond geometry for onboarding.",
+        "body": "Keep balance color inside the upper inset, fading into white before the white action row with softly tinted action circles. Reserve immersive color and diamond geometry for onboarding.",
         "section": "colors"
       },
       {
@@ -297,7 +455,8 @@
       "Do reuse BalancePanel, BalanceGlow, SurfacePanel, SelectionRow, IconBadge, EntryTile, and PageBody.",
       "Do retain thin Lucide 300 icons across navigation, categories, actions, and form rows.",
       "Do keep signed amounts and explanatory labels together so money direction never relies on color alone.",
-      "Do preserve category parent context, native focus and validation, and larger-text reflow."
+      "Do preserve category parent context, native focus and validation, and larger-text reflow.",
+      "Do preserve filters and scroll state across animated tabs and honor Reduce Motion."
     ],
     "donts": [
       "Don't restore purple-tinted page chrome, violet primary buttons, or broad black split tabs.",

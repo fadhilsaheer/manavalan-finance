@@ -1,5 +1,6 @@
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 
 import '../core/models.dart';
 
@@ -29,6 +30,13 @@ abstract final class AppTheme {
     brightness: Brightness.light,
     useMaterial3: true,
     fontFamily: 'Roboto',
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+      },
+    ),
     scaffoldBackgroundColor: base,
     colorScheme: const ColorScheme.light(
       primary: accent,
@@ -285,8 +293,36 @@ IconData categoryIcon(Category? category, LedgerSnapshot data) {
 
 Color categoryColor(Category? category, LedgerSnapshot data) {
   if (category == null) return AppTheme.muted;
-  return AppTheme.text;
+  if (category.kind == 'income') return AppTheme.green;
+  final root = data.category(category.parentId) ?? category;
+  return switch (root.icon) {
+    'food' => const Color(0xffa86438),
+    'car' => const Color(0xff427b9b),
+    'home' => const Color(0xff4f7c64),
+    'bag' => const Color(0xffa3517c),
+    'health' => AppTheme.red,
+    'play' => const Color(0xff805ca7),
+    'book' => const Color(0xff927222),
+    'travel' => const Color(0xff367c80),
+    'heart' => const Color(0xffa05576),
+    _ => const Color(0xff7b64a0),
+  };
 }
+
+LinearGradient softTint(Color color, {double strength = .15}) => LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [
+    Color.lerp(Colors.white, color, strength)!,
+    Color.lerp(Colors.white, color, .025)!,
+  ],
+);
+Color cashColor(EntryKind kind, int sign) =>
+    (kind == EntryKind.transferIn || kind == EntryKind.transferOut)
+    ? AppTheme.muted
+    : sign > 0
+    ? AppTheme.green
+    : AppTheme.red;
 
 class BrandMark extends StatelessWidget {
   final double size;

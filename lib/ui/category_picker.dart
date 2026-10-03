@@ -217,7 +217,14 @@ class _CategoryPickerState extends State<CategoryPicker> {
                                     choose(c.id);
                                   }
                                 },
-                                child: Padding(
+                                child: Ink(
+                                  decoration: BoxDecoration(
+                                    gradient: softTint(
+                                      categoryColor(c, app.data),
+                                      strength: .12,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 6,
                                     vertical: 18,

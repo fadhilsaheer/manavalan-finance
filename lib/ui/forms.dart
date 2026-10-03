@@ -49,6 +49,7 @@ Widget amountField(
   TextEditingController controller,
   String currency, {
   String label = 'Amount',
+  Color color = AppTheme.text,
   bool signed = false,
   bool zero = false,
 }) => Padding(
@@ -63,7 +64,8 @@ Widget amountField(
       TextFormField(
         controller: controller,
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style: TextStyle(
+          color: color,
           fontSize: 46,
           fontWeight: FontWeight.w500,
           letterSpacing: -1.2,
@@ -491,7 +493,11 @@ class _TransactionFormState extends State<TransactionForm> {
       onSave: save,
       saving: saving,
       fields: [
-        amountField(amount, widget.app.wallet!.currency),
+        amountField(
+          amount,
+          widget.app.wallet!.currency,
+          color: kind == EntryKind.income ? AppTheme.green : AppTheme.red,
+        ),
         FlowTabs<EntryKind>(
           segments: const [
             ButtonSegment(

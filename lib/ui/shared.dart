@@ -6,6 +6,7 @@ import '../core/models.dart';
 import '../data/file_service.dart';
 import 'theme.dart';
 import 'reference_surfaces.dart';
+import 'navigation.dart';
 
 void message(BuildContext context, String text) {
   if (!context.mounted) return;
@@ -64,7 +65,23 @@ Future<bool> confirm(
     ) ??
     false;
 Future<T?> push<T>(BuildContext context, Widget page) =>
-    Navigator.of(context).push<T>(MaterialPageRoute(builder: (_) => page));
+    Navigator.of(context).push<T>(
+      _AppPageRoute(
+        builder: (_) => page,
+        reduceMotion: MediaQuery.disableAnimationsOf(context),
+      ),
+    );
+
+class _AppPageRoute<T> extends MaterialPageRoute<T> {
+  final bool reduceMotion;
+  _AppPageRoute({required super.builder, required this.reduceMotion});
+  @override
+  Duration get transitionDuration =>
+      reduceMotion ? Duration.zero : super.transitionDuration;
+  @override
+  Duration get reverseTransitionDuration =>
+      reduceMotion ? Duration.zero : super.reverseTransitionDuration;
+}
 
 class PageBody extends StatelessWidget {
   final List<Widget> children;
@@ -75,7 +92,14 @@ class PageBody extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 820),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(18, 12, 18, 96),
+        padding: EdgeInsets.fromLTRB(
+          18,
+          12,
+          18,
+          MediaQuery.paddingOf(context).bottom > 80
+              ? MediaQuery.paddingOf(context).bottom + 16
+              : 96,
+        ),
         children: children,
       ),
     ),
@@ -124,69 +148,94 @@ class FlowTabs<T> extends StatelessWidget {
     required this.selected,
     this.onSelectionChanged,
   });
+  Color tone(T value) => value == EntryKind.income || value == 'income'
+      ? AppTheme.green
+      : value == EntryKind.expense || value == 'expense'
+      ? AppTheme.red
+      : AppTheme.accent;
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      for (final segment in segments)
-        Expanded(
-          child: Semantics(
-            selected: selected.contains(segment.value),
-            button: true,
-            child: InkWell(
-              onTap: onSelectionChanged == null || !segment.enabled
-                  ? null
-                  : () => onSelectionChanged!({segment.value}),
-              child: Container(
-                constraints: const BoxConstraints(minHeight: 50),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: selected.contains(segment.value)
-                          ? AppTheme.accent
-                          : AppTheme.surface,
-                      width: selected.contains(segment.value) ? 2 : 1,
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final active = segments.indexWhere((s) => selected.contains(s.value));
+      return Stack(
+        children: [
+          Row(
+            children: [
+              for (final segment in segments)
+                Expanded(
+                  child: Semantics(
+                    selected: selected.contains(segment.value),
+                    button: true,
+                    child: InkWell(
+                      onTap: onSelectionChanged == null || !segment.enabled
+                          ? null
+                          : () => onSelectionChanged!({segment.value}),
+                      child: AnimatedContainer(
+                        duration: motionDuration(context),
+                        curve: Curves.easeOutCubic,
+                        constraints: const BoxConstraints(minHeight: 50),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 14,
+                        ),
+                        decoration: BoxDecoration(
+                          gradient: selected.contains(segment.value)
+                              ? softTint(tone(segment.value), strength: .10)
+                              : const LinearGradient(
+                                  colors: [Colors.white, Colors.white],
+                                ),
+                        ),
+                        child: AnimatedDefaultTextStyle(
+                          duration: motionDuration(context),
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 14,
+                            fontWeight: selected.contains(segment.value)
+                                ? FontWeight.w500
+                                : FontWeight.w400,
+                            color: selected.contains(segment.value)
+                                ? tone(segment.value)
+                                : AppTheme.muted,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (segment.icon != null) ...[
+                                IconTheme(
+                                  data: IconThemeData(
+                                    color: selected.contains(segment.value)
+                                        ? tone(segment.value)
+                                        : AppTheme.muted,
+                                    size: 18,
+                                  ),
+                                  child: segment.icon!,
+                                ),
+                                const SizedBox(width: 7),
+                              ],
+                              if (segment.label != null)
+                                Flexible(child: segment.label!),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                child: DefaultTextStyle.merge(
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: selected.contains(segment.value)
-                        ? FontWeight.w600
-                        : FontWeight.w400,
-                    color: selected.contains(segment.value)
-                        ? AppTheme.accent
-                        : AppTheme.muted,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (segment.icon != null) ...[
-                        IconTheme(
-                          data: IconThemeData(
-                            color: selected.contains(segment.value)
-                                ? AppTheme.accent
-                                : AppTheme.muted,
-                            size: 18,
-                          ),
-                          child: segment.icon!,
-                        ),
-                        const SizedBox(width: 7),
-                      ],
-                      if (segment.label != null)
-                        Flexible(child: segment.label!),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            ],
           ),
-        ),
-    ],
+          if (active >= 0)
+            AnimatedPositioned(
+              duration: motionDuration(context),
+              curve: Curves.easeOutCubic,
+              left: active * constraints.maxWidth / segments.length,
+              bottom: 0,
+              width: constraints.maxWidth / segments.length,
+              height: 2,
+              child: ColoredBox(color: tone(segments[active].value)),
+            ),
+        ],
+      );
+    },
   );
 }
 
@@ -301,12 +350,14 @@ class SelectionRow extends StatelessWidget {
 class BalancePanel extends StatelessWidget {
   final String label, value;
   final Widget? footer, trailing;
+  final Color? valueColor;
   const BalancePanel({
     super.key,
     required this.label,
     required this.value,
     this.footer,
     this.trailing,
+    this.valueColor,
   });
   @override
   Widget build(BuildContext context) => SurfacePanel(
@@ -334,7 +385,8 @@ class BalancePanel extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     value,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: valueColor ?? AppTheme.text,
                       fontSize: 42,
                       fontWeight: FontWeight.w500,
                       letterSpacing: -1.3,
@@ -454,8 +506,11 @@ class IconBadge extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: 42,
     height: 42,
-    decoration: BoxDecoration(color: AppTheme.base, shape: BoxShape.circle),
-    child: Icon(icon, size: 20, color: AppTheme.text),
+    decoration: BoxDecoration(
+      gradient: softTint(color, strength: .20),
+      shape: BoxShape.circle,
+    ),
+    child: Icon(icon, size: 20, color: color),
   );
 }
 
@@ -544,7 +599,7 @@ class EntryTile extends StatelessWidget {
       textAlign: TextAlign.end,
       softWrap: false,
       style: Theme.of(context).textTheme.titleMedium
-          ?.copyWith(color: AppTheme.text, fontSize: 14),
+          ?.copyWith(color: cashColor(entry.kind, entry.sign), fontSize: 14),
     );
     return Semantics(
       button: onTap != null,

@@ -13,6 +13,8 @@ import 'package:manavalan_finance/core/models.dart';
 import 'package:manavalan_finance/data/file_service.dart';
 import 'package:manavalan_finance/data/ledger_store.dart';
 import 'package:manavalan_finance/ui/app.dart';
+import 'package:manavalan_finance/ui/navigation.dart';
+import 'package:manavalan_finance/ui/ledger_pages.dart';
 import 'package:manavalan_finance/ui/details.dart';
 import 'package:manavalan_finance/ui/forms.dart';
 import 'package:manavalan_finance/ui/settings.dart';
@@ -228,6 +230,75 @@ void main() {
     expect(find.byTooltip('New transaction'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+  testWidgets(
+    'tab motion is visible, preserves filters, and respects reduced motion',
+    (tester) async {
+      await seed(tester);
+      await show(tester);
+      expect(
+        tester.widget<Scaffold>(find.byType(Scaffold).first).extendBody,
+        isTrue,
+      );
+      expect(find.byType(BackdropFilter), findsOneWidget);
+      await tester.drag(find.byType(ListView).first, const Offset(0, -260));
+      await tester.pumpAndSettle();
+      await screenshot(tester, 'navigation-glass');
+      final indicator = find.byKey(const ValueKey('navigation-indicator'));
+      final start = tester.getTopLeft(indicator).dx;
+      await tester.tap(find.byTooltip('Transactions'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 80));
+      final middle = tester.getTopLeft(indicator).dx;
+      expect(middle, greaterThan(start));
+      expect(
+        find.descendant(
+          of: find.byType(AnimatedTabDeck),
+          matching: find.byWidgetPredicate(
+            (w) => w is Opacity && w.opacity > 0 && w.opacity < 1,
+          ),
+        ),
+        findsWidgets,
+      );
+      await screenshot(tester, 'tab-transition');
+      await tester.pumpAndSettle();
+      expect(tester.getTopLeft(indicator).dx, greaterThan(middle));
+      await tester.enterText(find.byType(TextField).first, 'Groceries');
+      await tester.tap(find.byTooltip('Groups'));
+      await tester.pump(const Duration(milliseconds: 30));
+      await tester.tap(find.byTooltip('Lending'));
+      await tester.pump(const Duration(milliseconds: 30));
+      await tester.tap(find.byTooltip('Transactions'));
+      await tester.pumpAndSettle();
+      final search = find.descendant(
+        of: find.byType(TransactionsPage),
+        matching: find.byType(EditableText),
+      );
+      expect(tester.widget<EditableText>(search).controller.text, 'Groceries');
+      tester.platformDispatcher.accessibilityFeaturesTestValue =
+          const FakeAccessibilityFeatures(disableAnimations: true);
+      addTearDown(
+        tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
+      );
+      await tester.pump();
+      await tester.tap(find.byTooltip('Groups'));
+      await tester.pump();
+      expect(
+        tester.widget<AnimatedPositioned>(indicator).duration,
+        Duration.zero,
+      );
+      expect(
+        find.descendant(
+          of: find.byType(AnimatedTabDeck),
+          matching: find.byWidgetPredicate(
+            (w) => w is Opacity && w.opacity > 0 && w.opacity < 1,
+          ),
+        ),
+        findsNothing,
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    },
+  );
   testWidgets('transaction form validates amount and saves linked group', (
     tester,
   ) async {

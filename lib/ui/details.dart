@@ -44,6 +44,7 @@ class EntryDetail extends StatelessWidget {
                   ? (loan.lent ? 'Money lent' : 'Money borrowed')
                   : (loan.lent ? 'Repayment received' : 'Repayment paid'),
               value: '${e.sign > 0 ? '+' : '−'}${money(e.amount, w.currency)}',
+              valueColor: cashColor(e.kind, e.sign),
               footer: Row(
                 children: [
                   IconBadge(

@@ -8,6 +8,7 @@ import 'settings.dart';
 import 'shared.dart';
 import 'theme.dart';
 import 'reference_surfaces.dart';
+import 'navigation.dart';
 
 import 'package:intl/intl.dart';
 
@@ -134,7 +135,7 @@ class _AppShellState extends State<AppShell> {
             )
           : KeyedSubtree(
               key: ValueKey(wallet.id),
-              child: IndexedStack(
+              child: AnimatedTabDeck(
                 index: tab,
                 children: [
                   OverviewPage(
@@ -148,6 +149,7 @@ class _AppShellState extends State<AppShell> {
               ),
             );
       return Scaffold(
+        extendBody: !expanded && wallet != null,
         appBar: wallet == null
             ? null
             : AppBar(
@@ -246,6 +248,7 @@ class _AppShellState extends State<AppShell> {
               ),
         body: SafeArea(
           top: false,
+          bottom: expanded || wallet == null,
           child: Column(
             children: [
               if (app.busy) const LinearProgressIndicator(minHeight: 2),
@@ -295,59 +298,13 @@ class _AppShellState extends State<AppShell> {
             ? SafeArea(
                 top: false,
                 minimum: const EdgeInsets.fromLTRB(28, 6, 28, 12),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(38),
-                  child: NavigationBarTheme(
-                    data: NavigationBarThemeData(
-                      backgroundColor: Colors.white,
-                      surfaceTintColor: Colors.transparent,
-                      indicatorColor: Colors.transparent,
-                      indicatorShape: const CircleBorder(),
-                      height: 64,
-                      labelBehavior:
-                          NavigationDestinationLabelBehavior.alwaysHide,
-                      iconTheme: WidgetStateProperty.resolveWith(
-                        (states) => IconThemeData(
-                          color: states.contains(WidgetState.selected)
-                              ? Colors.white
-                              : AppTheme.text,
-                          size: 22,
-                        ),
-                      ),
-                    ),
-                    child: NavigationBar(
-                      selectedIndex: tab,
-                      onDestinationSelected: (v) => v == 4
-                          ? push(context, SettingsPage(app: app))
-                          : setState(() => tab = v),
-                      destinations: [
-                        for (var i = 0; i < 4; i++)
-                          NavigationDestination(
-                            icon: Icon(icons[i]),
-                            selectedIcon: Container(
-                              width: 52,
-                              height: 52,
-                              decoration: const BoxDecoration(
-                                color: AppTheme.text,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                icons[i],
-                                color: Colors.white,
-                                size: 23,
-                              ),
-                            ),
-                            label: labels[i],
-                            tooltip: labels[i],
-                          ),
-                        const NavigationDestination(
-                          icon: Icon(LucideIcons.menu300),
-                          label: 'Settings',
-                          tooltip: 'Settings',
-                        ),
-                      ],
-                    ),
-                  ),
+                child: FrostedNavigation(
+                  index: tab,
+                  icons: [...icons, LucideIcons.menu300],
+                  labels: [...labels, 'Settings'],
+                  onSelected: (v) => v == 4
+                      ? push(context, SettingsPage(app: app))
+                      : setState(() => tab = v),
                 ),
               )
             : null,

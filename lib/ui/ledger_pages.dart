@@ -967,25 +967,34 @@ class _QuickAction extends StatelessWidget {
   final VoidCallback onTap;
   const _QuickAction(this.label, this.icon, this.onTap);
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: Column(
-      children: [
-        IconButton.filledTonal(
-          onPressed: onTap,
-          tooltip: label,
-          style: IconButton.styleFrom(
-            backgroundColor: AppTheme.base,
-            foregroundColor: AppTheme.text,
-            minimumSize: const Size(48, 48),
+  Widget build(BuildContext context) {
+    final color = label == 'Income'
+        ? AppTheme.green
+        : label == 'Expense'
+        ? AppTheme.red
+        : AppTheme.text;
+    return Expanded(
+      child: Column(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: softTint(color),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: onTap,
+              tooltip: label,
+              style: IconButton.styleFrom(
+                foregroundColor: color,
+                minimumSize: const Size(48, 48),
+              ),
+              icon: Icon(icon, size: 21),
+            ),
           ),
-          icon: Icon(icon, size: 21),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12, color: AppTheme.muted),
-        ),
-      ],
-    ),
-  );
+          const SizedBox(height: 8),
+          Text(label, style: TextStyle(fontSize: 12, color: color)),
+        ],
+      ),
+    );
+  }
 }

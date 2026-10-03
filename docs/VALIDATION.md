@@ -115,3 +115,16 @@ Final independent verdict: **ship**.
 | Design documentation synchronization | Resolved |
 
 The final debug build was installed and launched on the already running iPhone 16 Plus simulator, retaining its existing wallet. The live runtime capture is `build/qa/simulator-live.png`. No material findings remain.
+
+
+## Translucent navigation, motion and semantic color — 3 October 2026
+
+- The scaffold body now extends beneath the floating bar. Its clipped backdrop blur and partially transparent white gradient reveal underlying content; high-contrast mode increases opacity.
+- A 280 ms eased selection indicator slides between tabs. Page transitions use short directional movement and fade-through while preserving mounted page state. Rapid switching retains search filters; inactive pages do not accept input or expose semantics.
+- Form/category underline selectors animate selection. Native iOS push/back transitions are retained; Reduce Motion makes custom tab and route transitions immediate.
+- Green/red amounts distinguish incoming/outgoing cash in transaction lists/details and transaction entry. Transfers remain neutral. Category families use coordinated muted icon colors and pale gradient tiles/badges; income categories use green.
+- All 31 tests pass. New checks verify intermediate indicator positions/page opacity, rapid navigation and filter retention, real content beneath the bar, and immediate reduced-motion transitions. Static analysis is clean; detector found no issues.
+
+- Release verification: Android APK 55.6 MB and unsigned iOS device app 22.0 MB built successfully. The debug build was installed and launched on the running iPhone 16 Plus simulator with its existing data retained.
+
+Final independent verdict: **ship**. The sole material finding was stale design documentation; DESIGN.md and its sidecar now match the glass navigation, motion and semantic colors. No open findings remain.
