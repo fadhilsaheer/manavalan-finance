@@ -43,21 +43,28 @@ class _OverviewPageState extends State<OverviewPage> {
       ..sort((a, b) => b.value.compareTo(a.value));
     return PageBody(
       children: [
+        const PageHeader('Overview'),
         BalancePanel(
           label: 'Wallet balance',
           value: money(s.balance(w), w.currency),
-          footer: Wrap(
-            children: [
-              OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white.withValues(alpha: .7),
-                  foregroundColor: AppTheme.text,
+          footer: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 8,
+              children: [
+                FilledButton.tonalIcon(
+                  onPressed: () => push(context, TransactionForm(app: app)),
+                  icon: const Icon(Icons.add_rounded, size: 18),
+                  label: const Text('Transaction'),
                 ),
-                onPressed: () => push(context, TransferForm(app: app)),
-                icon: const Icon(Icons.swap_horiz_rounded, size: 19),
-                label: const Text('Transfer'),
-              ),
-            ],
+                TextButton.icon(
+                  onPressed: () => push(context, TransferForm(app: app)),
+                  icon: const Icon(Icons.swap_horiz_rounded, size: 18),
+                  label: const Text('Transfer'),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 18),
@@ -128,9 +135,7 @@ class _OverviewPageState extends State<OverviewPage> {
           EmptyState(
             icon: Icons.receipt_long_outlined,
             title: 'Your ledger starts here',
-            detail: 'Add your first transaction.',
-            action: 'New transaction',
-            onAction: () => push(context, TransactionForm(app: app)),
+            detail: 'Your transactions will appear here.',
           )
         else
           SurfacePanel(
@@ -242,8 +247,11 @@ class _TransactionsPageState extends State<TransactionsPage> {
     }).toList();
     return PageBody(
       children: [
-        Text('Transactions', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 20),
+        PageHeader(
+          'Transactions',
+          action: 'New transaction',
+          onAction: () => push(context, TransactionForm(app: app)),
+        ),
         TextField(
           decoration: const InputDecoration(
             hintText: 'Search transactions',
@@ -401,75 +409,118 @@ class _GroupsPageState extends State<GroupsPage> {
     final groups = app.groups.where((g) => g.archived == archived).toList();
     return PageBody(
       children: [
-        Text('Groups', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 20),
-        SegmentedButton<bool>(
-          segments: const [
-            ButtonSegment(value: false, label: Text('Active')),
-            ButtonSegment(value: true, label: Text('Archived')),
+        PageHeader(
+          'Groups',
+          action: 'New group',
+          onAction: app.groups.isEmpty
+              ? null
+              : () => push(context, GroupForm(app: app)),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                '${groups.length} ${groups.length == 1 ? 'ledger' : 'ledgers'}',
+                style: const TextStyle(color: AppTheme.muted),
+              ),
+            ),
+            PopupMenuButton<bool>(
+              tooltip: 'Group view',
+              onSelected: (v) => setState(() => archived = v),
+              itemBuilder: (_) => [
+                const PopupMenuItem(value: false, child: Text('Active')),
+                const PopupMenuItem(value: true, child: Text('Archived')),
+              ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 14,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      archived ? 'Archived' : 'Active',
+                      style: const TextStyle(color: AppTheme.accent),
+                    ),
+                    const Icon(
+                      Icons.expand_more_rounded,
+                      color: AppTheme.accent,
+                      size: 18,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
-          selected: {archived},
-          onSelectionChanged: (v) => setState(() => archived = v.first),
         ),
         if (groups.isEmpty)
           EmptyState(
-            icon: Icons.folder_open_outlined,
-            title: archived
-                ? 'No archived groups'
-                : 'Keep related entries together',
-            detail: archived
-                ? 'Archived ledgers will appear here.'
-                : 'Create a group, then add transactions to its ledger.',
+            icon: Icons.folder_open_rounded,
+            title: archived ? 'No archived groups' : 'Your first group',
+            detail: archived ? 'Archived ledgers will appear here.' : 'A trip, a project, or shared expenses. Keep related transactions in one place.',
             action: archived ? null : 'Create group',
             onAction: archived
                 ? null
                 : () => push(context, GroupForm(app: app)),
           ),
-        for (final g in groups) ...[
+        for (final g in groups)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: ListTile(
-              tileColor: AppTheme.mantle,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(22),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
-              ),
-              leading: IconBadge(icon: iconFor(g.icon)),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(g.name),
-                  const SizedBox(height: 8),
-                  Text(
-                    money(
-                      app.entries
-                          .where((e) => e.groupId == g.id)
-                          .fold<int>(0, (sum, e) => sum + e.signed),
-                      w.currency,
-                    ),
-                    style: const TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: -.5,
-                    ),
+            padding: const EdgeInsets.only(top: 14),
+            child: SurfacePanel(
+              padding: EdgeInsets.zero,
+              child: InkWell(
+                onTap: () =>
+                    push(context, GroupDetail(app: app, groupId: g.id)),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconBadge(icon: iconFor(g.icon)),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Text(
+                              g.name,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          const Icon(
+                            Icons.chevron_right_rounded,
+                            color: AppTheme.muted,
+                            size: 20,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 22),
+                      Text(
+                        money(
+                          app.entries
+                              .where((e) => e.groupId == g.id)
+                              .fold<int>(0, (sum, e) => sum + e.signed),
+                          w.currency,
+                        ),
+                        style: const TextStyle(
+                          fontSize: 27,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: -.6,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Net balance · ${app.entries.where((e) => e.groupId == g.id).length} entries',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppTheme.muted,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  '${app.entries.where((e) => e.groupId == g.id).length} ${app.entries.where((e) => e.groupId == g.id).length == 1 ? 'transaction' : 'transactions'}',
                 ),
               ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => push(context, GroupDetail(app: app, groupId: g.id)),
             ),
           ),
-          const SizedBox(height: 4),
-        ],
       ],
     );
   }
@@ -483,8 +534,8 @@ class LendingPage extends StatefulWidget {
 }
 
 class _LendingPageState extends State<LendingPage> {
-  String direction = 'lent', query = '';
-  String status = 'open';
+  String direction = 'lent', query = '', status = 'open';
+  bool searching = false;
   @override
   Widget build(BuildContext context) {
     final app = widget.app, w = widget.app.wallet!;
@@ -501,101 +552,265 @@ class _LendingPageState extends State<LendingPage> {
                             : app.data.outstanding(l) > 0)),
         )
         .toList();
+    void add() =>
+        push(context, LoanForm(app: app, initialDirection: direction));
     return PageBody(
       children: [
-        Text('Lending', style: Theme.of(context).textTheme.headlineLarge),
-        const SizedBox(height: 20),
-        SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: 'lent', label: Text('Lent')),
-            ButtonSegment(value: 'borrowed', label: Text('Borrowed')),
+        PageHeader(
+          'Lending',
+          action: 'New loan',
+          onAction: loans.isEmpty && status == 'open' && query.isEmpty
+              ? null
+              : add,
+        ),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final cards = [
+              for (final type in ['lent', 'borrowed'])
+                _DebtChoice(
+                  label: type == 'lent' ? 'Owed to you' : 'You owe',
+                  value: money(
+                    app.loans
+                        .where((l) => l.direction == type)
+                        .fold<int>(
+                          0,
+                          (sum, l) => sum + app.data.outstanding(l),
+                        ),
+                    w.currency,
+                  ),
+                  selected: direction == type,
+                  rose: type == 'borrowed',
+                  onTap: () => setState(() => direction = type),
+                ),
+            ];
+            return MediaQuery.textScalerOf(context).scale(1) > 1.3
+                ? Column(
+                    children: [cards[0], const SizedBox(height: 12), cards[1]],
+                  )
+                : Row(
+                    children: [
+                      Expanded(child: cards[0]),
+                      const SizedBox(width: 12),
+                      Expanded(child: cards[1]),
+                    ],
+                  );
+          },
+        ),
+        const SizedBox(height: 26),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                direction == 'lent' ? 'Lent to' : 'Borrowed from',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            IconButton(
+              tooltip: 'Search people',
+              onPressed: () => setState(() {
+                searching = !searching;
+                if (!searching) query = '';
+              }),
+              icon: const Icon(Icons.search_rounded, size: 20),
+            ),
+            PopupMenuButton<String>(
+              tooltip: 'Loan status',
+              onSelected: (v) => setState(() => status = v),
+              itemBuilder: (_) => [
+                for (final v in ['open', 'settled', 'archived'])
+                  PopupMenuItem(
+                    value: v,
+                    child: Text(v[0].toUpperCase() + v.substring(1)),
+                  ),
+              ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                  horizontal: 8,
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      status[0].toUpperCase() + status.substring(1),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppTheme.accent,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.expand_more_rounded,
+                      size: 18,
+                      color: AppTheme.accent,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
-          selected: {direction},
-          onSelectionChanged: (v) => setState(() => direction = v.first),
         ),
-        const SizedBox(height: 18),
-        BalancePanel(
-          label: direction == 'lent' ? 'Owed to you' : 'You owe',
-          value: money(
-            app.loans
-                .where((l) => l.direction == direction)
-                .fold<int>(0, (sum, l) => sum + app.data.outstanding(l)),
-            w.currency,
-          ),
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          decoration: const InputDecoration(
-            hintText: 'Search people',
-            prefixIcon: Icon(Icons.search),
-          ),
-          onChanged: (v) => setState(() => query = v),
-        ),
-        const SizedBox(height: 16),
-        Wrap(
-          spacing: 8,
-          children: ['open', 'settled', 'archived']
-              .map(
-                (s) => ChoiceChip(
-                  label: Text(s[0].toUpperCase() + s.substring(1)),
-                  labelStyle: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 14,
-                    color: status == s ? Colors.white : AppTheme.muted,
-                  ),
-                  selected: status == s,
-                  onSelected: (_) => setState(() => status = s),
-                ),
-              )
-              .toList(),
-        ),
-        if (loans.isEmpty)
-          EmptyState(
-            icon: Icons.handshake_outlined,
-            title: status == 'open'
-                ? 'No outstanding loans here'
-                : 'No $status loans',
-            detail: 'Record money you lent or borrowed to start a repayment ledger.',
-            action: 'New loan',
-            onAction: () => push(context, LoanForm(app: app)),
-          ),
-        for (final l in loans) ...[
+        if (searching)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: ListTile(
-              tileColor: AppTheme.mantle,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(22),
+            padding: const EdgeInsets.only(top: 8),
+            child: TextField(
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: 'Search people',
+                prefixIcon: Icon(Icons.search_rounded),
               ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
-              ),
-              leading: const IconBadge(icon: Icons.person_outline),
-              title: Text(l.person),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 6),
-                child: Text(
-                  '${l.lent ? 'Owes you' : 'You owe'} ${money(app.data.outstanding(l), w.currency)}${l.due == null ? '' : '\nDue ${prettyDay(l.due!)}'}',
-                  style: TextStyle(
-                    color:
-                        l.due != null &&
-                            l.due!.compareTo(dayKey(DateTime.now())) < 0 &&
-                            app.data.outstanding(l) > 0
-                        ? AppTheme.peach
-                        : AppTheme.muted,
-                  ),
-                ),
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => push(context, LoanDetail(app: app, loanId: l.id)),
+              onChanged: (v) => setState(() => query = v),
             ),
           ),
-          const SizedBox(height: 4),
-        ],
+        if (loans.isEmpty)
+          EmptyState(
+            icon: Icons.people_outline_rounded,
+            title: query.isNotEmpty
+                ? 'No matching people'
+                : status == 'settled'
+                ? 'No settled loans'
+                : status == 'archived'
+                ? 'No archived loans'
+                : direction == 'lent'
+                ? 'Keep track of money lent'
+                : 'Keep track of money borrowed',
+            detail: query.isNotEmpty
+                ? 'Try another name.'
+                : 'Record an amount and track repayments as they happen.',
+            action: query.isNotEmpty || status != 'open'
+                ? null
+                : direction == 'lent'
+                ? 'Lend money'
+                : 'Add borrowed money',
+            onAction: query.isNotEmpty || status != 'open' ? null : add,
+          ),
+        for (final l in loans)
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: SurfacePanel(
+              padding: EdgeInsets.zero,
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 14,
+                ),
+                leading: CircleAvatar(
+                  backgroundColor: direction == 'lent'
+                      ? AppTheme.lavender.withValues(alpha: .4)
+                      : AppTheme.blush.withValues(alpha: .4),
+                  child: Text(
+                    l.person.characters.first.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppTheme.accent,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                title: Text(l.person),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        money(app.data.outstanding(l), w.currency),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          color: AppTheme.text,
+                        ),
+                      ),
+                      if (l.due != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            'Due ${prettyDay(l.due!)}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color:
+                                  l.due!.compareTo(dayKey(DateTime.now())) <
+                                          0 &&
+                                      app.data.outstanding(l) > 0
+                                  ? AppTheme.peach
+                                  : AppTheme.muted,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () => push(context, LoanDetail(app: app, loanId: l.id)),
+              ),
+            ),
+          ),
       ],
     );
   }
+}
+
+class _DebtChoice extends StatelessWidget {
+  final String label, value;
+  final bool selected, rose;
+  final VoidCallback onTap;
+  const _DebtChoice({
+    required this.label,
+    required this.value,
+    required this.selected,
+    required this.rose,
+    required this.onTap,
+  });
+  @override
+  Widget build(BuildContext context) => Semantics(
+    button: true,
+    selected: selected,
+    child: Material(
+      color: selected
+          ? (rose ? const Color(0xffffedf4) : const Color(0xfff0eafa))
+          : Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(22),
+        side: BorderSide(
+          color: selected
+              ? (rose ? const Color(0xffb36691) : AppTheme.accent)
+              : AppTheme.surface,
+          width: 1,
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(18),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                rose ? Icons.north_east_rounded : Icons.south_west_rounded,
+                color: rose ? const Color(0xffa24d7d) : AppTheme.accent,
+                size: 22,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                label,
+                style: const TextStyle(fontSize: 12, color: AppTheme.muted),
+              ),
+              const SizedBox(height: 8),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class _MonthlyTotal extends StatelessWidget {

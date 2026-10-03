@@ -73,10 +73,118 @@ class PageBody extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 820),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),
+        padding: const EdgeInsets.fromLTRB(24, 12, 24, 96),
         children: children,
       ),
     ),
+  );
+}
+
+class PageHeader extends StatelessWidget {
+  final String title;
+  final String? action;
+  final VoidCallback? onAction;
+  const PageHeader(this.title, {super.key, this.action, this.onAction});
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 24),
+    child: Row(
+      children: [
+        Expanded(
+          child: Text(title, style: Theme.of(context).textTheme.headlineLarge),
+        ),
+        if (onAction != null)
+          IconButton.filledTonal(
+            tooltip: action,
+            style: IconButton.styleFrom(
+              backgroundColor: AppTheme.lavender.withValues(alpha: .4),
+              foregroundColor: AppTheme.accent,
+              minimumSize: const Size(48, 48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            onPressed: onAction,
+            icon: const Icon(Icons.add_rounded),
+          ),
+      ],
+    ),
+  );
+}
+
+class FlowTabs<T> extends StatelessWidget {
+  final List<ButtonSegment<T>> segments;
+  final Set<T> selected;
+  final ValueChanged<Set<T>>? onSelectionChanged;
+  const FlowTabs({
+    super.key,
+    required this.segments,
+    required this.selected,
+    this.onSelectionChanged,
+  });
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      for (final segment in segments)
+        Expanded(
+          child: Semantics(
+            selected: selected.contains(segment.value),
+            button: true,
+            child: InkWell(
+              onTap: onSelectionChanged == null || !segment.enabled
+                  ? null
+                  : () => onSelectionChanged!({segment.value}),
+              child: Container(
+                constraints: const BoxConstraints(minHeight: 50),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 14,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: selected.contains(segment.value)
+                          ? AppTheme.accent
+                          : AppTheme.surface,
+                      width: selected.contains(segment.value) ? 2 : 1,
+                    ),
+                  ),
+                ),
+                child: DefaultTextStyle.merge(
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: selected.contains(segment.value)
+                        ? FontWeight.w600
+                        : FontWeight.w400,
+                    color: selected.contains(segment.value)
+                        ? AppTheme.accent
+                        : AppTheme.muted,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (segment.icon != null) ...[
+                        IconTheme(
+                          data: IconThemeData(
+                            color: selected.contains(segment.value)
+                                ? AppTheme.accent
+                                : AppTheme.muted,
+                            size: 18,
+                          ),
+                          child: segment.icon!,
+                        ),
+                        const SizedBox(width: 7),
+                      ],
+                      if (segment.label != null)
+                        Flexible(child: segment.label!),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+    ],
   );
 }
 
@@ -85,6 +193,7 @@ class SelectionRow extends StatelessWidget {
   final IconData icon, trailing;
   final Color color;
   final VoidCallback? onTap;
+  final bool primaryLabel;
   const SelectionRow({
     super.key,
     required this.label,
@@ -93,21 +202,96 @@ class SelectionRow extends StatelessWidget {
     this.onTap,
     this.color = AppTheme.accent,
     this.trailing = Icons.chevron_right_rounded,
+    this.primaryLabel = false,
   });
   @override
   Widget build(BuildContext context) => Material(
     color: AppTheme.mantle,
-    borderRadius: BorderRadius.circular(20),
-    child: ListTile(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-      leading: IconBadge(icon: icon, color: color),
-      title: Text(label),
-      subtitle: value.isEmpty ? null : Text(value),
-      trailing: onTap == null
-          ? null
-          : Icon(trailing, size: 20, color: AppTheme.muted),
+    borderRadius: BorderRadius.circular(18),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(18),
       onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        child: Row(
+          children: [
+            if (primaryLabel)
+              IconBadge(icon: icon, color: color)
+            else
+              Icon(icon, color: color, size: 21),
+            const SizedBox(width: 14),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final stacked =
+                      primaryLabel ||
+                      MediaQuery.textScalerOf(context).scale(1) > 1.3;
+                  if (stacked) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          label,
+                          style: TextStyle(
+                            color: primaryLabel
+                                ? AppTheme.text
+                                : AppTheme.muted,
+                            fontSize: primaryLabel ? 15 : 12,
+                            fontWeight: primaryLabel
+                                ? FontWeight.w500
+                                : FontWeight.w400,
+                          ),
+                        ),
+                        if (value.isNotEmpty) ...[
+                          const SizedBox(height: 5),
+                          Text(
+                            value,
+                            style: TextStyle(
+                              fontSize: primaryLabel ? 12 : 15,
+                              color: primaryLabel
+                                  ? AppTheme.muted
+                                  : AppTheme.text,
+                            ),
+                          ),
+                        ],
+                      ],
+                    );
+                  }
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          label,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: AppTheme.muted,
+                          ),
+                        ),
+                      ),
+                      if (value.isNotEmpty) const SizedBox(width: 12),
+                      if (value.isNotEmpty)
+                        Flexible(
+                          child: Text(
+                            value,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            if (onTap != null) ...[
+              const SizedBox(width: 8),
+              Icon(trailing, size: 18, color: AppTheme.muted),
+            ],
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -125,7 +309,12 @@ class BalancePanel extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(24),
     decoration: BoxDecoration(
-      gradient: AppTheme.wash,
+      gradient: const LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [AppTheme.blush, AppTheme.lavender, Colors.white],
+        stops: [0, .3, .8],
+      ),
       borderRadius: BorderRadius.circular(26),
     ),
     child: Column(
@@ -184,29 +373,39 @@ class EmptyState extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 16),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon, size: 52, color: AppTheme.muted),
-        const SizedBox(height: 20),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          detail,
-          style: const TextStyle(color: AppTheme.muted),
-          textAlign: TextAlign.center,
-        ),
-        if (onAction != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: FilledButton(onPressed: onAction, child: Text(action!)),
+    padding: const EdgeInsets.only(top: 28, bottom: 24),
+    child: SurfacePanel(
+      padding: const EdgeInsets.all(28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              gradient: AppTheme.wash,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Icon(icon, size: 32, color: AppTheme.accent),
           ),
-      ],
+          const SizedBox(height: 26),
+          Text(title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 10),
+          Text(
+            detail,
+            style: const TextStyle(color: AppTheme.muted, height: 1.5),
+          ),
+          if (onAction != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 24),
+              child: FilledButton.icon(
+                onPressed: onAction,
+                icon: const Icon(Icons.add_rounded, size: 18),
+                label: Text(action!),
+              ),
+            ),
+        ],
+      ),
     ),
   );
 }

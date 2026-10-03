@@ -7,7 +7,7 @@ from PIL import Image
 
 root = Path(__file__).resolve().parents[1]
 source = Image.open(root / 'assets/icon/app-icon.png').convert('RGBA')
-opaque = Image.new('RGB', source.size, '#f7f6f8')
+opaque = Image.new('RGB', source.size, '#faf9fc')
 opaque.paste(source, mask=source.getchannel('A'))
 opaque.save(root / 'assets/icon/app-icon.png')
 for density, size in [('mdpi', 48), ('hdpi', 72), ('xhdpi', 96), ('xxhdpi', 144), ('xxxhdpi', 192)]:

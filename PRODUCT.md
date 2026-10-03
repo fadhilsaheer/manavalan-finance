@@ -21,7 +21,7 @@ Quick manual finance tracking with independent wallet workspaces and accurate, u
 - Backup/restore, export, and same-currency transfers are included practical additions from the accepted plan.
 
 ## Brand Commitments
-The 3 October 2026 user reference supersedes the earlier blue design: light neutral canvas, soft pink-to-violet balance surfaces, near-black primary actions, quiet white navigation with a dark selected circle, and a matching violet/pink original wallet icon. Secondary screens must have the same care as the dashboard. Keep copy minimal, amounts prominent, categories recognizable by icon and color, and subcategory hierarchy explicit. Preserve the name Manavalan Finance.
+The 3 October 2026 user reference supersedes the earlier blue design: light neutral canvas, soft pink-to-violet balance surfaces, violet primary actions, a full-width labeled white navigation bar with lavender selection, quiet underline tabs, and a matching violet/pink original wallet icon. The user rejected black split controls and floating navigation pills; use contextual page actions and actionable, compact empty states. Lending direction is selected using meaningful balance cards. Secondary screens must have the same care as the dashboard. Keep copy minimal, amounts prominent, categories recognizable by icon and color, and subcategory hierarchy explicit. Preserve the name Manavalan Finance.
 
 ## Product Principles
 - Wallet context is visible wherever money is entered.

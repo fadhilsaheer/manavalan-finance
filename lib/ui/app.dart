@@ -30,7 +30,7 @@ class _AppShellState extends State<AppShell> {
   int tab = 0;
   static const labels = ['Overview', 'Transactions', 'Groups', 'Lending'];
   static const icons = [
-    Icons.space_dashboard_outlined,
+    Icons.home_outlined,
     Icons.receipt_long_outlined,
     Icons.folder_outlined,
     Icons.handshake_outlined,
@@ -194,84 +194,59 @@ class _AppShellState extends State<AppShell> {
           ),
         ),
         bottomNavigationBar: !expanded && wallet != null
-            ? SafeArea(
-                top: false,
-                minimum: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 330),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child: NavigationBarTheme(
-                            data: NavigationBarThemeData(
-                              backgroundColor: AppTheme.mantle,
-                              indicatorColor: AppTheme.text,
-                              indicatorShape: const CircleBorder(),
-                              iconTheme: WidgetStateProperty.resolveWith(
-                                (states) => IconThemeData(
-                                  color: states.contains(WidgetState.selected)
-                                      ? Colors.white
-                                      : AppTheme.muted,
-                                  size: 23,
-                                ),
-                              ),
-                              overlayColor: WidgetStatePropertyAll(
-                                Colors.white.withValues(alpha: .12),
-                              ),
-                              height: 66,
-                              labelBehavior:
-                                  NavigationDestinationLabelBehavior.alwaysHide,
-                            ),
-                            child: NavigationBar(
-                              selectedIndex: tab,
-                              onDestinationSelected: (v) =>
-                                  setState(() => tab = v),
-                              destinations: List.generate(
-                                4,
-                                (i) => NavigationDestination(
-                                  icon: Icon(icons[i]),
-                                  label: labels[i],
-                                  tooltip: labels[i],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+            ? DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  border: Border(top: BorderSide(color: AppTheme.surface)),
+                ),
+                child: NavigationBarTheme(
+                  data: NavigationBarThemeData(
+                    backgroundColor: Colors.white,
+                    surfaceTintColor: Colors.transparent,
+                    indicatorColor: AppTheme.lavender.withValues(alpha: .45),
+                    indicatorShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    iconTheme: WidgetStateProperty.resolveWith(
+                      (states) => IconThemeData(
+                        color: states.contains(WidgetState.selected)
+                            ? AppTheme.accent
+                            : AppTheme.muted,
+                        size: 23,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    SizedBox.square(dimension: 62, child: _addButton(app)),
-                  ],
+                    labelTextStyle: WidgetStateProperty.resolveWith(
+                      (states) => TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 11,
+                        fontWeight: states.contains(WidgetState.selected)
+                            ? FontWeight.w600
+                            : FontWeight.w400,
+                        color: states.contains(WidgetState.selected)
+                            ? AppTheme.accent
+                            : AppTheme.muted,
+                      ),
+                    ),
+                    height: 76,
+                    labelBehavior:
+                        NavigationDestinationLabelBehavior.alwaysShow,
+                  ),
+                  child: NavigationBar(
+                    selectedIndex: tab,
+                    onDestinationSelected: (v) => setState(() => tab = v),
+                    destinations: List.generate(
+                      4,
+                      (i) => NavigationDestination(
+                        icon: Icon(icons[i]),
+                        label: labels[i],
+                        tooltip: labels[i],
+                      ),
+                    ),
+                  ),
                 ),
               )
             : null,
-        floatingActionButton: expanded && wallet != null
-            ? _addButton(app)
-            : null,
       );
     },
-  );
-
-  Widget _addButton(AppController app) => FloatingActionButton(
-    shape: const CircleBorder(),
-    tooltip: tab == 2
-        ? 'New group'
-        : tab == 3
-        ? 'New loan'
-        : 'New transaction',
-    onPressed: app.busy
-        ? null
-        : () => push(
-            context,
-            tab == 2
-                ? GroupForm(app: app)
-                : tab == 3
-                ? LoanForm(app: app)
-                : TransactionForm(app: app),
-          ),
-    child: const Icon(Icons.add_rounded, size: 30),
   );
 }

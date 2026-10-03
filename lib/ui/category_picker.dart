@@ -132,6 +132,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
                   ),
               ] else if (current != null) ...[
                 SelectionRow(
+                  primaryLabel: true,
                   label: widget.filter
                       ? 'All ${current.name}'
                       : 'Use ${current.name}',
@@ -150,6 +151,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
                   ),
               ] else ...[
                 SelectionRow(
+                  primaryLabel: true,
                   label: widget.filter ? 'All categories' : 'Uncategorised',
                   value: '',
                   icon: Icons.category_outlined,
@@ -299,6 +301,7 @@ class CategoryOption extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) => SelectionRow(
+    primaryLabel: true,
     label: category.name,
     value:
         app.data.category(category.parentId)?.name ??
@@ -327,6 +330,7 @@ class GroupPicker extends StatelessWidget {
     body: PageBody(
       children: [
         SelectionRow(
+          primaryLabel: true,
           label: 'No group',
           value: 'Keep this transaction on its own',
           icon: Icons.receipt_long_outlined,
@@ -339,6 +343,7 @@ class GroupPicker extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: SelectionRow(
+              primaryLabel: true,
               label: g.name,
               value:
                   '${app.entries.where((e) => e.groupId == g.id).length} transactions',

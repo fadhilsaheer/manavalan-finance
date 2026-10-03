@@ -475,7 +475,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               onChanged: (v) => setState(() => query = v.toLowerCase().trim()),
             ),
             const SizedBox(height: 16),
-            SegmentedButton<String>(
+            FlowTabs<String>(
               segments: const [
                 ButtonSegment(value: 'expense', label: Text('Expense')),
                 ButtonSegment(value: 'income', label: Text('Income')),
@@ -500,7 +500,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     label: const Text('Archived'),
                     selected: showArchived,
                     labelStyle: TextStyle(
-                      color: showArchived ? Colors.white : AppTheme.muted,
+                      color: showArchived ? AppTheme.accent : AppTheme.muted,
                     ),
                     onSelected: (v) => setState(() => showArchived = v),
                   ),

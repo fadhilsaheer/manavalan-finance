@@ -3,24 +3,24 @@ import 'package:flutter/material.dart';
 import '../core/models.dart';
 
 abstract final class AppTheme {
-  static const base = Color(0xfff7f6f8);
+  static const base = Color(0xfffaf9fc);
   static const mantle = Colors.white;
   static const surface = Color(0xffeeecf1);
   static const overlay = Color(0xffc5c0cf);
-  static const text = Color(0xff201d25);
-  static const muted = Color(0xff706a78);
-  static const accent = Color(0xff7850b8);
+  static const text = Color(0xff383044);
+  static const muted = Color(0xff5e5269);
+  static const accent = Color(0xff8054b5);
   static const green = Color(0xff16764d);
   static const red = Color(0xffbe3d47);
   static const peach = Color(0xffa75d16);
-  static const blue = Color(0xff7850b8);
+  static const blue = Color(0xff8054b5);
   static const yellow = Color(0xff867016);
   static const blush = Color(0xfff4c7e4);
   static const lavender = Color(0xffd9c9f6);
   static const wash = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [Color(0xfff6d6e9), Color(0xffe3d7f9), Color(0xfffaf8fc)],
+    colors: [Color(0xfff9d8e9), Color(0xffe9ddfa), Color(0xfffdfbff)],
     stops: [0, .5, 1],
   );
   static const accents = [accent, green, peach, red, yellow, Color(0xff7854ad)];
@@ -46,9 +46,9 @@ abstract final class AppTheme {
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
         fontFamily: 'Roboto',
-        fontSize: 30,
+        fontSize: 28,
         fontWeight: FontWeight.w600,
-        letterSpacing: -.8,
+        letterSpacing: -.6,
         color: text,
       ),
       titleLarge: TextStyle(
@@ -122,7 +122,7 @@ abstract final class AppTheme {
     ),
     chipTheme: ChipThemeData(
       backgroundColor: mantle,
-      selectedColor: text,
+      selectedColor: lavender,
       side: const BorderSide(color: surface),
       shape: const StadiumBorder(),
       showCheckmark: false,
@@ -137,11 +137,10 @@ abstract final class AppTheme {
       style: ButtonStyle(
         side: const WidgetStatePropertyAll(BorderSide.none),
         backgroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected) ? text : mantle,
+          (states) => states.contains(WidgetState.selected) ? lavender : mantle,
         ),
         foregroundColor: WidgetStateProperty.resolveWith(
-          (states) =>
-              states.contains(WidgetState.selected) ? Colors.white : muted,
+          (states) => states.contains(WidgetState.selected) ? accent : muted,
         ),
         padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(vertical: 16, horizontal: 12),
@@ -161,9 +160,9 @@ abstract final class AppTheme {
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        backgroundColor: text,
+        backgroundColor: accent,
         minimumSize: const Size(48, 54),
-        shape: const StadiumBorder(),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         textStyle: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 16,
@@ -179,7 +178,7 @@ abstract final class AppTheme {
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: text,
+      backgroundColor: accent,
       foregroundColor: Colors.white,
       shape: StadiumBorder(),
       elevation: 0,

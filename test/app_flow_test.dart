@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
@@ -18,6 +17,7 @@ import 'package:manavalan_finance/ui/details.dart';
 import 'package:manavalan_finance/ui/forms.dart';
 import 'package:manavalan_finance/ui/settings.dart';
 import 'package:manavalan_finance/ui/theme.dart';
+import 'package:manavalan_finance/ui/shared.dart';
 import 'package:manavalan_finance/ui/category_picker.dart';
 
 void main() {
@@ -30,20 +30,10 @@ void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     if (capture) {
-      final config = jsonDecode(
-        await File('.dart_tool/package_config.json').readAsString(),
-      ) as Map<String, dynamic>;
-      final flutter = (config['packages'] as List)
-          .cast<Map<String, dynamic>>()
-          .firstWhere((p) => p['name'] == 'flutter');
-      final sdk = Directory.fromUri(Uri.parse(flutter['rootUri'] as String))
-          .parent
-          .parent;
-      final font = File(
-        '${sdk.path}/bin/cache/artifacts/material_fonts/Roboto-Regular.ttf',
-      );
-      final loader = FontLoader('Roboto')
-        ..addFont(Future.value(ByteData.sublistView(await font.readAsBytes())));
+      final loader = FontLoader('Roboto');
+      for (final weight in ['Regular', 'Medium', 'Bold']) {
+        loader.addFont(rootBundle.load('assets/fonts/Roboto-$weight.ttf'));
+      }
       await loader.load();
       final icons = FontLoader('MaterialIcons')
         ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
@@ -442,6 +432,49 @@ void main() {
     await screenshot(tester, 'category-picker-tablet');
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'empty groups and lending offer contextual actions without dark split controls',
+    (tester) async {
+      await tester.runAsync(() async {
+        app.walletId = await store.saveWallet(
+          name: 'Personal',
+          currency: 'INR',
+          opening: 0,
+        );
+        await app.reload();
+      });
+      await show(tester);
+      await tester.tap(find.byTooltip('Groups'));
+      await tester.pumpAndSettle();
+      await screenshot(tester, 'groups-empty');
+      expect(find.byType(SegmentedButton<bool>), findsNothing);
+      expect(find.text('Create group'), findsOneWidget);
+      await tester.tap(find.byTooltip('Lending'));
+      await tester.pumpAndSettle();
+      await screenshot(tester, 'lending-empty');
+      await tester.tap(find.text('You owe'));
+      await tester.pumpAndSettle();
+      await screenshot(tester, 'lending-borrowed-empty');
+      await tester.ensureVisible(find.text('Add borrowed money'));
+      await tester.tap(find.text('Add borrowed money'));
+      await tester.pumpAndSettle();
+      final tabs = tester.widget<FlowTabs<String>>(
+        find.byType(FlowTabs<String>),
+      );
+      expect(tabs.selected, {'borrowed'});
+      await screenshot(tester, 'new-borrowed-loan');
+      expect(tester.takeException(), isNull);
+      await tester.pageBack();
+      await show(tester, size: const Size(320, 740), textScale: 2);
+      await tester.tap(find.byTooltip('Groups'));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await tester.tap(find.byTooltip('Lending'));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   test('CSV correctly escapes and neutralises spreadsheet formulas', () {
     final data = LedgerSnapshot(

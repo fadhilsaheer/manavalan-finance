@@ -62,3 +62,28 @@ Final independent review: **ship**.
 | Finding | Status |
 | --- | --- |
 | Persist the implemented design | Resolved: DESIGN.md and the sidecar match the violet/pink balances, black actions, white navigation and category hierarchy. |
+
+
+## Light layouts and contextual actions — 3 October 2026
+
+The user rejected the previous black split controls and floating navigation. This revision replaces those structures rather than keeping them as the visual baseline.
+
+- Full-width labeled mobile navigation with lavender selection; adaptive tablet rail.
+- Underline controls in entry/category forms, a compact Groups view menu, and selectable “Owed to you” / “You owe” balance cards in Lending.
+- Contextual empty states and creation actions; selecting borrowed money carries through to the new-loan form.
+- White entry forms with compact property rows, clearer amount fields and violet save buttons. Transaction details use inline icon-labeled properties.
+- Rose/lavender balance surfaces, plum typography, and matching regenerated original launcher/splash artwork.
+- All 29 tests pass (15 domain/database, 14 UI/CSV), including empty Groups/Lending at 320×740 with 2× text and borrowed-intent selection. No ledger/domain changes.
+- Static analysis is clean; the mechanical design detector reported no findings.
+- Phone/tablet screenshots are isolated test fixtures, including empty and populated ledgers. Detail pages mounted as test roots omit back arrows in captures; normal pushed routes retain native back navigation.
+
+The independent finish review returned **ship** after one correction batch:
+
+| Material finding | Final verdict |
+| --- | --- |
+| Test previews loaded a font not bundled for production | Resolved: Roboto 400/500/700 are bundled with their license, and QA loads the same assets. |
+| Secondary text on tinted surfaces had insufficient contrast | Resolved: the secondary token is #5e5269, providing 4.72:1 or better on the identified tinted backgrounds. |
+
+The reviewer confirmed substantive replacement of the rejected Groups, Lending and navigation compositions. No material findings remain.
+
+Final release builds passed: Android APK 53.9 MB (local debug signing) and iOS device app 18.5 MB (unsigned).

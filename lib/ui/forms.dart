@@ -44,38 +44,52 @@ TextFormField nameField(
   }) => null,
   validator: nameValidator,
 );
-TextFormField amountField(
+Widget amountField(
   TextEditingController controller,
   String currency, {
   String label = 'Amount',
   bool signed = false,
   bool zero = false,
-}) => TextFormField(
-  controller: controller,
-  decoration: InputDecoration(
-    labelText: '$label · $currency',
-    alignLabelWithHint: true,
-    hintText: '0.00',
-    hintStyle: const TextStyle(
-      fontSize: 40,
-      fontWeight: FontWeight.w600,
-      color: AppTheme.muted,
-    ),
-    floatingLabelBehavior: FloatingLabelBehavior.always,
-    fillColor: AppTheme.base,
-    border: InputBorder.none,
-    enabledBorder: InputBorder.none,
-    focusedBorder: InputBorder.none,
-    contentPadding: const EdgeInsets.symmetric(vertical: 26, horizontal: 12),
+}) => Padding(
+  padding: const EdgeInsets.symmetric(vertical: 22),
+  child: Column(
+    children: [
+      Text(
+        '$label · $currency',
+        style: const TextStyle(fontSize: 13, color: AppTheme.muted),
+      ),
+      const SizedBox(height: 8),
+      TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 46,
+          fontWeight: FontWeight.w500,
+          letterSpacing: -1.2,
+        ),
+        decoration: const InputDecoration(
+          hintText: '0.00',
+          hintStyle: TextStyle(
+            fontSize: 46,
+            fontWeight: FontWeight.w500,
+            color: Color(0xff81758f),
+          ),
+          filled: false,
+          border: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          errorMaxLines: 3,
+          contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+        ),
+        keyboardType: TextInputType.numberWithOptions(
+          decimal: true,
+          signed: signed,
+        ),
+        validator: (value) =>
+            amountValidator(value, signed: signed, zero: zero),
+      ),
+    ],
   ),
-  textAlign: TextAlign.center,
-  style: const TextStyle(
-    fontSize: 40,
-    fontWeight: FontWeight.w600,
-    letterSpacing: -1,
-  ),
-  keyboardType: TextInputType.numberWithOptions(decimal: true, signed: signed),
-  validator: (value) => amountValidator(value, signed: signed, zero: zero),
 );
 Widget noteField(TextEditingController controller) => ExpansionTile(
   initiallyExpanded: controller.text.isNotEmpty,
@@ -112,9 +126,12 @@ class FormScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: Colors.white,
     appBar: AppBar(
+      backgroundColor: Colors.white,
+      centerTitle: true,
       title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(title),
           if (app.wallet != null)
@@ -136,7 +153,7 @@ class FormScreen extends StatelessWidget {
                 children: [
                   for (final field in fields)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 14),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: field,
                     ),
                 ],
@@ -315,7 +332,7 @@ class _CategoryFormState extends State<CategoryForm> {
     saving: saving,
     fields: [
       nameField(name, label: 'Category name'),
-      SegmentedButton<String>(
+      FlowTabs<String>(
         segments: const [
           ButtonSegment(value: 'expense', label: Text('Expense')),
           ButtonSegment(value: 'income', label: Text('Income')),
@@ -472,7 +489,7 @@ class _TransactionFormState extends State<TransactionForm> {
       saving: saving,
       fields: [
         amountField(amount, widget.app.wallet!.currency),
-        SegmentedButton<EntryKind>(
+        FlowTabs<EntryKind>(
           segments: const [
             ButtonSegment(
               value: EntryKind.expense,
@@ -536,7 +553,13 @@ class _TransactionFormState extends State<TransactionForm> {
 class LoanForm extends StatefulWidget {
   final AppController app;
   final Loan? existing;
-  const LoanForm({super.key, required this.app, this.existing});
+  final String initialDirection;
+  const LoanForm({
+    super.key,
+    required this.app,
+    this.existing,
+    this.initialDirection = 'lent',
+  });
   @override
   State<LoanForm> createState() => _LoanFormState();
 }
@@ -548,7 +571,7 @@ class _LoanFormState extends State<LoanForm> {
   );
   final amount = TextEditingController();
   late final note = TextEditingController(text: widget.existing?.note ?? '');
-  String direction = 'lent';
+  late String direction = widget.existing?.direction ?? widget.initialDirection;
   DateTime date = DateTime.now();
   late DateTime? due = widget.existing?.due == null
       ? null
@@ -601,7 +624,7 @@ class _LoanFormState extends State<LoanForm> {
     fields: [
       nameField(person, label: 'Person'),
       if (widget.existing == null) ...[
-        SegmentedButton<String>(
+        FlowTabs<String>(
           segments: const [
             ButtonSegment(value: 'lent', label: Text('I lent')),
             ButtonSegment(value: 'borrowed', label: Text('I borrowed')),
@@ -632,7 +655,7 @@ class _LoanFormState extends State<LoanForm> {
       DateField(
         value: due,
         optional: true,
-        label: 'Due date (optional)',
+        label: 'Due date',
         onChanged: (v) => setState(() => due = v),
       ),
       noteField(note),

@@ -74,64 +74,40 @@ class EntryDetail extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 child: Column(
                   children: [
-                    ListTile(
-                      tileColor: AppTheme.mantle,
-                      shape: const RoundedRectangleBorder(),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 5,
-                      ),
-                      title: const Text('Wallet'),
-                      subtitle: Text(w.name),
+                    SelectionRow(
+                      label: 'Wallet',
+                      value: w.name,
+                      icon: Icons.account_balance_wallet_outlined,
                     ),
-                    ListTile(
-                      tileColor: AppTheme.mantle,
-                      shape: const RoundedRectangleBorder(),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 5,
-                      ),
-                      title: const Text('Date'),
-                      subtitle: Text(prettyDay(e.date)),
+                    SelectionRow(
+                      label: 'Date',
+                      value: prettyDay(e.date),
+                      icon: Icons.calendar_today_outlined,
                     ),
                     if (e.kind.ordinary)
-                      ListTile(
-                        tileColor: AppTheme.mantle,
-                        shape: const RoundedRectangleBorder(),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 5,
+                      SelectionRow(
+                        label: 'Category',
+                        value: app.data.categoryName(e.categoryId),
+                        icon: categoryIcon(
+                          app.data.category(e.categoryId),
+                          app.data,
                         ),
-                        title: const Text('Category'),
-                        subtitle: Text(app.data.categoryName(e.categoryId)),
                       ),
                     if (group != null)
-                      ListTile(
-                        tileColor: AppTheme.mantle,
-                        shape: const RoundedRectangleBorder(),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 5,
-                        ),
-                        title: const Text('Group'),
-                        subtitle: Text(group.name),
-                        trailing: const Icon(Icons.chevron_right),
+                      SelectionRow(
+                        label: 'Group',
+                        value: group.name,
+                        icon: Icons.folder_outlined,
                         onTap: () => push(
                           context,
                           GroupDetail(app: app, groupId: group.id),
                         ),
                       ),
                     if (loan != null)
-                      ListTile(
-                        tileColor: AppTheme.mantle,
-                        shape: const RoundedRectangleBorder(),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 18,
-                          vertical: 5,
-                        ),
-                        title: const Text('Loan'),
-                        subtitle: Text(loan.person),
-                        trailing: const Icon(Icons.chevron_right),
+                      SelectionRow(
+                        label: 'Loan',
+                        value: loan.person,
+                        icon: Icons.person_outline_rounded,
                         onTap: () => push(
                           context,
                           LoanDetail(app: app, loanId: loan.id),
@@ -145,30 +121,18 @@ class EntryDetail extends StatelessWidget {
                       for (final peer in app.data.entries.where(
                         (p) => p.transferId == e.transferId && p.id != e.id,
                       ))
-                        ListTile(
-                          tileColor: AppTheme.mantle,
-                          shape: const RoundedRectangleBorder(),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 5,
-                          ),
-                          title: const Text('Other wallet'),
-                          subtitle: Text(
-                            app.data.wallets
-                                .firstWhere((w) => w.id == peer.walletId)
-                                .name,
-                          ),
+                        SelectionRow(
+                          label: 'Other wallet',
+                          value: app.data.wallets
+                              .firstWhere((w) => w.id == peer.walletId)
+                              .name,
+                          icon: Icons.swap_horiz_rounded,
                         ),
                     ],
-                    ListTile(
-                      tileColor: AppTheme.mantle,
-                      shape: const RoundedRectangleBorder(),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 5,
-                      ),
-                      title: const Text('Wallet balance after this entry'),
-                      subtitle: Text(money(running, w.currency)),
+                    SelectionRow(
+                      label: 'Balance after',
+                      value: money(running, w.currency),
+                      icon: Icons.account_balance_outlined,
                     ),
                     if (e.note.isNotEmpty)
                       ListTile(
