@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
+import '../core/models.dart';
+
 abstract final class AppTheme {
-  static const base = Color(0xfff6f7f9);
+  static const base = Color(0xfff7f6f8);
   static const mantle = Colors.white;
-  static const surface = Color(0xffe9ecf1);
-  static const overlay = Color(0xffb9c1ce);
-  static const text = Color(0xff191c22);
-  static const muted = Color(0xff68717e);
-  static const accent = Color(0xff2866d8);
+  static const surface = Color(0xffeeecf1);
+  static const overlay = Color(0xffc5c0cf);
+  static const text = Color(0xff201d25);
+  static const muted = Color(0xff706a78);
+  static const accent = Color(0xff7850b8);
   static const green = Color(0xff16764d);
   static const red = Color(0xffbe3d47);
   static const peach = Color(0xffa75d16);
-  static const blue = Color(0xff2866d8);
+  static const blue = Color(0xff7850b8);
   static const yellow = Color(0xff867016);
+  static const blush = Color(0xfff4c7e4);
+  static const lavender = Color(0xffd9c9f6);
+  static const wash = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xfff6d6e9), Color(0xffe3d7f9), Color(0xfffaf8fc)],
+    stops: [0, .5, 1],
+  );
   static const accents = [accent, green, peach, red, yellow, Color(0xff7854ad)];
   static ThemeData get theme => ThemeData(
     brightness: Brightness.light,
@@ -144,8 +154,14 @@ abstract final class AppTheme {
       behavior: SnackBarBehavior.floating,
     ),
     dividerTheme: const DividerThemeData(color: surface, space: 1),
+    popupMenuTheme: PopupMenuThemeData(
+      color: mantle,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
+        backgroundColor: text,
         minimumSize: const Size(48, 54),
         shape: const StadiumBorder(),
         textStyle: const TextStyle(
@@ -163,9 +179,9 @@ abstract final class AppTheme {
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: accent,
+      backgroundColor: text,
       foregroundColor: Colors.white,
-      shape: CircleBorder(),
+      shape: StadiumBorder(),
       elevation: 0,
       focusElevation: 0,
       hoverElevation: 0,
@@ -195,10 +211,95 @@ const appIcons = <String, IconData>{
   'phone': Icons.devices_outlined,
   'fitness': Icons.fitness_center_rounded,
   'pet': Icons.pets_outlined,
+  'groceries': Icons.local_grocery_store_outlined,
+  'fuel': Icons.local_gas_station_outlined,
+  'bus': Icons.directions_bus_outlined,
+  'taxi': Icons.local_taxi_outlined,
+  'repair': Icons.handyman_outlined,
+  'rent': Icons.key_outlined,
+  'electricity': Icons.bolt_outlined,
+  'internet': Icons.wifi_rounded,
+  'clothing': Icons.checkroom_outlined,
+  'medicine': Icons.medication_outlined,
+  'doctor': Icons.medical_services_outlined,
+  'movies': Icons.movie_outlined,
+  'subscription': Icons.subscriptions_outlined,
+  'games': Icons.sports_esports_outlined,
+  'course': Icons.school_outlined,
+  'hotel': Icons.hotel_outlined,
+  'ticket': Icons.confirmation_number_outlined,
+  'activity': Icons.local_activity_outlined,
+  'care': Icons.spa_outlined,
+  'donation': Icons.volunteer_activism_outlined,
+  'salary': Icons.badge_outlined,
+  'freelance': Icons.laptop_mac_outlined,
+  'business': Icons.storefront_outlined,
 };
 IconData iconFor(String key) => appIcons[key] ?? Icons.category_outlined;
 Color walletColor(int index) =>
     AppTheme.accents[index.abs() % AppTheme.accents.length];
+
+const _categorySymbols = <String, String>{
+  'groceries': 'groceries',
+  'restaurants': 'food',
+  'coffee': 'coffee',
+  'fuel': 'fuel',
+  'public transport': 'bus',
+  'taxi': 'taxi',
+  'maintenance': 'repair',
+  'rent': 'rent',
+  'electricity': 'electricity',
+  'internet': 'internet',
+  'repairs': 'repair',
+  'clothing': 'clothing',
+  'electronics': 'phone',
+  'household': 'home',
+  'medicine': 'medicine',
+  'doctor': 'doctor',
+  'fitness': 'fitness',
+  'movies': 'movies',
+  'subscriptions': 'subscription',
+  'games': 'games',
+  'courses': 'course',
+  'books': 'book',
+  'fees': 'cash',
+  'accommodation': 'hotel',
+  'tickets': 'ticket',
+  'activities': 'activity',
+  'gifts': 'gift',
+  'care': 'care',
+  'donations': 'donation',
+  'salary': 'salary',
+  'freelance': 'freelance',
+  'business': 'business',
+  'other income': 'cash',
+};
+IconData categoryIcon(Category? category, LedgerSnapshot data) {
+  if (category == null) return Icons.category_outlined;
+  final parent = data.category(category.parentId);
+  final key = parent != null && category.icon == parent.icon
+      ? _categorySymbols[category.name.toLowerCase()] ?? category.icon
+      : category.icon;
+  return iconFor(key);
+}
+
+Color categoryColor(Category? category, LedgerSnapshot data) {
+  if (category == null) return AppTheme.muted;
+  final root = data.category(category.parentId) ?? category;
+  return switch (root.icon) {
+    'food' => const Color(0xffa66526),
+    'car' => const Color(0xff427da0),
+    'home' => const Color(0xff548069),
+    'bag' => const Color(0xffa45483),
+    'health' => const Color(0xffa65560),
+    'play' => const Color(0xff7d62b1),
+    'book' => const Color(0xff957526),
+    'travel' => const Color(0xff397e83),
+    'heart' => const Color(0xffa15d7d),
+    'work' => AppTheme.green,
+    _ => AppTheme.accent,
+  };
+}
 
 class BrandMark extends StatelessWidget {
   final double size;
@@ -237,7 +338,7 @@ class BrandPainter extends CustomPainter {
         const Rect.fromLTWH(200, 220, 548, 126),
         const Radius.circular(60),
       ),
-      Paint()..color = const Color(0xff174da9),
+      Paint()..color = const Color(0xffd38cb9),
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(

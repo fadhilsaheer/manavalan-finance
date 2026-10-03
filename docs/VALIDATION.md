@@ -44,3 +44,21 @@ The independent finish reviewer returned **ship** for the redesign:
 ## Practical limits
 
 Native file-picker interaction, VoiceOver/TalkBack, real-device keyboard/back gestures and long-running device use still need hardware verification. The iOS release build needs signing for installation. Store publishing requires final app identifiers and production signing. There is no old-database migration because the user explicitly requested a fresh start; the old database file is left untouched.
+
+
+## Category UX and violet redesign — 3 October 2026
+
+- Replaced flat category selection with searchable parent icon grids, explicit subcategory browsing, recent shortcuts, cancellation/clearing semantics, and inline category creation. Archived and income/expense choices remain scoped correctly.
+- Added a group selector, searchable icon library, semantic icons for existing seeded subcategories, and expandable category management.
+- Revised transaction, group, loan, wallet, settings and form hierarchy using grouped surfaces. Fixed the clipped extended add button. Matched original native launcher artwork to violet and pink.
+- Full regression suite: 28 tests pass (15 domain/database, 13 UI/CSV). Coverage includes category drill-down, search, cancellation, clearing, archived filtering, type isolation, grouped management and 320×740 at 2× text.
+- Screenshot coverage includes phone/tablet category pickers, category search and subcategories, management, icon library, forms, all tabs, transaction detail, wallets, settings and ledgers. Data is isolated test data.
+- A narrow-screen transfer action now wraps rather than overflowing with wide text. Interactive grouped panels use Material so taps and ink remain visible.
+- Detector: no findings. Independent review matched visual fidelity; documentation synchronization was the only material finding.
+- Final native builds: Android release APK (53.7 MB, local debug signing) and iOS device release app (18.0 MB, unsigned). Static analysis is clean.
+
+Final independent review: **ship**.
+
+| Finding | Status |
+| --- | --- |
+| Persist the implemented design | Resolved: DESIGN.md and the sidecar match the violet/pink balances, black actions, white navigation and category hierarchy. |

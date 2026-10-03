@@ -207,14 +207,14 @@ class _AppShellState extends State<AppShell> {
                           borderRadius: BorderRadius.circular(40),
                           child: NavigationBarTheme(
                             data: NavigationBarThemeData(
-                              backgroundColor: AppTheme.text,
-                              indicatorColor: Colors.white,
+                              backgroundColor: AppTheme.mantle,
+                              indicatorColor: AppTheme.text,
                               indicatorShape: const CircleBorder(),
                               iconTheme: WidgetStateProperty.resolveWith(
                                 (states) => IconThemeData(
                                   color: states.contains(WidgetState.selected)
-                                      ? AppTheme.text
-                                      : const Color(0xffb9c1ce),
+                                      ? Colors.white
+                                      : AppTheme.muted,
                                   size: 23,
                                 ),
                               ),
@@ -256,6 +256,7 @@ class _AppShellState extends State<AppShell> {
   );
 
   Widget _addButton(AppController app) => FloatingActionButton(
+    shape: const CircleBorder(),
     tooltip: tab == 2
         ? 'New group'
         : tab == 3

@@ -36,77 +36,155 @@ class EntryDetail extends StatelessWidget {
         appBar: AppBar(title: const Text('Transaction')),
         body: PageBody(
           children: [
-            Text(
-              '${e.sign > 0 ? '+' : '−'}${money(e.amount, w.currency)}',
-              style: Theme.of(context).textTheme.headlineLarge
-                  ?.copyWith(color: e.sign > 0 ? AppTheme.green : AppTheme.red),
-            ),
-            const SizedBox(height: 12),
-            Text(e.kind.label, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 24),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Wallet'),
-              subtitle: Text(w.name),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Date'),
-              subtitle: Text(prettyDay(e.date)),
-            ),
-            if (e.kind.ordinary)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Category'),
-                subtitle: Text(app.data.categoryName(e.categoryId)),
-              ),
-            if (group != null)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Group'),
-                subtitle: Text(group.name),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () =>
-                    push(context, GroupDetail(app: app, groupId: group.id)),
-              ),
-            if (loan != null)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Loan'),
-                subtitle: Text(loan.person),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () =>
-                    push(context, LoanDetail(app: app, loanId: loan.id)),
-              ),
-            if (e.transferId != null) ...[
-              const Text(
-                'This entry is linked to the other wallet. Removing it removes both sides of the transfer.',
-                style: TextStyle(color: AppTheme.muted),
-              ),
-              for (final peer in app.data.entries.where(
-                (p) => p.transferId == e.transferId && p.id != e.id,
-              ))
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('Other wallet'),
-                  subtitle: Text(
-                    app.data.wallets
-                        .firstWhere((w) => w.id == peer.walletId)
-                        .name,
+            BalancePanel(
+              label: loan == null
+                  ? e.kind.label
+                  : e.kind == EntryKind.loanAdvance
+                  ? (loan.lent ? 'Money lent' : 'Money borrowed')
+                  : (loan.lent ? 'Repayment received' : 'Repayment paid'),
+              value: '${e.sign > 0 ? '+' : '−'}${money(e.amount, w.currency)}',
+              footer: Row(
+                children: [
+                  IconBadge(
+                    icon: loan != null
+                        ? Icons.person_outline_rounded
+                        : categoryIcon(
+                            app.data.category(e.categoryId),
+                            app.data,
+                          ),
+                    color: categoryColor(
+                      app.data.category(e.categoryId),
+                      app.data,
+                    ),
                   ),
-                ),
-            ],
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Wallet balance after this entry'),
-              subtitle: Text(money(running, w.currency)),
-            ),
-            if (e.note.isNotEmpty)
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Note'),
-                subtitle: Text(e.note),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      loan?.person ?? app.data.categoryName(e.categoryId),
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
               ),
+            ),
+            const SectionTitle('Details'),
+            SurfacePanel(
+              padding: EdgeInsets.zero,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Column(
+                  children: [
+                    ListTile(
+                      tileColor: AppTheme.mantle,
+                      shape: const RoundedRectangleBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 5,
+                      ),
+                      title: const Text('Wallet'),
+                      subtitle: Text(w.name),
+                    ),
+                    ListTile(
+                      tileColor: AppTheme.mantle,
+                      shape: const RoundedRectangleBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 5,
+                      ),
+                      title: const Text('Date'),
+                      subtitle: Text(prettyDay(e.date)),
+                    ),
+                    if (e.kind.ordinary)
+                      ListTile(
+                        tileColor: AppTheme.mantle,
+                        shape: const RoundedRectangleBorder(),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 5,
+                        ),
+                        title: const Text('Category'),
+                        subtitle: Text(app.data.categoryName(e.categoryId)),
+                      ),
+                    if (group != null)
+                      ListTile(
+                        tileColor: AppTheme.mantle,
+                        shape: const RoundedRectangleBorder(),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 5,
+                        ),
+                        title: const Text('Group'),
+                        subtitle: Text(group.name),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => push(
+                          context,
+                          GroupDetail(app: app, groupId: group.id),
+                        ),
+                      ),
+                    if (loan != null)
+                      ListTile(
+                        tileColor: AppTheme.mantle,
+                        shape: const RoundedRectangleBorder(),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 5,
+                        ),
+                        title: const Text('Loan'),
+                        subtitle: Text(loan.person),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => push(
+                          context,
+                          LoanDetail(app: app, loanId: loan.id),
+                        ),
+                      ),
+                    if (e.transferId != null) ...[
+                      const Text(
+                        'This entry is linked to the other wallet. Removing it removes both sides of the transfer.',
+                        style: TextStyle(color: AppTheme.muted),
+                      ),
+                      for (final peer in app.data.entries.where(
+                        (p) => p.transferId == e.transferId && p.id != e.id,
+                      ))
+                        ListTile(
+                          tileColor: AppTheme.mantle,
+                          shape: const RoundedRectangleBorder(),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 5,
+                          ),
+                          title: const Text('Other wallet'),
+                          subtitle: Text(
+                            app.data.wallets
+                                .firstWhere((w) => w.id == peer.walletId)
+                                .name,
+                          ),
+                        ),
+                    ],
+                    ListTile(
+                      tileColor: AppTheme.mantle,
+                      shape: const RoundedRectangleBorder(),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 5,
+                      ),
+                      title: const Text('Wallet balance after this entry'),
+                      subtitle: Text(money(running, w.currency)),
+                    ),
+                    if (e.note.isNotEmpty)
+                      ListTile(
+                        tileColor: AppTheme.mantle,
+                        shape: const RoundedRectangleBorder(),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 18,
+                          vertical: 5,
+                        ),
+                        title: const Text('Note'),
+                        subtitle: Text(e.note),
+                      ),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
             if (!w.archived && e.kind.ordinary)
               FilledButton.icon(
@@ -292,13 +370,11 @@ class _GroupDetailState extends State<GroupDetail> {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: Text(g.note),
               ),
-            Text('Net balance', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 8),
-            Text(
-              money(income - expense, w.currency),
-              style: Theme.of(context).textTheme.displaySmall,
+            BalancePanel(
+              label: 'Net balance',
+              value: money(income - expense, w.currency),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Stats(
               children: [
                 Stat(
@@ -475,24 +551,17 @@ class LoanDetail extends StatelessWidget {
         ),
         body: PageBody(
           children: [
-            Text(
-              l.lent ? 'Owed to you' : 'You owe',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              money(outstanding, w.currency),
-              style: Theme.of(context).textTheme.displaySmall
-                  ?.copyWith(color: l.lent ? AppTheme.green : AppTheme.peach),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              l.archived
-                  ? 'Archived · still included in outstanding totals'
-                  : outstanding == 0
-                  ? 'Settled'
-                  : 'Open loan',
-              style: const TextStyle(color: AppTheme.muted),
+            BalancePanel(
+              label: l.lent ? 'Owed to you' : 'You owe',
+              value: money(outstanding, w.currency),
+              footer: Text(
+                l.archived
+                    ? 'Archived'
+                    : outstanding == 0
+                    ? 'Settled'
+                    : 'Open loan',
+                style: const TextStyle(color: AppTheme.muted),
+              ),
             ),
             const SizedBox(height: 28),
             Stats(
@@ -539,7 +608,14 @@ class LoanDetail extends StatelessWidget {
             const SectionTitle('Repayment ledger'),
             for (final e in entries) ...[
               ListTile(
-                contentPadding: EdgeInsets.zero,
+                tileColor: AppTheme.mantle,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 5,
+                ),
                 leading: Icon(
                   e.kind == EntryKind.loanRepayment
                       ? Icons.check_circle_outline

@@ -18,6 +18,7 @@ import 'package:manavalan_finance/ui/details.dart';
 import 'package:manavalan_finance/ui/forms.dart';
 import 'package:manavalan_finance/ui/settings.dart';
 import 'package:manavalan_finance/ui/theme.dart';
+import 'package:manavalan_finance/ui/category_picker.dart';
 
 void main() {
   late LedgerStore store;
@@ -325,6 +326,123 @@ void main() {
     await screenshot(tester, 'repayment-received');
     expect(tester.takeException(), isNull);
   });
+  testWidgets('category picker drills down, searches, cancels and clears', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(tester, page: TransactionForm(app: app));
+    await tester.tap(find.text('Category'));
+    await tester.pumpAndSettle();
+    await screenshot(tester, 'category-picker');
+    await tester.ensureVisible(find.text('Food & drink').last);
+    await tester.tap(find.text('Food & drink').last);
+    await tester.pumpAndSettle();
+    await screenshot(tester, 'category-subcategories');
+    expect(find.text('Restaurants'), findsOneWidget);
+    await tester.tap(find.text('Restaurants'));
+    await tester.pumpAndSettle();
+    expect(find.text('Food & drink / Restaurants'), findsOneWidget);
+    await tester.tap(find.text('Category'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Close categories'));
+    await tester.pumpAndSettle();
+    expect(find.text('Food & drink / Restaurants'), findsOneWidget);
+    await tester.tap(find.text('Category'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'fuel');
+    await tester.pumpAndSettle();
+    expect(find.text('Fuel'), findsOneWidget);
+    await screenshot(tester, 'category-search');
+    await tester.tap(find.text('Fuel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Transport / Fuel'), findsOneWidget);
+    await tester.tap(find.text('Category'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Uncategorised'));
+    await tester.pumpAndSettle();
+    expect(find.text('Uncategorised'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('category picker isolates kind and archived categories', (
+    tester,
+  ) async {
+    await seed(tester);
+    final food = app.categories.firstWhere((c) => c.name == 'Food & drink');
+    await tester.runAsync(
+      () => app.change(() => store.archiveCategory(food.id, true)),
+    );
+    await show(
+      tester,
+      page: CategoryPicker(app: app, kind: 'expense'),
+    );
+    expect(find.text('Food & drink'), findsNothing);
+    expect(find.text('Salary'), findsNothing);
+    await tester.enterText(find.byType(TextField), 'groceries');
+    await tester.pumpAndSettle();
+    expect(find.text('No categories found'), findsOneWidget);
+    await show(
+      tester,
+      page: CategoryPicker(key: UniqueKey(), app: app, kind: 'income'),
+    );
+    expect(find.text('Income'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets(
+    'secondary screens and category management render with real hierarchy',
+    (tester) async {
+      await seed(tester);
+      await show(tester, page: CategoriesPage(app: app));
+      await screenshot(tester, 'categories');
+      await tester.tap(find.text('Food & drink').last);
+      await tester.pumpAndSettle();
+      expect(find.text('Groceries'), findsOneWidget);
+      await screenshot(tester, 'categories-expanded');
+      expect(
+        tester.getSize(find.byType(FloatingActionButton)).width,
+        greaterThan(120),
+      );
+      await show(tester, page: SettingsPage(app: app));
+      await screenshot(tester, 'settings');
+      await show(tester, page: WalletsPage(app: app));
+      await screenshot(tester, 'wallets');
+      await show(
+        tester,
+        page: EntryDetail(app: app, entryId: app.entries.first.id),
+      );
+      await screenshot(tester, 'transaction-detail');
+      await show(tester, page: CategoryForm(app: app));
+      await screenshot(tester, 'new-category');
+      await tester.tap(find.text('Icon'));
+      await tester.pumpAndSettle();
+      await screenshot(tester, 'icon-library');
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('pickers and forms support small phones with large text', (
+    tester,
+  ) async {
+    await seed(tester);
+    for (final page in <Widget>[
+      CategoryPicker(app: app, kind: 'expense'),
+      CategoriesPage(app: app),
+      TransactionForm(app: app),
+      LoanForm(app: app),
+    ]) {
+      await show(tester, size: const Size(320, 740), textScale: 2, page: page);
+      expect(tester.takeException(), isNull);
+    }
+    await show(
+      tester,
+      size: const Size(1100, 900),
+      page: CategoryPicker(app: app, kind: 'expense'),
+    );
+    await screenshot(tester, 'category-picker-tablet');
+    expect(tester.takeException(), isNull);
+  });
+
   test('CSV correctly escapes and neutralises spreadsheet formulas', () {
     final data = LedgerSnapshot(
       wallets: const [

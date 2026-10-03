@@ -73,9 +73,80 @@ class PageBody extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 820),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),
         children: children,
       ),
+    ),
+  );
+}
+
+class SelectionRow extends StatelessWidget {
+  final String label, value;
+  final IconData icon, trailing;
+  final Color color;
+  final VoidCallback? onTap;
+  const SelectionRow({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.icon,
+    this.onTap,
+    this.color = AppTheme.accent,
+    this.trailing = Icons.chevron_right_rounded,
+  });
+  @override
+  Widget build(BuildContext context) => Material(
+    color: AppTheme.mantle,
+    borderRadius: BorderRadius.circular(20),
+    child: ListTile(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+      leading: IconBadge(icon: icon, color: color),
+      title: Text(label),
+      subtitle: value.isEmpty ? null : Text(value),
+      trailing: onTap == null
+          ? null
+          : Icon(trailing, size: 20, color: AppTheme.muted),
+      onTap: onTap,
+    ),
+  );
+}
+
+class BalancePanel extends StatelessWidget {
+  final String label, value;
+  final Widget? footer;
+  const BalancePanel({
+    super.key,
+    required this.label,
+    required this.value,
+    this.footer,
+  });
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.all(24),
+    decoration: BoxDecoration(
+      gradient: AppTheme.wash,
+      borderRadius: BorderRadius.circular(26),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+        const SizedBox(height: 16),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -1.2,
+            ),
+          ),
+        ),
+        if (footer != null) ...[const SizedBox(height: 18), footer!],
+      ],
     ),
   );
 }
@@ -149,13 +220,11 @@ class SurfacePanel extends StatelessWidget {
     this.padding = const EdgeInsets.all(18),
   });
   @override
-  Widget build(BuildContext context) => Container(
-    padding: padding,
-    decoration: BoxDecoration(
-      color: AppTheme.mantle,
-      borderRadius: BorderRadius.circular(24),
-    ),
-    child: child,
+  Widget build(BuildContext context) => Material(
+    color: AppTheme.mantle,
+    borderRadius: BorderRadius.circular(24),
+    clipBehavior: Clip.antiAlias,
+    child: Padding(padding: padding, child: child),
   );
 }
 
@@ -290,10 +359,10 @@ class EntryTile extends StatelessWidget {
                           icon: loan != null
                               ? Icons.handshake_outlined
                               : entry.kind.ordinary
-                              ? iconFor(category?.icon ?? 'wallet')
+                              ? categoryIcon(category, s)
                               : Icons.swap_horiz_rounded,
-                          color: entry.sign > 0
-                              ? AppTheme.green
+                          color: entry.kind.ordinary
+                              ? categoryColor(category, s)
                               : AppTheme.accent,
                         ),
                       ),
@@ -370,51 +439,34 @@ class DateField extends StatelessWidget {
     this.label = 'Date',
     this.optional = false,
   });
+  Future<void> pick(BuildContext context) async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: value ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2200),
+    );
+    if (date != null) onChanged(date);
+  }
+
   @override
-  Widget build(BuildContext context) => InputDecorator(
-    decoration: InputDecoration(labelText: label),
-    child: Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: () async {
-              final date = await showDatePicker(
-                context: context,
-                initialDate: value ?? DateTime.now(),
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2200),
-              );
-              if (date != null) onChanged(date);
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Text(
-                value == null ? 'Choose date' : prettyDay(dayKey(value!)),
-              ),
-            ),
-          ),
-        ),
-        if (optional && value != null)
-          IconButton(
-            tooltip: 'Clear date',
+  Widget build(BuildContext context) => Column(
+    children: [
+      SelectionRow(
+        label: label,
+        value: value == null ? 'Not set' : prettyDay(dayKey(value!)),
+        icon: Icons.calendar_today_outlined,
+        onTap: () => pick(context),
+      ),
+      if (optional && value != null)
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
             onPressed: () => onChanged(null),
-            icon: const Icon(Icons.close),
+            child: const Text('Clear date'),
           ),
-        IconButton(
-          tooltip: 'Choose $label',
-          onPressed: () async {
-            final date = await showDatePicker(
-              context: context,
-              initialDate: value ?? DateTime.now(),
-              firstDate: DateTime(1900),
-              lastDate: DateTime(2200),
-            );
-            if (date != null) onChanged(date);
-          },
-          icon: const Icon(Icons.calendar_today_outlined),
         ),
-      ],
-    ),
+    ],
   );
 }
 
@@ -423,35 +475,92 @@ class IconPicker extends StatelessWidget {
   final ValueChanged<String> onChanged;
   const IconPicker({super.key, required this.value, required this.onChanged});
   @override
-  Widget build(BuildContext context) => ExpansionTile(
-    shape: const Border(),
-    collapsedShape: const Border(),
-    title: const Text('Icon', style: TextStyle(fontSize: 14)),
-    leading: IconBadge(icon: iconFor(value)),
-    children: [
-      Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: appIcons.entries
-            .map(
-              (e) => IconButton.filledTonal(
-                tooltip: e.key,
-                isSelected: value == e.key,
-                style: IconButton.styleFrom(
-                  backgroundColor: value == e.key
-                      ? AppTheme.accent
-                      : AppTheme.mantle,
-                  foregroundColor: value == e.key
-                      ? AppTheme.mantle
-                      : AppTheme.muted,
-                ),
-                onPressed: () => onChanged(e.key),
-                icon: Icon(e.value),
-              ),
-            )
-            .toList(),
-      ),
-    ],
+  Widget build(BuildContext context) => SelectionRow(
+    label: 'Icon',
+    value: value[0].toUpperCase() + value.substring(1),
+    icon: iconFor(value),
+    onTap: () async {
+      final selected = await push<String>(
+        context,
+        _IconLibrary(selected: value),
+      );
+      if (selected != null) onChanged(selected);
+    },
+  );
+}
+
+class _IconLibrary extends StatefulWidget {
+  final String selected;
+  const _IconLibrary({required this.selected});
+  @override
+  State<_IconLibrary> createState() => _IconLibraryState();
+}
+
+class _IconLibraryState extends State<_IconLibrary> {
+  String query = '';
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Choose icon')),
+    body: PageBody(
+      children: [
+        TextField(
+          decoration: const InputDecoration(
+            hintText: 'Search icons',
+            prefixIcon: Icon(Icons.search),
+          ),
+          onChanged: (v) => setState(() => query = v.toLowerCase()),
+        ),
+        const SizedBox(height: 20),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final columns = MediaQuery.textScalerOf(context).scale(1) > 1.3
+                ? 2
+                : constraints.maxWidth > 600
+                ? 6
+                : 4;
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final e in appIcons.entries.where(
+                  (e) => e.key.contains(query),
+                ))
+                  SizedBox(
+                    width: (constraints.maxWidth - (columns - 1) * 8) / columns,
+                    child: Material(
+                      color: widget.selected == e.key
+                          ? AppTheme.lavender
+                          : AppTheme.mantle,
+                      borderRadius: BorderRadius.circular(16),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () => Navigator.pop(context, e.key),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 4,
+                          ),
+                          child: Column(
+                            children: [
+                              Icon(e.value, color: AppTheme.accent),
+                              const SizedBox(height: 8),
+                              Text(
+                                e.key,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
+    ),
   );
 }
 

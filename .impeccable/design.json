@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-28T05:40:34.998206+00:00",
+  "generatedAt": "2026-10-03T07:59:29.963217+00:00",
   "title": "Design System: Manavalan Finance",
   "extensions": {
     "colorMeta": {
@@ -8,14 +8,14 @@
         "role": "neutral",
         "displayName": "Base",
         "tonalRamp": [
-          "oklch(15.00% 0.00287 264.54)",
-          "oklch(26.43% 0.00287 264.54)",
-          "oklch(37.86% 0.00287 264.54)",
-          "oklch(49.29% 0.00287 264.54)",
-          "oklch(60.71% 0.00287 264.54)",
-          "oklch(72.14% 0.00287 264.54)",
-          "oklch(83.57% 0.00287 264.54)",
-          "oklch(95.00% 0.00287 264.54)"
+          "oklch(15.00% 0.00284 308.43)",
+          "oklch(26.43% 0.00284 308.43)",
+          "oklch(37.86% 0.00284 308.43)",
+          "oklch(49.29% 0.00284 308.43)",
+          "oklch(60.71% 0.00284 308.43)",
+          "oklch(72.14% 0.00284 308.43)",
+          "oklch(83.57% 0.00284 308.43)",
+          "oklch(95.00% 0.00284 308.43)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -38,14 +38,14 @@
         "role": "neutral",
         "displayName": "Surface",
         "tonalRamp": [
-          "oklch(15.00% 0.00746 260.73)",
-          "oklch(26.43% 0.00746 260.73)",
-          "oklch(37.86% 0.00746 260.73)",
-          "oklch(49.29% 0.00746 260.73)",
-          "oklch(60.71% 0.00746 260.73)",
-          "oklch(72.14% 0.00746 260.73)",
-          "oklch(83.57% 0.00746 260.73)",
-          "oklch(95.00% 0.00746 260.73)"
+          "oklch(15.00% 0.00698 304.24)",
+          "oklch(26.43% 0.00698 304.24)",
+          "oklch(37.86% 0.00698 304.24)",
+          "oklch(49.29% 0.00698 304.24)",
+          "oklch(60.71% 0.00698 304.24)",
+          "oklch(72.14% 0.00698 304.24)",
+          "oklch(83.57% 0.00698 304.24)",
+          "oklch(95.00% 0.00698 304.24)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -53,14 +53,14 @@
         "role": "neutral",
         "displayName": "Overlay",
         "tonalRamp": [
-          "oklch(15.00% 0.02033 260.17)",
-          "oklch(26.43% 0.02033 260.17)",
-          "oklch(37.86% 0.02033 260.17)",
-          "oklch(49.29% 0.02033 260.17)",
-          "oklch(60.71% 0.02033 260.17)",
-          "oklch(72.14% 0.02033 260.17)",
-          "oklch(83.57% 0.02033 260.17)",
-          "oklch(95.00% 0.02033 260.17)"
+          "oklch(15.00% 0.02146 301.07)",
+          "oklch(26.43% 0.02146 301.07)",
+          "oklch(37.86% 0.02146 301.07)",
+          "oklch(49.29% 0.02146 301.07)",
+          "oklch(60.71% 0.02146 301.07)",
+          "oklch(72.14% 0.02146 301.07)",
+          "oklch(83.57% 0.02146 301.07)",
+          "oklch(95.00% 0.02146 301.07)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -68,14 +68,14 @@
         "role": "neutral",
         "displayName": "Text",
         "tonalRamp": [
-          "oklch(15.00% 0.01254 264.28)",
-          "oklch(26.43% 0.01254 264.28)",
-          "oklch(37.86% 0.01254 264.28)",
-          "oklch(49.29% 0.01254 264.28)",
-          "oklch(60.71% 0.01254 264.28)",
-          "oklch(72.14% 0.01254 264.28)",
-          "oklch(83.57% 0.01254 264.28)",
-          "oklch(95.00% 0.01254 264.28)"
+          "oklch(15.00% 0.01571 302.29)",
+          "oklch(26.43% 0.01571 302.29)",
+          "oklch(37.86% 0.01571 302.29)",
+          "oklch(49.29% 0.01571 302.29)",
+          "oklch(60.71% 0.01571 302.29)",
+          "oklch(72.14% 0.01571 302.29)",
+          "oklch(83.57% 0.01571 302.29)",
+          "oklch(95.00% 0.01571 302.29)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -83,14 +83,14 @@
         "role": "neutral",
         "displayName": "Muted",
         "tonalRamp": [
-          "oklch(15.00% 0.02304 257.51)",
-          "oklch(26.43% 0.02304 257.51)",
-          "oklch(37.86% 0.02304 257.51)",
-          "oklch(49.29% 0.02304 257.51)",
-          "oklch(60.71% 0.02304 257.51)",
-          "oklch(72.14% 0.02304 257.51)",
-          "oklch(83.57% 0.02304 257.51)",
-          "oklch(95.00% 0.02304 257.51)"
+          "oklch(15.00% 0.02271 304.97)",
+          "oklch(26.43% 0.02271 304.97)",
+          "oklch(37.86% 0.02271 304.97)",
+          "oklch(49.29% 0.02271 304.97)",
+          "oklch(60.71% 0.02271 304.97)",
+          "oklch(72.14% 0.02271 304.97)",
+          "oklch(83.57% 0.02271 304.97)",
+          "oklch(95.00% 0.02271 304.97)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -98,14 +98,14 @@
         "role": "primary",
         "displayName": "Accent",
         "tonalRamp": [
-          "oklch(15.00% 0.18662 261.29)",
-          "oklch(26.43% 0.18662 261.29)",
-          "oklch(37.86% 0.18662 261.29)",
-          "oklch(49.29% 0.18662 261.29)",
-          "oklch(60.71% 0.18662 261.29)",
-          "oklch(72.14% 0.18662 261.29)",
-          "oklch(83.57% 0.18662 261.29)",
-          "oklch(95.00% 0.18662 261.29)"
+          "oklch(15.00% 0.15865 298.54)",
+          "oklch(26.43% 0.15865 298.54)",
+          "oklch(37.86% 0.15865 298.54)",
+          "oklch(49.29% 0.15865 298.54)",
+          "oklch(60.71% 0.15865 298.54)",
+          "oklch(72.14% 0.15865 298.54)",
+          "oklch(83.57% 0.15865 298.54)",
+          "oklch(95.00% 0.15865 298.54)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       },
@@ -183,6 +183,66 @@
           "oklch(95.00% 0.13831 300.38)"
         ],
         "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+      },
+      "lavender": {
+        "role": "secondary",
+        "displayName": "Lavender",
+        "tonalRamp": [
+          "oklch(15.00% 0.06375 301.30)",
+          "oklch(26.43% 0.06375 301.30)",
+          "oklch(37.86% 0.06375 301.30)",
+          "oklch(49.29% 0.06375 301.30)",
+          "oklch(60.71% 0.06375 301.30)",
+          "oklch(72.14% 0.06375 301.30)",
+          "oklch(83.57% 0.06375 301.30)",
+          "oklch(95.00% 0.06375 301.30)"
+        ],
+        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+      },
+      "wash-pink": {
+        "role": "secondary",
+        "displayName": "Wash Pink",
+        "tonalRamp": [
+          "oklch(15.00% 0.04323 341.58)",
+          "oklch(26.43% 0.04323 341.58)",
+          "oklch(37.86% 0.04323 341.58)",
+          "oklch(49.29% 0.04323 341.58)",
+          "oklch(60.71% 0.04323 341.58)",
+          "oklch(72.14% 0.04323 341.58)",
+          "oklch(83.57% 0.04323 341.58)",
+          "oklch(95.00% 0.04323 341.58)"
+        ],
+        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+      },
+      "wash-violet": {
+        "role": "secondary",
+        "displayName": "Wash Violet",
+        "tonalRamp": [
+          "oklch(15.00% 0.04768 301.51)",
+          "oklch(26.43% 0.04768 301.51)",
+          "oklch(37.86% 0.04768 301.51)",
+          "oklch(49.29% 0.04768 301.51)",
+          "oklch(60.71% 0.04768 301.51)",
+          "oklch(72.14% 0.04768 301.51)",
+          "oklch(83.57% 0.04768 301.51)",
+          "oklch(95.00% 0.04768 301.51)"
+        ],
+        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+      },
+      "wash-light": {
+        "role": "secondary",
+        "displayName": "Wash Light",
+        "tonalRamp": [
+          "oklch(15.00% 0.00567 308.40)",
+          "oklch(26.43% 0.00567 308.40)",
+          "oklch(37.86% 0.00567 308.40)",
+          "oklch(49.29% 0.00567 308.40)",
+          "oklch(60.71% 0.00567 308.40)",
+          "oklch(72.14% 0.00567 308.40)",
+          "oklch(83.57% 0.00567 308.40)",
+          "oklch(95.00% 0.00567 308.40)"
+        ],
+        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
       }
     },
     "typographyMeta": {
@@ -201,6 +261,10 @@
       "entry-title": {
         "displayName": "Ledger title",
         "purpose": "Ledger names and signed values."
+      },
+      "balance": {
+        "displayName": "Balance value",
+        "purpose": "Shared overview and detail financial value."
       }
     },
     "shadows": [],
@@ -225,6 +289,16 @@
         "name": "ledger-stack",
         "value": "300px",
         "condition": "Inner content width < 300 or text scale > 1.3."
+      },
+      {
+        "name": "category-four-columns",
+        "value": "600px",
+        "condition": "Content width > 600 and text scale <= 1.3; otherwise three columns, or rows above scale 1.3."
+      },
+      {
+        "name": "icon-six-columns",
+        "value": "600px",
+        "condition": "Content width > 600 and text scale <= 1.3; otherwise four columns, or two above scale 1.3."
       }
     ],
     "native": {
@@ -243,7 +317,7 @@
       "refersTo": "button-primary",
       "description": "Native action approximation; Flutter provides exact state layers and sizing.",
       "html": "<button class=\"ds-button-primary\">Save</button>",
-      "css": ".ds-button-primary{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:999px;background:#2866d8;color:#fff;cursor:pointer} .ds-button-primary:hover{filter:brightness(.96)} .ds-button-primary:focus-visible{outline:2px solid #2866d8;outline-offset:3px} .ds-button-primary:active{filter:brightness(.9)} .ds-button-primary:disabled{opacity:.38;cursor:default}"
+      "css": ".ds-button-primary{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:999px;background:#201d25;color:#fff;cursor:pointer} .ds-button-primary:hover{filter:brightness(.96)} .ds-button-primary:focus-visible{outline:2px solid #7850b8;outline-offset:3px} .ds-button-primary:active{filter:brightness(.9)} .ds-button-primary:disabled{opacity:.38;cursor:default}"
     },
     {
       "name": "Outlined action",
@@ -251,7 +325,7 @@
       "refersTo": "button-outlined",
       "description": "Native action approximation; Flutter provides exact state layers and sizing.",
       "html": "<button class=\"ds-button-outlined\">Lend more</button>",
-      "css": ".ds-button-outlined{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:48px;padding:0 24px;border:1px solid #e9ecf1;border-radius:999px;background:transparent;color:#2866d8;cursor:pointer} .ds-button-outlined:hover{filter:brightness(.96)} .ds-button-outlined:focus-visible{outline:2px solid #2866d8;outline-offset:3px} .ds-button-outlined:active{filter:brightness(.9)} .ds-button-outlined:disabled{opacity:.38;cursor:default}"
+      "css": ".ds-button-outlined{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:48px;padding:0 24px;border:1px solid #eeecf1;border-radius:999px;background:transparent;color:#7850b8;cursor:pointer} .ds-button-outlined:hover{filter:brightness(.96)} .ds-button-outlined:focus-visible{outline:2px solid #7850b8;outline-offset:3px} .ds-button-outlined:active{filter:brightness(.9)} .ds-button-outlined:disabled{opacity:.38;cursor:default}"
     },
     {
       "name": "Destructive action",
@@ -259,7 +333,7 @@
       "refersTo": "button-destructive",
       "description": "Native action approximation; Flutter provides exact state layers and sizing.",
       "html": "<button class=\"ds-button-destructive\">Delete</button>",
-      "css": ".ds-button-destructive{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:999px;background:#be3d47;color:#fff;cursor:pointer} .ds-button-destructive:hover{filter:brightness(.96)} .ds-button-destructive:focus-visible{outline:2px solid #2866d8;outline-offset:3px} .ds-button-destructive:active{filter:brightness(.9)} .ds-button-destructive:disabled{opacity:.38;cursor:default}"
+      "css": ".ds-button-destructive{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:999px;background:#be3d47;color:#fff;cursor:pointer} .ds-button-destructive:hover{filter:brightness(.96)} .ds-button-destructive:focus-visible{outline:2px solid #7850b8;outline-offset:3px} .ds-button-destructive:active{filter:brightness(.9)} .ds-button-destructive:disabled{opacity:.38;cursor:default}"
     },
     {
       "name": "Text field",
@@ -267,7 +341,7 @@
       "refersTo": "field",
       "description": "Filled field with native validation and keyboard behavior.",
       "html": "<label class=\"ds-label\" for=\"ds-name\">Name</label><input class=\"ds-field\" id=\"ds-name\" placeholder=\"Name\"/>",
-      "css": ".ds-label{font-family:Roboto,sans-serif;display:block;color:#68717e;font-size:14px;margin-bottom:8px} .ds-field{font-family:Roboto,sans-serif;background:white;color:#191c22;border:1px solid #e9ecf1;border-radius:18px;padding:18px;font-size:16px;width:calc(100% - 38px)} .ds-field:hover{border-color:#b9c1ce} .ds-field:focus-visible{outline:1.5px solid #2866d8;outline-offset:-1.5px}"
+      "css": ".ds-label{font-family:Roboto,sans-serif;display:block;color:#706a78;font-size:14px;margin-bottom:8px} .ds-field{font-family:Roboto,sans-serif;background:white;color:#201d25;border:1px solid #eeecf1;border-radius:18px;padding:18px;font-size:16px;width:calc(100% - 38px)} .ds-field:hover{border-color:#c5c0cf} .ds-field:focus-visible{outline:1.5px solid #7850b8;outline-offset:-1.5px}"
     },
     {
       "name": "Amount entry",
@@ -275,15 +349,15 @@
       "refersTo": "amount-field",
       "description": "Large centered currency entry; focus is the native caret, without a field border.",
       "html": "<label class=\"ds-amount-label\" for=\"ds-amount\">Amount (INR)</label><input class=\"ds-amount\" id=\"ds-amount\" inputmode=\"decimal\" placeholder=\"0.00\"/>",
-      "css": ".ds-amount-label{font-family:Roboto,sans-serif;display:block;background:#f6f7f9;color:#68717e;font-size:14px} .ds-amount{font-family:Roboto,sans-serif;width:calc(100% - 24px);border:0;background:#f6f7f9;color:#191c22;padding:26px 12px;text-align:center;font-size:40px;font-weight:600;letter-spacing:-1px} .ds-amount::placeholder{color:#68717e} .ds-amount:hover{cursor:text} .ds-amount:focus-visible{outline:none;caret-color:#2866d8}"
+      "css": ".ds-amount-label{font-family:Roboto,sans-serif;display:block;background:#f7f6f8;color:#706a78;font-size:14px} .ds-amount{font-family:Roboto,sans-serif;width:calc(100% - 24px);border:0;background:#f7f6f8;color:#201d25;padding:26px 12px;text-align:center;font-size:40px;font-weight:600;letter-spacing:-1px} .ds-amount::placeholder{color:#706a78} .ds-amount:hover{cursor:text} .ds-amount:focus-visible{outline:none;caret-color:#7850b8}"
     },
     {
       "name": "Surface panel",
       "kind": "card",
       "refersTo": "surface-panel",
       "description": "Flat white container used by shared statistics and content.",
-      "html": "<div class=\"ds-panel\"><span>Income</span><strong>₹12,500.00</strong></div>",
-      "css": ".ds-panel{font-family:Roboto,sans-serif;padding:18px;border-radius:24px;background:#fff;color:#68717e;font-size:14px} .ds-panel strong{display:block;margin-top:8px;color:#16764d;font-size:20px;font-weight:600;letter-spacing:-.4px}"
+      "html": "<div class=\"ds-panel\"><span>Income</span><strong>\u20b912,500.00</strong></div>",
+      "css": ".ds-panel{font-family:Roboto,sans-serif;padding:18px;border-radius:24px;background:#fff;color:#706a78;font-size:14px} .ds-panel strong{display:block;margin-top:8px;color:#16764d;font-size:20px;font-weight:600;letter-spacing:-.4px}"
     },
     {
       "name": "Lending status",
@@ -291,25 +365,41 @@
       "refersTo": "choice-selected",
       "description": "Selected labels stay white against the dark pill; no checkmark.",
       "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Open</button><button class=\"ds-chip\" aria-pressed=\"false\">Settled</button><button class=\"ds-chip\" aria-pressed=\"false\">Archived</button></div>",
-      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px} .ds-chip{font-family:Roboto,sans-serif;font-size:14px;padding:10px 14px;border:1px solid #e9ecf1;border-radius:999px;color:#68717e;background:#fff;cursor:pointer} .ds-chip[aria-pressed=true]{background:#191c22;color:#fff} .ds-chip:hover{filter:brightness(.96)} .ds-chip:focus-visible{outline:2px solid #2866d8;outline-offset:2px} .ds-chip:active{filter:brightness(.9)}"
+      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px} .ds-chip{font-family:Roboto,sans-serif;font-size:14px;padding:10px 14px;border:1px solid #eeecf1;border-radius:999px;color:#706a78;background:#fff;cursor:pointer} .ds-chip[aria-pressed=true]{background:#201d25;color:#fff} .ds-chip:hover{filter:brightness(.96)} .ds-chip:focus-visible{outline:2px solid #7850b8;outline-offset:2px} .ds-chip:active{filter:brightness(.9)}"
     },
     {
       "name": "Mobile navigation",
       "kind": "nav",
       "refersTo": "navigation-mobile",
-      "description": "Compact dark navigation plus a separate blue add action; native icons and state rendering are approximated.",
+      "description": "White mobile navigation with a dark selected circle and separate dark add action; native state rendering is approximated.",
       "html": "<div class=\"ds-shell\"><nav class=\"ds-nav\" aria-label=\"Wallet workspace\"><button class=\"ds-destination\" aria-label=\"Overview\" title=\"Overview\" aria-current=\"page\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M3 10 12 3l9 7v11h-6v-7H9v7H3Z\"/></svg></button><button class=\"ds-destination\" aria-label=\"Transactions\" title=\"Transactions\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2ZM9 7h6M9 11h6M9 15h6\"/></svg></button><button class=\"ds-destination\" aria-label=\"Groups\" title=\"Groups\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M3 6h7l2 2h9v12H3Z\"/></svg></button><button class=\"ds-destination\" aria-label=\"Lending\" title=\"Lending\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"m2 9 5-5 5 2 5-2 5 5-4 4-4-4-3 2-4-3-3 5m3 0 7 7 6-6\"/></svg></button></nav><button class=\"ds-add\" aria-label=\"New transaction\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></button></div>",
-      "css": ".ds-shell{display:flex;align-items:center;gap:12px;max-width:404px}.ds-nav{display:flex;justify-content:space-around;align-items:center;height:66px;border-radius:40px;background:#191c22;flex:1;max-width:330px}.ds-destination{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:#b9c1ce;cursor:pointer}.ds-destination[aria-current]{background:white;color:#191c22}.ds-add{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border:0;border-radius:50%;background:#2866d8;color:#fff;cursor:pointer}.ds-destination:hover,.ds-add:hover{filter:brightness(.94)}.ds-destination:focus-visible,.ds-add:focus-visible{outline:2px solid #2866d8;outline-offset:3px}.ds-destination:active,.ds-add:active{filter:brightness(.85)}"
+      "css": ".ds-shell{display:flex;align-items:center;gap:12px;max-width:404px}.ds-nav{display:flex;justify-content:space-around;align-items:center;height:66px;border-radius:40px;background:#ffffff;flex:1;max-width:330px}.ds-destination{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:#706a78;cursor:pointer}.ds-destination[aria-current]{background:#201d25;color:#ffffff}.ds-add{display:flex;align-items:center;justify-content:center;width:62px;height:62px;border:0;border-radius:50%;background:#201d25;color:#fff;cursor:pointer}.ds-destination:hover,.ds-add:hover{filter:brightness(.94)}.ds-destination:focus-visible,.ds-add:focus-visible{outline:2px solid #7850b8;outline-offset:3px}.ds-destination:active,.ds-add:active{filter:brightness(.85)}"
+    },
+    {
+      "name": "Balance panel",
+      "kind": "card",
+      "refersTo": "balance-panel",
+      "description": "Shared soft diagonal wash for overview and detail values.",
+      "html": "<section class=\"ds-balance\"><p>Wallet balance</p><strong>\u20b924,500.00</strong></section>",
+      "css": ".ds-balance{background:linear-gradient(135deg,#f6d6e9 0%,#e3d7f9 50%,#faf8fc 100%);color:#201d25;border-radius:26px;padding:24px;font-family:Roboto,sans-serif}.ds-balance p{margin:0 0 16px;font-size:14px;font-weight:500}.ds-balance strong{display:block;font-size:38px;font-weight:600;letter-spacing:-1.2px}"
+    },
+    {
+      "name": "Selection row",
+      "kind": "custom",
+      "refersTo": "selection-row",
+      "description": "Category, group, and icon route entry with recognizable icon and secondary context.",
+      "html": "<button class=\"ds-selection\"><span class=\"ds-selection-icon\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 7h16v13H4zM8 7V5a4 4 0 0 1 8 0v2\"/></svg></span><span><strong>Groceries</strong><small>Food &amp; drink</small></span><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m9 6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-selection{display:flex;align-items:center;gap:16px;width:100%;border:0;border-radius:20px;padding:9px 16px;background:#fff;color:#201d25;text-align:left;font-family:Roboto,sans-serif;cursor:pointer}.ds-selection-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:42px;height:42px;border-radius:14px;background:rgba(120,80,184,.08);color:#7850b8}.ds-selection strong{display:block;font-size:15px;font-weight:600}.ds-selection small{display:block;font-size:13px;color:#706a78;margin-top:4px}.ds-selection>svg{margin-left:auto;color:#706a78}.ds-selection:hover{background:#f7f6f8}.ds-selection:focus-visible{outline:2px solid #7850b8;outline-offset:2px}.ds-selection:active{background:#eeecf1}"
     }
   ],
   "narrative": {
     "northStar": "The Wallet Workspace",
-    "overview": "The Wallet Workspace is a clean, light interface for local personal finance on Android and iOS. The user’s supplied references establish a gray canvas, white rounded surfaces, a saturated blue balance area, compact dark navigation, and prominent amounts. Short labels and familiar controls keep the interface quiet.\n\nFlutter Material 3 supplies native interaction, focus, validation, and navigation behavior. The original wallet-and-bars identity remains, recolored in blue and white. This record describes the implemented light redesign in lib/ui; it supersedes the earlier dark direction.",
+    "overview": "The Wallet Workspace is a light interface for local personal finance on Android and iOS. A neutral canvas and white rounded surfaces support soft pink-to-violet balance panels, near-black primary actions, and prominent amounts. Short labels and recognizable category icons keep everyday entry quiet and direct.\n\nFlutter Material 3 supplies native interaction, focus, validation, and navigation behavior. The original wallet-and-bars identity uses matching violet and pink. This record follows the implemented lib/ui system and the user\u2019s 3 October 2026 reference, which supersedes the earlier blue direction.",
     "keyCharacteristics": [
-      "Light gray canvas with flat white surfaces and a blue financial focal point.",
-      "Large amounts, compact metadata, and restrained explanatory copy.",
-      "Dark mobile navigation pill with a separate blue add action.",
-      "Adaptive layouts preserve wallet context and readable financial values."
+      "Light neutral canvas, white surfaces, and soft gradient financial focal points.",
+      "Large exact amounts and compact supporting metadata.",
+      "White mobile navigation with a dark selected circle and separate dark add action.",
+      "Explicit category hierarchy, recognizable icons, and adaptive selection layouts."
     ],
     "rules": [
       {
@@ -324,21 +414,23 @@
       },
       {
         "name": "The Flat Surface Rule",
-        "body": "Use contrast between the gray canvas and white panels to organize content. Keep permanent surfaces and the add action free of decorative shadows.",
+        "body": "Use contrast between the neutral canvas and white panels to organize content. Keep permanent surfaces and the add action free of decorative shadows.",
         "section": "elevation"
       }
     ],
     "dos": [
       "Do retain the selected wallet in the app shell and money-entry forms.",
-      "Do reuse SurfacePanel, IconBadge, Stats, EntryTile, and PageBody for related screens.",
+      "Do reuse BalancePanel, SurfacePanel, SelectionRow, IconBadge, Stats, EntryTile, and PageBody for related screens.",
       "Do keep selected lending chips white on the dark selected background.",
+      "Do expose parent context for child categories and preserve the selection when a picker is dismissed.",
       "Do use concise labels and reveal optional notes through the existing expansion control.",
       "Do preserve native keyboard, date-picker, Back, focus, and validation behavior.",
       "Do explain destructive effects in the confirmation dialog."
     ],
     "donts": [
-      "Don't restore the superseded dark palette or mauve actions.",
+      "Don't restore the superseded blue balance cards, blue primary actions, or dark mobile navigation.",
       "Don't use color alone to identify money direction or loan status.",
+      "Don't replace the hierarchical category route with a long flat dropdown.",
       "Don't add decorative charts, marketing copy, or extra cards without information that needs them.",
       "Don't abbreviate or ellipsize financial amounts.",
       "Don't turn loan advances, repayments, or transfers into ordinary income or spending."

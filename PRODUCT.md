@@ -21,7 +21,7 @@ Quick manual finance tracking with independent wallet workspaces and accurate, u
 - Backup/restore, export, and same-currency transfers are included practical additions from the accepted plan.
 
 ## Brand Commitments
-A clean light interface inspired by the user’s supplied finance-app references: blue balance area, white rounded surfaces, dark compact navigation, prominent amounts, and minimal explanatory copy. The user explicitly superseded Catppuccin Mocha. Preserve the name Manavalan Finance and its original wallet icon, recolored to match.
+The 3 October 2026 user reference supersedes the earlier blue design: light neutral canvas, soft pink-to-violet balance surfaces, near-black primary actions, quiet white navigation with a dark selected circle, and a matching violet/pink original wallet icon. Secondary screens must have the same care as the dashboard. Keep copy minimal, amounts prominent, categories recognizable by icon and color, and subcategory hierarchy explicit. Preserve the name Manavalan Finance.
 
 ## Product Principles
 - Wallet context is visible wherever money is entered.

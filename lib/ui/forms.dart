@@ -4,6 +4,7 @@ import '../core/app_controller.dart';
 import '../core/models.dart';
 import 'shared.dart';
 import 'theme.dart';
+import 'category_picker.dart';
 
 String? nameValidator(String? value) {
   try {
@@ -52,7 +53,8 @@ TextFormField amountField(
 }) => TextFormField(
   controller: controller,
   decoration: InputDecoration(
-    labelText: '$label ($currency)',
+    labelText: '$label · $currency',
+    alignLabelWithHint: true,
     hintText: '0.00',
     hintStyle: const TextStyle(
       fontSize: 40,
@@ -489,71 +491,41 @@ class _TransactionFormState extends State<TransactionForm> {
             category = null;
           }),
         ),
+        SelectionRow(
+          label: 'Category',
+          value: widget.app.data.categoryName(category),
+          icon: categoryIcon(
+            widget.app.data.category(category),
+            widget.app.data,
+          ),
+          color: categoryColor(
+            widget.app.data.category(category),
+            widget.app.data,
+          ),
+          onTap: () async {
+            final choice = await push<CategoryChoice>(
+              context,
+              CategoryPicker(
+                app: widget.app,
+                kind: kind.name,
+                selected: category,
+              ),
+            );
+            if (choice != null && mounted) setState(() => category = choice.id);
+          },
+        ),
         DateField(value: date, onChanged: (v) => setState(() => date = v!)),
-        DropdownButtonFormField<int>(
-          key: ValueKey('category-$category-${kind.name}'),
-          initialValue: category,
-          isExpanded: true,
-          decoration: const InputDecoration(labelText: 'Category'),
-          items: [
-            const DropdownMenuItem<int>(
-              value: null,
-              child: Text('Uncategorised'),
-            ),
-            ...widget.app.categories
-                .where(
-                  (c) =>
-                      c.kind == kind.name && (!c.archived || c.id == category),
-                )
-                .map(
-                  (c) => DropdownMenuItem(
-                    value: c.id,
-                    child: Text(
-                      widget.app.data.categoryName(c.id),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-          ],
-          onChanged: (v) => setState(() => category = v),
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-            icon: const Icon(Icons.add),
-            label: const Text('New category'),
-            onPressed: () async {
-              final id = await push<int>(
-                context,
-                CategoryForm(app: widget.app, kind: kind.name),
-              );
-              if (id != null && mounted) setState(() => category = id);
-            },
-          ),
-        ),
-        DropdownButtonFormField<int>(
-          key: ValueKey('group-$group'),
-          initialValue: group,
-          isExpanded: true,
-          decoration: const InputDecoration(labelText: 'Group (optional)'),
-          items: [
-            const DropdownMenuItem<int>(value: null, child: Text('No group')),
-            ...widget.app.groups
-                .where((g) => !g.archived || g.id == group)
-                .map((g) => DropdownMenuItem(value: g.id, child: Text(g.name))),
-          ],
-          onChanged: (v) => setState(() => group = v),
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-            icon: const Icon(Icons.add),
-            label: const Text('New group'),
-            onPressed: () async {
-              final id = await push<int>(context, GroupForm(app: widget.app));
-              if (id != null && mounted) setState(() => group = id);
-            },
-          ),
+        SelectionRow(
+          label: 'Group',
+          value: widget.app.data.group(group)?.name ?? 'None',
+          icon: iconFor(widget.app.data.group(group)?.icon ?? 'group'),
+          onTap: () async {
+            final choice = await push<GroupChoice>(
+              context,
+              GroupPicker(app: widget.app, selected: group),
+            );
+            if (choice != null && mounted) setState(() => group = choice.id);
+          },
         ),
         noteField(note),
       ],

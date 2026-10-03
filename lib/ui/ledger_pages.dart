@@ -7,6 +7,7 @@ import 'forms.dart';
 import 'shared.dart';
 import 'theme.dart';
 import 'details.dart';
+import 'category_picker.dart';
 
 class OverviewPage extends StatefulWidget {
   final AppController app;
@@ -42,38 +43,15 @@ class _OverviewPageState extends State<OverviewPage> {
       ..sort((a, b) => b.value.compareTo(a.value));
     return PageBody(
       children: [
-        Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: AppTheme.accent,
-            borderRadius: BorderRadius.circular(28),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        BalancePanel(
+          label: 'Wallet balance',
+          value: money(s.balance(w), w.currency),
+          footer: Wrap(
             children: [
-              const Text(
-                'Wallet balance',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-              const SizedBox(height: 12),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  money(s.balance(w), w.currency),
-                  style: const TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: -1.2,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 22),
               OutlinedButton.icon(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: const BorderSide(color: Color(0xff91b3f2)),
+                  backgroundColor: Colors.white.withValues(alpha: .7),
+                  foregroundColor: AppTheme.text,
                 ),
                 onPressed: () => push(context, TransferForm(app: app)),
                 icon: const Icon(Icons.swap_horiz_rounded, size: 19),
@@ -301,27 +279,21 @@ class _TransactionsPageState extends State<TransactionsPage> {
             onChanged: (v) => setState(() => kind = v),
           ),
           const SizedBox(height: 12),
-          DropdownButtonFormField<int>(
-            key: ValueKey('filter-category-$categoryValue'),
-            initialValue: categoryValue,
-            decoration: const InputDecoration(labelText: 'Category'),
-            isExpanded: true,
-            items: [
-              const DropdownMenuItem<int>(
-                value: null,
-                child: Text('All categories'),
-              ),
-              ...app.categories.map(
-                (c) => DropdownMenuItem(
-                  value: c.id,
-                  child: Text(
-                    app.data.categoryName(c.id),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ],
-            onChanged: (v) => setState(() => categoryId = v),
+          SelectionRow(
+            label: 'Category',
+            value: categoryValue == null
+                ? 'All categories'
+                : app.data.categoryName(categoryValue),
+            icon: categoryIcon(app.data.category(categoryValue), app.data),
+            onTap: () async {
+              final choice = await push<CategoryChoice>(
+                context,
+                CategoryPicker(app: app, selected: categoryValue, filter: true),
+              );
+              if (choice != null && mounted) {
+                setState(() => categoryId = choice.id);
+              }
+            },
           ),
           const SizedBox(height: 12),
           DropdownButtonFormField<int>(
@@ -381,13 +353,33 @@ class _TransactionsPageState extends State<TransactionsPage> {
             title: 'No matching transactions',
             detail: 'Try different filters or add a transaction.',
           ),
-        for (final e in entries) ...[
-          EntryTile(
-            app: app,
-            entry: e,
-            onTap: () => push(context, EntryDetail(app: app, entryId: e.id)),
+        for (final date in entries.map((e) => e.date).toSet()) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 10),
+            child: Text(
+              prettyDay(date),
+              style: const TextStyle(
+                color: AppTheme.muted,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
-          const Divider(),
+          SurfacePanel(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              children: [
+                for (final e in entries.where((e) => e.date == date))
+                  EntryTile(
+                    app: app,
+                    entry: e,
+                    onTap: () =>
+                        push(context, EntryDetail(app: app, entryId: e.id)),
+                  ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
         ],
       ],
     );
@@ -446,18 +438,37 @@ class _GroupsPageState extends State<GroupsPage> {
                 vertical: 10,
               ),
               leading: IconBadge(icon: iconFor(g.icon)),
-              title: Text(g.name),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(g.name),
+                  const SizedBox(height: 8),
+                  Text(
+                    money(
+                      app.entries
+                          .where((e) => e.groupId == g.id)
+                          .fold<int>(0, (sum, e) => sum + e.signed),
+                      w.currency,
+                    ),
+                    style: const TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -.5,
+                    ),
+                  ),
+                ],
+              ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 6),
                 child: Text(
-                  '${app.entries.where((e) => e.groupId == g.id).length} entries · Net ${money(app.entries.where((e) => e.groupId == g.id).fold<int>(0, (sum, e) => sum + e.signed), w.currency)}',
+                  '${app.entries.where((e) => e.groupId == g.id).length} ${app.entries.where((e) => e.groupId == g.id).length == 1 ? 'transaction' : 'transactions'}',
                 ),
               ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => push(context, GroupDetail(app: app, groupId: g.id)),
             ),
           ),
-          const Divider(),
+          const SizedBox(height: 4),
         ],
       ],
     );
@@ -501,6 +512,16 @@ class _LendingPageState extends State<LendingPage> {
           ],
           selected: {direction},
           onSelectionChanged: (v) => setState(() => direction = v.first),
+        ),
+        const SizedBox(height: 18),
+        BalancePanel(
+          label: direction == 'lent' ? 'Owed to you' : 'You owe',
+          value: money(
+            app.loans
+                .where((l) => l.direction == direction)
+                .fold<int>(0, (sum, l) => sum + app.data.outstanding(l)),
+            w.currency,
+          ),
         ),
         const SizedBox(height: 16),
         TextField(
@@ -570,7 +591,7 @@ class _LendingPageState extends State<LendingPage> {
               onTap: () => push(context, LoanDetail(app: app, loanId: l.id)),
             ),
           ),
-          const Divider(),
+          const SizedBox(height: 4),
         ],
       ],
     );
