@@ -1,3 +1,4 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_controller.dart';
@@ -47,7 +48,7 @@ class EntryDetail extends StatelessWidget {
                 children: [
                   IconBadge(
                     icon: loan != null
-                        ? Icons.person_outline_rounded
+                        ? LucideIcons.userRound300
                         : categoryIcon(
                             app.data.category(e.categoryId),
                             app.data,
@@ -77,12 +78,12 @@ class EntryDetail extends StatelessWidget {
                     SelectionRow(
                       label: 'Wallet',
                       value: w.name,
-                      icon: Icons.account_balance_wallet_outlined,
+                      icon: LucideIcons.wallet300,
                     ),
                     SelectionRow(
                       label: 'Date',
                       value: prettyDay(e.date),
-                      icon: Icons.calendar_today_outlined,
+                      icon: LucideIcons.calendarDays300,
                     ),
                     if (e.kind.ordinary)
                       SelectionRow(
@@ -97,7 +98,7 @@ class EntryDetail extends StatelessWidget {
                       SelectionRow(
                         label: 'Group',
                         value: group.name,
-                        icon: Icons.folder_outlined,
+                        icon: LucideIcons.folder300,
                         onTap: () => push(
                           context,
                           GroupDetail(app: app, groupId: group.id),
@@ -107,7 +108,7 @@ class EntryDetail extends StatelessWidget {
                       SelectionRow(
                         label: 'Loan',
                         value: loan.person,
-                        icon: Icons.person_outline_rounded,
+                        icon: LucideIcons.userRound300,
                         onTap: () => push(
                           context,
                           LoanDetail(app: app, loanId: loan.id),
@@ -126,13 +127,13 @@ class EntryDetail extends StatelessWidget {
                           value: app.data.wallets
                               .firstWhere((w) => w.id == peer.walletId)
                               .name,
-                          icon: Icons.swap_horiz_rounded,
+                          icon: LucideIcons.arrowRightLeft300,
                         ),
                     ],
                     SelectionRow(
                       label: 'Balance after',
                       value: money(running, w.currency),
-                      icon: Icons.account_balance_outlined,
+                      icon: LucideIcons.landmark300,
                     ),
                     if (e.note.isNotEmpty)
                       ListTile(
@@ -154,7 +155,7 @@ class EntryDetail extends StatelessWidget {
               FilledButton.icon(
                 onPressed: () =>
                     push(context, TransactionForm(app: app, existing: e)),
-                icon: const Icon(Icons.edit_outlined),
+                icon: const Icon(LucideIcons.pencil300),
                 label: const Text('Edit transaction'),
               ),
             if (!w.archived && loan != null && !loan.archived)
@@ -168,7 +169,7 @@ class EntryDetail extends StatelessWidget {
                     repayment: e.kind == EntryKind.loanRepayment,
                   ),
                 ),
-                icon: const Icon(Icons.edit_outlined),
+                icon: const Icon(LucideIcons.pencil300),
                 label: const Text('Edit loan entry'),
               ),
             const SizedBox(height: 12),
@@ -195,7 +196,7 @@ class EntryDetail extends StatelessWidget {
                       );
                       if (removed && context.mounted) Navigator.pop(context);
                     },
-              icon: const Icon(Icons.delete_outline),
+              icon: const Icon(LucideIcons.trash2300),
               label: const Text('Delete transaction'),
             ),
           ],
@@ -359,7 +360,7 @@ class _GroupDetailState extends State<GroupDetail> {
               FilledButton.icon(
                 onPressed: () =>
                     push(context, TransactionForm(app: app, groupId: g.id)),
-                icon: const Icon(Icons.add),
+                icon: const Icon(LucideIcons.plus300),
                 label: const Text('Add transaction'),
               ),
             const SizedBox(height: 16),
@@ -367,7 +368,7 @@ class _GroupDetailState extends State<GroupDetail> {
               spacing: 8,
               children: [
                 OutlinedButton.icon(
-                  icon: const Icon(Icons.date_range),
+                  icon: const Icon(LucideIcons.calendarRange300),
                   label: Text(
                     range == null
                         ? 'All dates'
@@ -397,7 +398,7 @@ class _GroupDetailState extends State<GroupDetail> {
             ),
             if (entries.isEmpty)
               const EmptyState(
-                icon: Icons.folder_open_outlined,
+                icon: LucideIcons.folderOpen300,
                 title: 'No entries yet',
                 detail: 'Add income or expenses to build this ledger.',
               ),
@@ -556,7 +557,7 @@ class LoanDetail extends StatelessWidget {
                 FilledButton.icon(
                   onPressed: () =>
                       push(context, LoanMovementForm(app: app, loan: l)),
-                  icon: const Icon(Icons.check),
+                  icon: const Icon(LucideIcons.check300),
                   label: const Text('Record repayment'),
                 ),
               const SizedBox(height: 12),
@@ -565,7 +566,7 @@ class LoanDetail extends StatelessWidget {
                   context,
                   LoanMovementForm(app: app, loan: l, repayment: false),
                 ),
-                icon: const Icon(Icons.add),
+                icon: const Icon(LucideIcons.plus300),
                 label: Text(l.lent ? 'Lend more' : 'Borrow more'),
               ),
             ],
@@ -582,8 +583,8 @@ class LoanDetail extends StatelessWidget {
                 ),
                 leading: Icon(
                   e.kind == EntryKind.loanRepayment
-                      ? Icons.check_circle_outline
-                      : Icons.add_circle_outline,
+                      ? LucideIcons.circleCheck300
+                      : LucideIcons.circlePlus300,
                   color: e.kind == EntryKind.loanRepayment
                       ? AppTheme.green
                       : AppTheme.accent,
@@ -594,7 +595,7 @@ class LoanDetail extends StatelessWidget {
                 subtitle: Text(
                   '${prettyDay(e.date)}\nOutstanding after: ${money(balances[e.id]!, w.currency)}${e.note.isEmpty ? '' : '\n${e.note}'}',
                 ),
-                trailing: const Icon(Icons.chevron_right),
+                trailing: const Icon(LucideIcons.chevronRight300),
                 onTap: () =>
                     push(context, EntryDetail(app: app, entryId: e.id)),
               ),

@@ -11,7 +11,7 @@ A private Flutter finance tracker for Android and iOS, rebuilt on Flutter **3.47
 - Lent/borrowed ledgers with partial returns, additional advances, due dates, editable movements, and settled/archived views. Existing outstanding debts can be entered without inventing a cash movement.
 - Same-currency transfers with linked entries, monthly summaries and category spending.
 - Full JSON backup/restore with a private safety copy before replacement. CSV wallet/group exports and loan cash-movement exports.
-- Light theme with pink–violet balance surfaces, white grouped panels, violet primary actions, labeled adaptive navigation, and quiet underline controls. Original vector launcher art, matching native splash screens, and system text scaling.
+- Reference-matched neutral theme with localized pink–violet balance glow, thin Lucide icons, compact wallet cards, white transaction rows and adaptive navigation. Original vector launcher art, matching native splash screens, and system text scaling.
 
 ## Run
 
@@ -55,7 +55,7 @@ Images are written to `build/qa/`. Tests never populate the production database.
 
 ## Launcher artwork
 
-The original artwork lives in `assets/icon/app-icon.svg` and `BrandPainter`. To regenerate PNG and native sizes, install Pillow in your build tooling, then run:
+Interface icons use [Lucide](https://pub.dev/packages/lucide_icons_flutter) at a consistent thin stroke. The original artwork lives in `assets/icon/app-icon.svg` and `BrandPainter`. To regenerate PNG and native sizes, install Pillow in your build tooling, then run:
 
 ```sh
 flutter test tool/render_icon_test.dart

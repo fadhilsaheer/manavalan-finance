@@ -1,22 +1,23 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/models.dart';
 
 abstract final class AppTheme {
-  static const base = Color(0xfffaf9fc);
+  static const base = Color(0xfff6f6f6);
   static const mantle = Colors.white;
-  static const surface = Color(0xffeeecf1);
-  static const overlay = Color(0xffc5c0cf);
-  static const text = Color(0xff383044);
-  static const muted = Color(0xff5e5269);
-  static const accent = Color(0xff8054b5);
+  static const surface = Color(0xffeeeeee);
+  static const overlay = Color(0xffcecece);
+  static const text = Color(0xff171717);
+  static const muted = Color(0xff686868);
+  static const accent = Color(0xff171717);
   static const green = Color(0xff16764d);
   static const red = Color(0xffbe3d47);
   static const peach = Color(0xffa75d16);
-  static const blue = Color(0xff8054b5);
+  static const blue = Color(0xff171717);
   static const yellow = Color(0xff867016);
-  static const blush = Color(0xfff4c7e4);
-  static const lavender = Color(0xffd9c9f6);
+  static const blush = Color(0xfff69dcc);
+  static const lavender = Color(0xffb392ef);
   static const wash = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -46,22 +47,22 @@ abstract final class AppTheme {
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
         fontFamily: 'Roboto',
-        fontSize: 28,
-        fontWeight: FontWeight.w600,
+        fontSize: 24,
+        fontWeight: FontWeight.w400,
         letterSpacing: -.6,
         color: text,
       ),
       titleLarge: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         letterSpacing: -.4,
         color: text,
       ),
       titleMedium: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 15,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: text,
       ),
       bodyMedium: TextStyle(fontFamily: 'Roboto', fontSize: 14, color: text),
@@ -74,7 +75,7 @@ abstract final class AppTheme {
       titleTextStyle: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 19,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: text,
       ),
     ),
@@ -111,7 +112,7 @@ abstract final class AppTheme {
       titleTextStyle: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 15,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         color: text,
       ),
       subtitleTextStyle: TextStyle(
@@ -122,7 +123,7 @@ abstract final class AppTheme {
     ),
     chipTheme: ChipThemeData(
       backgroundColor: mantle,
-      selectedColor: lavender,
+      selectedColor: surface,
       side: const BorderSide(color: surface),
       shape: const StadiumBorder(),
       showCheckmark: false,
@@ -137,7 +138,7 @@ abstract final class AppTheme {
       style: ButtonStyle(
         side: const WidgetStatePropertyAll(BorderSide.none),
         backgroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected) ? lavender : mantle,
+          (states) => states.contains(WidgetState.selected) ? surface : mantle,
         ),
         foregroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected) ? accent : muted,
@@ -166,7 +167,7 @@ abstract final class AppTheme {
         textStyle: const TextStyle(
           fontFamily: 'Roboto',
           fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w400,
         ),
       ),
     ),
@@ -190,51 +191,51 @@ abstract final class AppTheme {
 }
 
 const appIcons = <String, IconData>{
-  'wallet': Icons.account_balance_wallet_outlined,
-  'bank': Icons.account_balance_outlined,
-  'cash': Icons.payments_outlined,
-  'work': Icons.work_outline_rounded,
-  'food': Icons.restaurant_rounded,
-  'car': Icons.directions_car_outlined,
-  'home': Icons.home_outlined,
-  'bag': Icons.shopping_bag_outlined,
-  'health': Icons.health_and_safety_outlined,
-  'play': Icons.play_circle_outline,
-  'book': Icons.menu_book_outlined,
-  'travel': Icons.flight_outlined,
-  'heart': Icons.favorite_border_rounded,
-  'group': Icons.folder_outlined,
-  'person': Icons.person_outline_rounded,
-  'gift': Icons.card_giftcard_outlined,
-  'coffee': Icons.coffee_outlined,
-  'phone': Icons.devices_outlined,
-  'fitness': Icons.fitness_center_rounded,
-  'pet': Icons.pets_outlined,
-  'groceries': Icons.local_grocery_store_outlined,
-  'fuel': Icons.local_gas_station_outlined,
-  'bus': Icons.directions_bus_outlined,
-  'taxi': Icons.local_taxi_outlined,
-  'repair': Icons.handyman_outlined,
-  'rent': Icons.key_outlined,
-  'electricity': Icons.bolt_outlined,
-  'internet': Icons.wifi_rounded,
-  'clothing': Icons.checkroom_outlined,
-  'medicine': Icons.medication_outlined,
-  'doctor': Icons.medical_services_outlined,
-  'movies': Icons.movie_outlined,
-  'subscription': Icons.subscriptions_outlined,
-  'games': Icons.sports_esports_outlined,
-  'course': Icons.school_outlined,
-  'hotel': Icons.hotel_outlined,
-  'ticket': Icons.confirmation_number_outlined,
-  'activity': Icons.local_activity_outlined,
-  'care': Icons.spa_outlined,
-  'donation': Icons.volunteer_activism_outlined,
-  'salary': Icons.badge_outlined,
-  'freelance': Icons.laptop_mac_outlined,
-  'business': Icons.storefront_outlined,
+  'wallet': LucideIcons.wallet300,
+  'bank': LucideIcons.landmark300,
+  'cash': LucideIcons.banknote300,
+  'work': LucideIcons.briefcaseBusiness300,
+  'food': LucideIcons.utensils300,
+  'car': LucideIcons.car300,
+  'home': LucideIcons.house300,
+  'bag': LucideIcons.shoppingBag300,
+  'health': LucideIcons.heartPulse300,
+  'play': LucideIcons.circlePlay300,
+  'book': LucideIcons.bookOpen300,
+  'travel': LucideIcons.plane300,
+  'heart': LucideIcons.heart300,
+  'group': LucideIcons.folder300,
+  'person': LucideIcons.userRound300,
+  'gift': LucideIcons.gift300,
+  'coffee': LucideIcons.coffee300,
+  'phone': LucideIcons.monitorSmartphone300,
+  'fitness': LucideIcons.dumbbell300,
+  'pet': LucideIcons.pawPrint300,
+  'groceries': LucideIcons.shoppingBasket300,
+  'fuel': LucideIcons.fuel300,
+  'bus': LucideIcons.bus300,
+  'taxi': LucideIcons.carTaxiFront300,
+  'repair': LucideIcons.wrench300,
+  'rent': LucideIcons.keyRound300,
+  'electricity': LucideIcons.zap300,
+  'internet': LucideIcons.wifi300,
+  'clothing': LucideIcons.shirt300,
+  'medicine': LucideIcons.pill300,
+  'doctor': LucideIcons.stethoscope300,
+  'movies': LucideIcons.clapperboard300,
+  'subscription': LucideIcons.repeat300,
+  'games': LucideIcons.gamepad2300,
+  'course': LucideIcons.graduationCap300,
+  'hotel': LucideIcons.bedDouble300,
+  'ticket': LucideIcons.ticket300,
+  'activity': LucideIcons.sparkles300,
+  'care': LucideIcons.flower2300,
+  'donation': LucideIcons.handHeart300,
+  'salary': LucideIcons.badgeDollarSign300,
+  'freelance': LucideIcons.laptop300,
+  'business': LucideIcons.store300,
 };
-IconData iconFor(String key) => appIcons[key] ?? Icons.category_outlined;
+IconData iconFor(String key) => appIcons[key] ?? LucideIcons.shapes300;
 Color walletColor(int index) =>
     AppTheme.accents[index.abs() % AppTheme.accents.length];
 
@@ -274,7 +275,7 @@ const _categorySymbols = <String, String>{
   'other income': 'cash',
 };
 IconData categoryIcon(Category? category, LedgerSnapshot data) {
-  if (category == null) return Icons.category_outlined;
+  if (category == null) return LucideIcons.shapes300;
   final parent = data.category(category.parentId);
   final key = parent != null && category.icon == parent.icon
       ? _categorySymbols[category.name.toLowerCase()] ?? category.icon
@@ -284,20 +285,7 @@ IconData categoryIcon(Category? category, LedgerSnapshot data) {
 
 Color categoryColor(Category? category, LedgerSnapshot data) {
   if (category == null) return AppTheme.muted;
-  final root = data.category(category.parentId) ?? category;
-  return switch (root.icon) {
-    'food' => const Color(0xffa66526),
-    'car' => const Color(0xff427da0),
-    'home' => const Color(0xff548069),
-    'bag' => const Color(0xffa45483),
-    'health' => const Color(0xffa65560),
-    'play' => const Color(0xff7d62b1),
-    'book' => const Color(0xff957526),
-    'travel' => const Color(0xff397e83),
-    'heart' => const Color(0xffa15d7d),
-    'work' => AppTheme.green,
-    _ => AppTheme.accent,
-  };
+  return AppTheme.text;
 }
 
 class BrandMark extends StatelessWidget {
@@ -330,14 +318,17 @@ class BrandPainter extends CustomPainter {
         const Rect.fromLTWH(200, 270, 624, 490),
         const Radius.circular(90),
       ),
-      Paint()..color = AppTheme.accent,
+      Paint()
+        ..shader = const LinearGradient(
+          colors: [AppTheme.blush, AppTheme.lavender],
+        ).createShader(const Rect.fromLTWH(200, 270, 624, 490)),
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         const Rect.fromLTWH(200, 220, 548, 126),
         const Radius.circular(60),
       ),
-      Paint()..color = const Color(0xffd38cb9),
+      Paint()..color = AppTheme.text,
     );
     canvas.drawRRect(
       RRect.fromRectAndRadius(

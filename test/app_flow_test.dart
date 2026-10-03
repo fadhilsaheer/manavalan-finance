@@ -35,6 +35,13 @@ void main() {
         loader.addFont(rootBundle.load('assets/fonts/Roboto-$weight.ttf'));
       }
       await loader.load();
+      final lines = FontLoader('packages/lucide_icons_flutter/Lucide300')
+        ..addFont(
+          rootBundle.load(
+            'packages/lucide_icons_flutter/assets/build_font/LucideVariable-w300.ttf',
+          ),
+        );
+      await lines.load();
       final icons = FontLoader('MaterialIcons')
         ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
       await icons.load();
@@ -163,7 +170,7 @@ void main() {
   testWidgets('first wallet can be created through onboarding', (tester) async {
     await show(tester);
     await screenshot(tester, 'onboarding');
-    await tester.tap(find.text('Create your first wallet'));
+    await tester.tap(find.byTooltip('Create your first wallet'));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).at(0), 'Personal');
     await tester.ensureVisible(find.text('Save'));
@@ -193,6 +200,32 @@ void main() {
     expect(app.entries, isEmpty);
     await tester.runAsync(() => app.init());
     expect(app.wallet?.name, 'Savings');
+    expect(tester.takeException(), isNull);
+  });
+  testWidgets('overview actions preserve income intent and open history', (
+    tester,
+  ) async {
+    await seed(tester);
+    await show(tester);
+    await tester.tap(find.byTooltip('Hide balance'));
+    await tester.pumpAndSettle();
+    expect(find.text('••••••'), findsOneWidget);
+    await tester.tap(find.byTooltip('Income'));
+    await tester.pumpAndSettle();
+    expect(
+      tester
+          .widget<FlowTabs<EntryKind>>(find.byType(FlowTabs<EntryKind>))
+          .selected,
+      {EntryKind.income},
+    );
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(
+      find.widgetWithText(TextButton, 'View all').last,
+    );
+    await tester.tap(find.widgetWithText(TextButton, 'View all').last);
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('New transaction'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
   testWidgets('transaction form validates amount and saves linked group', (

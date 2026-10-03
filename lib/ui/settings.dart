@@ -1,3 +1,5 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -114,11 +116,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         horizontal: 16,
                         vertical: 6,
                       ),
-                      leading: const Icon(
-                        Icons.account_balance_wallet_outlined,
-                      ),
+                      leading: const Icon(LucideIcons.wallet300),
                       title: const Text('Wallets'),
-                      trailing: const Icon(Icons.chevron_right),
+                      trailing: const Icon(LucideIcons.chevronRight300),
                       onTap: () => push(context, WalletsPage(app: app)),
                     ),
                     if (app.wallet != null)
@@ -129,10 +129,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           horizontal: 16,
                           vertical: 6,
                         ),
-                        leading: const Icon(Icons.category_outlined),
+                        leading: const Icon(LucideIcons.shapes300),
                         title: const Text('Categories'),
                         subtitle: Text('For ${app.wallet!.name}'),
-                        trailing: const Icon(Icons.chevron_right),
+                        trailing: const Icon(LucideIcons.chevronRight300),
                         onTap: () => push(context, CategoriesPage(app: app)),
                       ),
                   ],
@@ -153,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         horizontal: 16,
                         vertical: 6,
                       ),
-                      leading: const Icon(Icons.save_alt),
+                      leading: const Icon(LucideIcons.download300),
                       title: const Text('Save full backup'),
                       subtitle: const Text('All wallets · JSON'),
                       enabled: !working,
@@ -175,7 +175,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         horizontal: 16,
                         vertical: 6,
                       ),
-                      leading: const Icon(Icons.restore),
+                      leading: const Icon(LucideIcons.history300),
                       title: const Text('Restore backup'),
                       subtitle: const Text(
                         'Replace local data from a saved JSON backup',
@@ -191,7 +191,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           horizontal: 16,
                           vertical: 6,
                         ),
-                        leading: const Icon(Icons.undo),
+                        leading: const Icon(LucideIcons.undo2300),
                         title: const Text('Restore safety copy'),
                         subtitle: const Text('Before your last restore'),
                         enabled: !working,
@@ -207,7 +207,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           horizontal: 16,
                           vertical: 6,
                         ),
-                        leading: const Icon(Icons.table_chart_outlined),
+                        leading: const Icon(LucideIcons.table2300),
                         title: const Text('Export wallet transactions'),
                         subtitle: Text('${app.wallet!.name} · CSV'),
                         enabled: !working,
@@ -253,14 +253,14 @@ class WalletsPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Wallets')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => push(context, WalletForm(app: app)),
-        icon: const Icon(Icons.add),
+        icon: const Icon(LucideIcons.plus300),
         label: const Text('Create wallet'),
       ),
       body: PageBody(
         children: [
           if (app.data.wallets.isEmpty)
             const EmptyState(
-              icon: Icons.account_balance_wallet_outlined,
+              icon: LucideIcons.wallet300,
               title: 'No wallets yet',
               detail: 'Create your first wallet to begin.',
             ),
@@ -462,7 +462,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         appBar: AppBar(title: const Text('Categories')),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => push(context, CategoryForm(app: app, kind: kind)),
-          icon: const Icon(Icons.add),
+          icon: const Icon(LucideIcons.plus300),
           label: const Text('New category'),
         ),
         body: PageBody(
@@ -470,7 +470,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             TextField(
               decoration: const InputDecoration(
                 hintText: 'Search categories',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: Icon(LucideIcons.search300),
               ),
               onChanged: (v) => setState(() => query = v.toLowerCase().trim()),
             ),
@@ -509,7 +509,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             ),
             if (roots.isEmpty)
               const EmptyState(
-                icon: Icons.category_outlined,
+                icon: LucideIcons.shapes300,
                 title: 'No categories here',
                 detail: 'Create a main category, then add subcategories.',
               ),
@@ -549,7 +549,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.expand_more_rounded, size: 20),
+                      const Icon(LucideIcons.chevronDown300, size: 20),
                       menu(c),
                     ],
                   ),
@@ -572,7 +572,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               kind: c.kind,
                             ),
                           ),
-                          icon: const Icon(Icons.add_rounded, size: 18),
+                          icon: const Icon(LucideIcons.plus300, size: 18),
                           label: const Text('Add subcategory'),
                         ),
                       ),

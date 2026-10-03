@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-03T08:39:30.196143+00:00",
+  "generatedAt": "2026-10-03T09:10:41.158055+00:00",
   "title": "Design System: Manavalan Finance",
   "extensions": {
     "colorMeta": {
@@ -8,16 +8,15 @@
         "role": "neutral",
         "displayName": "Base",
         "tonalRamp": [
-          "oklch(15.00% 0.00409 301.43)",
-          "oklch(26.43% 0.00409 301.43)",
-          "oklch(37.86% 0.00409 301.43)",
-          "oklch(49.29% 0.00409 301.43)",
-          "oklch(60.71% 0.00409 301.43)",
-          "oklch(72.14% 0.00409 301.43)",
-          "oklch(83.57% 0.00409 301.43)",
-          "oklch(95.00% 0.00409 301.43)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "mantle": {
         "role": "neutral",
@@ -31,86 +30,80 @@
           "oklch(72.14% 0.00000 89.88)",
           "oklch(83.57% 0.00000 89.88)",
           "oklch(95.00% 0.00000 89.88)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+        ]
       },
       "surface": {
         "role": "neutral",
         "displayName": "Surface",
         "tonalRamp": [
-          "oklch(15.00% 0.00698 304.24)",
-          "oklch(26.43% 0.00698 304.24)",
-          "oklch(37.86% 0.00698 304.24)",
-          "oklch(49.29% 0.00698 304.24)",
-          "oklch(60.71% 0.00698 304.24)",
-          "oklch(72.14% 0.00698 304.24)",
-          "oklch(83.57% 0.00698 304.24)",
-          "oklch(95.00% 0.00698 304.24)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "overlay": {
         "role": "neutral",
         "displayName": "Overlay",
         "tonalRamp": [
-          "oklch(15.00% 0.02146 301.07)",
-          "oklch(26.43% 0.02146 301.07)",
-          "oklch(37.86% 0.02146 301.07)",
-          "oklch(49.29% 0.02146 301.07)",
-          "oklch(60.71% 0.02146 301.07)",
-          "oklch(72.14% 0.02146 301.07)",
-          "oklch(83.57% 0.02146 301.07)",
-          "oklch(95.00% 0.02146 301.07)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "text": {
         "role": "neutral",
         "displayName": "Text",
         "tonalRamp": [
-          "oklch(15.00% 0.03632 302.73)",
-          "oklch(26.43% 0.03632 302.73)",
-          "oklch(37.86% 0.03632 302.73)",
-          "oklch(49.29% 0.03632 302.73)",
-          "oklch(60.71% 0.03632 302.73)",
-          "oklch(72.14% 0.03632 302.73)",
-          "oklch(83.57% 0.03632 302.73)",
-          "oklch(95.00% 0.03632 302.73)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "muted": {
         "role": "neutral",
         "displayName": "Muted",
         "tonalRamp": [
-          "oklch(15.00% 0.03957 308.44)",
-          "oklch(26.43% 0.03957 308.44)",
-          "oklch(37.86% 0.03957 308.44)",
-          "oklch(49.29% 0.03957 308.44)",
-          "oklch(60.71% 0.03957 308.44)",
-          "oklch(72.14% 0.03957 308.44)",
-          "oklch(83.57% 0.03957 308.44)",
-          "oklch(95.00% 0.03957 308.44)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "accent": {
         "role": "primary",
         "displayName": "Accent",
         "tonalRamp": [
-          "oklch(15.00% 0.15018 302.60)",
-          "oklch(26.43% 0.15018 302.60)",
-          "oklch(37.86% 0.15018 302.60)",
-          "oklch(49.29% 0.15018 302.60)",
-          "oklch(60.71% 0.15018 302.60)",
-          "oklch(72.14% 0.15018 302.60)",
-          "oklch(83.57% 0.15018 302.60)",
-          "oklch(95.00% 0.15018 302.60)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
       },
       "green": {
-        "role": "secondary",
+        "role": "tertiary",
         "displayName": "Green",
         "tonalRamp": [
           "oklch(15.00% 0.10753 159.15)",
@@ -121,11 +114,10 @@
           "oklch(72.14% 0.10753 159.15)",
           "oklch(83.57% 0.10753 159.15)",
           "oklch(95.00% 0.10753 159.15)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+        ]
       },
       "red": {
-        "role": "secondary",
+        "role": "tertiary",
         "displayName": "Red",
         "tonalRamp": [
           "oklch(15.00% 0.16454 20.12)",
@@ -136,11 +128,10 @@
           "oklch(72.14% 0.16454 20.12)",
           "oklch(83.57% 0.16454 20.12)",
           "oklch(95.00% 0.16454 20.12)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+        ]
       },
       "peach": {
-        "role": "secondary",
+        "role": "tertiary",
         "displayName": "Peach",
         "tonalRamp": [
           "oklch(15.00% 0.12389 57.78)",
@@ -151,135 +142,45 @@
           "oklch(72.14% 0.12389 57.78)",
           "oklch(83.57% 0.12389 57.78)",
           "oklch(95.00% 0.12389 57.78)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "yellow": {
-        "role": "secondary",
-        "displayName": "Yellow",
-        "tonalRamp": [
-          "oklch(15.00% 0.10544 94.09)",
-          "oklch(26.43% 0.10544 94.09)",
-          "oklch(37.86% 0.10544 94.09)",
-          "oklch(49.29% 0.10544 94.09)",
-          "oklch(60.71% 0.10544 94.09)",
-          "oklch(72.14% 0.10544 94.09)",
-          "oklch(83.57% 0.10544 94.09)",
-          "oklch(95.00% 0.10544 94.09)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "violet": {
-        "role": "secondary",
-        "displayName": "Violet",
-        "tonalRamp": [
-          "oklch(15.00% 0.13831 300.38)",
-          "oklch(26.43% 0.13831 300.38)",
-          "oklch(37.86% 0.13831 300.38)",
-          "oklch(49.29% 0.13831 300.38)",
-          "oklch(60.71% 0.13831 300.38)",
-          "oklch(72.14% 0.13831 300.38)",
-          "oklch(83.57% 0.13831 300.38)",
-          "oklch(95.00% 0.13831 300.38)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "lavender": {
-        "role": "secondary",
-        "displayName": "Lavender",
-        "tonalRamp": [
-          "oklch(15.00% 0.06375 301.30)",
-          "oklch(26.43% 0.06375 301.30)",
-          "oklch(37.86% 0.06375 301.30)",
-          "oklch(49.29% 0.06375 301.30)",
-          "oklch(60.71% 0.06375 301.30)",
-          "oklch(72.14% 0.06375 301.30)",
-          "oklch(83.57% 0.06375 301.30)",
-          "oklch(95.00% 0.06375 301.30)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "wash-pink": {
-        "role": "secondary",
-        "displayName": "Wash Pink",
-        "tonalRamp": [
-          "oklch(15.00% 0.04266 345.52)",
-          "oklch(26.43% 0.04266 345.52)",
-          "oklch(37.86% 0.04266 345.52)",
-          "oklch(49.29% 0.04266 345.52)",
-          "oklch(60.71% 0.04266 345.52)",
-          "oklch(72.14% 0.04266 345.52)",
-          "oklch(83.57% 0.04266 345.52)",
-          "oklch(95.00% 0.04266 345.52)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "wash-violet": {
-        "role": "secondary",
-        "displayName": "Wash Violet",
-        "tonalRamp": [
-          "oklch(15.00% 0.04099 304.30)",
-          "oklch(26.43% 0.04099 304.30)",
-          "oklch(37.86% 0.04099 304.30)",
-          "oklch(49.29% 0.04099 304.30)",
-          "oklch(60.71% 0.04099 304.30)",
-          "oklch(72.14% 0.04099 304.30)",
-          "oklch(83.57% 0.04099 304.30)",
-          "oklch(95.00% 0.04099 304.30)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
-      },
-      "wash-light": {
-        "role": "secondary",
-        "displayName": "Wash Light",
-        "tonalRamp": [
-          "oklch(15.00% 0.00566 308.40)",
-          "oklch(26.43% 0.00566 308.40)",
-          "oklch(37.86% 0.00566 308.40)",
-          "oklch(49.29% 0.00566 308.40)",
-          "oklch(60.71% 0.00566 308.40)",
-          "oklch(72.14% 0.00566 308.40)",
-          "oklch(83.57% 0.00566 308.40)",
-          "oklch(95.00% 0.00566 308.40)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+        ]
       },
       "blush": {
         "role": "secondary",
         "displayName": "Blush",
         "tonalRamp": [
-          "oklch(15.00% 0.06320 339.68)",
-          "oklch(26.43% 0.06320 339.68)",
-          "oklch(37.86% 0.06320 339.68)",
-          "oklch(49.29% 0.06320 339.68)",
-          "oklch(60.71% 0.06320 339.68)",
-          "oklch(72.14% 0.06320 339.68)",
-          "oklch(83.57% 0.06320 339.68)",
-          "oklch(95.00% 0.06320 339.68)"
-        ],
-        "rampPurpose": "Synthesized panel exploration only; not an implemented theme scale."
+          "oklch(15.00% 0.12015 347.23)",
+          "oklch(26.43% 0.12015 347.23)",
+          "oklch(37.86% 0.12015 347.23)",
+          "oklch(49.29% 0.12015 347.23)",
+          "oklch(60.71% 0.12015 347.23)",
+          "oklch(72.14% 0.12015 347.23)",
+          "oklch(83.57% 0.12015 347.23)",
+          "oklch(95.00% 0.12015 347.23)"
+        ]
+      },
+      "lavender": {
+        "role": "secondary",
+        "displayName": "Lavender",
+        "tonalRamp": [
+          "oklch(15.00% 0.13535 299.36)",
+          "oklch(26.43% 0.13535 299.36)",
+          "oklch(37.86% 0.13535 299.36)",
+          "oklch(49.29% 0.13535 299.36)",
+          "oklch(60.71% 0.13535 299.36)",
+          "oklch(72.14% 0.13535 299.36)",
+          "oklch(83.57% 0.13535 299.36)",
+          "oklch(95.00% 0.13535 299.36)"
+        ]
       }
     },
     "typographyMeta": {
-      "amount": {
-        "displayName": "Amount entry",
-        "purpose": "Centered reusable money input."
+      "balance": {
+        "displayName": "Balance",
+        "purpose": "Exact balance amount; fitted down when required."
       },
       "headline": {
         "displayName": "Page heading",
-        "purpose": "Top-level page titles."
-      },
-      "title": {
-        "displayName": "Section and statistic",
-        "purpose": "Sections and statistic values."
-      },
-      "entry-title": {
-        "displayName": "Ledger title",
-        "purpose": "Ledger names and signed values."
-      },
-      "balance": {
-        "displayName": "Balance value",
-        "purpose": "Shared overview and detail financial value."
+        "purpose": "Regular-weight page hierarchy."
       }
     },
     "shadows": [],
@@ -287,176 +188,123 @@
     "breakpoints": [
       {
         "name": "navigation-rail",
-        "value": "760px",
-        "condition": "Viewport width >= 760."
-      },
-      {
-        "name": "stats-single-column",
-        "value": "340px",
-        "condition": "Content width < 340 or text scale >= 1.4."
-      },
-      {
-        "name": "stats-three-columns",
-        "value": "520px",
-        "condition": "Content width > 520 and text scale < 1.4."
-      },
-      {
-        "name": "ledger-stack",
-        "value": "300px",
-        "condition": "Inner content width < 300 or text scale > 1.3."
-      },
-      {
-        "name": "category-four-columns",
-        "value": "600px",
-        "condition": "Content width > 600 and text scale <= 1.3; otherwise three columns, or rows above scale 1.3."
-      },
-      {
-        "name": "icon-six-columns",
-        "value": "600px",
-        "condition": "Content width > 600 and text scale <= 1.3; otherwise four columns, or two above scale 1.3."
+        "value": "760px"
       }
-    ],
-    "native": {
-      "framework": "Flutter Material 3, light theme",
-      "units": "Logical pixels; CSS px approximate native dimensions.",
-      "typeface": "Roboto is bundled locally at weights 400, 500, and 700 and explicitly selected on Android and iOS; QA uses the same assets.",
-      "elevation": "Permanent panels and contextual page actions are flat; popup elevation is inherited.",
-      "motion": "Native MaterialPageRoute and framework interaction feedback; no project motion tokens.",
-      "previewFidelity": "Self-contained HTML/CSS previews approximate native Flutter components. SVG icons and CSS state feedback are illustrative; lib/ui is implementation authority."
-    }
+    ]
   },
   "components": [
     {
-      "name": "Primary action",
+      "name": "Primary button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Native action approximation; Flutter provides exact state layers and sizing.",
+      "description": "Flutter button geometry and colors; native state layers approximated.",
       "html": "<button class=\"ds-button-primary\">Save</button>",
-      "css": ".ds-button-primary{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:18px;background:#8054b5;color:#fff;cursor:pointer} .ds-button-primary:hover{filter:brightness(.96)} .ds-button-primary:focus-visible{outline:2px solid #8054b5;outline-offset:3px} .ds-button-primary:active{filter:brightness(.9)} .ds-button-primary:disabled{opacity:.38;cursor:default}"
+      "css": ".ds-button-primary{font-family:Roboto,sans-serif;background:#171717;color:#ffffff;min-height:54px;padding:12px 24px;border:0;border-radius:18px;font-size:16px;font-weight:400;cursor:pointer}.ds-button-primary:hover{opacity:.9}.ds-button-primary:focus-visible{outline:2px solid #171717;outline-offset:3px}.ds-button-primary:active{opacity:.8}"
     },
     {
-      "name": "Outlined action",
+      "name": "Outlined button",
       "kind": "button",
       "refersTo": "button-outlined",
-      "description": "Native action approximation; Flutter provides exact state layers and sizing.",
-      "html": "<button class=\"ds-button-outlined\">Lend more</button>",
-      "css": ".ds-button-outlined{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:48px;padding:0 24px;border:1px solid #eeecf1;border-radius:999px;background:transparent;color:#8054b5;cursor:pointer} .ds-button-outlined:hover{filter:brightness(.96)} .ds-button-outlined:focus-visible{outline:2px solid #8054b5;outline-offset:3px} .ds-button-outlined:active{filter:brightness(.9)} .ds-button-outlined:disabled{opacity:.38;cursor:default}"
+      "description": "Flutter button geometry and colors; native state layers approximated.",
+      "html": "<button class=\"ds-button-outlined\">Cancel</button>",
+      "css": ".ds-button-outlined{font-family:Roboto,sans-serif;background:transparent;color:#171717;min-height:48px;padding:12px 24px;border:1px solid #eeeeee;border-radius:999px;font-size:16px;font-weight:400;cursor:pointer}.ds-button-outlined:hover{opacity:.9}.ds-button-outlined:focus-visible{outline:2px solid #171717;outline-offset:3px}.ds-button-outlined:active{opacity:.8}"
     },
     {
-      "name": "Destructive action",
+      "name": "Destructive button",
       "kind": "button",
       "refersTo": "button-destructive",
-      "description": "Native action approximation; Flutter provides exact state layers and sizing.",
+      "description": "Flutter button geometry and colors; native state layers approximated.",
       "html": "<button class=\"ds-button-destructive\">Delete</button>",
-      "css": ".ds-button-destructive{font-family:Roboto,sans-serif;font-size:16px;font-weight:600;min-width:48px;min-height:54px;padding:0 24px;border:none;border-radius:18px;background:#be3d47;color:#fff;cursor:pointer} .ds-button-destructive:hover{filter:brightness(.96)} .ds-button-destructive:focus-visible{outline:2px solid #8054b5;outline-offset:3px} .ds-button-destructive:active{filter:brightness(.9)} .ds-button-destructive:disabled{opacity:.38;cursor:default}"
+      "css": ".ds-button-destructive{font-family:Roboto,sans-serif;background:#be3d47;color:#ffffff;min-height:54px;padding:12px 24px;border:0;border-radius:18px;font-size:16px;font-weight:400;cursor:pointer}.ds-button-destructive:hover{opacity:.9}.ds-button-destructive:focus-visible{outline:2px solid #171717;outline-offset:3px}.ds-button-destructive:active{opacity:.8}"
     },
     {
       "name": "Text field",
       "kind": "input",
       "refersTo": "field",
-      "description": "Filled field with native validation and keyboard behavior.",
-      "html": "<label class=\"ds-label\" for=\"ds-name\">Name</label><input class=\"ds-field\" id=\"ds-name\" placeholder=\"Name\"/>",
-      "css": ".ds-label{font-family:Roboto,sans-serif;display:block;color:#5e5269;font-size:14px;margin-bottom:8px} .ds-field{font-family:Roboto,sans-serif;background:white;color:#383044;border:1px solid #eeecf1;border-radius:18px;padding:18px;font-size:16px;width:calc(100% - 38px)} .ds-field:hover{border-color:#c5c0cf} .ds-field:focus-visible{outline:1.5px solid #8054b5;outline-offset:-1.5px}"
+      "description": "White field with an ink focus border.",
+      "html": "<input class=\"ds-field\" aria-label=\"Wallet name\" placeholder=\"Wallet name\">",
+      "css": ".ds-field{font-family:Roboto,sans-serif;background:#fff;color:#171717;padding:18px;border:1px solid #eee;border-radius:18px;font-size:14px}.ds-field::placeholder{color:#686868}.ds-field:hover{border-color:#cecece}.ds-field:focus-visible{outline:none;border:1.5px solid #171717}"
     },
     {
-      "name": "Amount entry",
-      "kind": "input",
-      "refersTo": "amount-field",
-      "description": "Large centered currency entry; focus is the native caret, without a field border.",
-      "html": "<label class=\"ds-amount-label\" for=\"ds-amount\">Amount · INR</label><input class=\"ds-amount\" id=\"ds-amount\" inputmode=\"decimal\" placeholder=\"0.00\"/>",
-      "css": ".ds-amount-label{font-family:Roboto,sans-serif;display:block;text-align:center;background:#fff;color:#5e5269;font-size:13px;margin:22px 0 8px}.ds-amount{font-family:Roboto,sans-serif;width:calc(100% - 8px);border:0;background:#fff;color:#383044;padding:12px 4px;text-align:center;font-size:46px;font-weight:500;letter-spacing:-1.2px}.ds-amount::placeholder{color:#81758f}.ds-amount:hover{cursor:text}.ds-amount:focus-visible{outline:none;caret-color:#8054b5}"
+      "name": "Selected chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Neutral selection; native state layers approximated.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">This month</button>",
+      "css": ".ds-chip{font-family:Roboto,sans-serif;background:#eee;color:#686868;border:1px solid #eee;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}.ds-chip:hover{background:#e7e7e7}.ds-chip:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-chip:active{background:#ddd}"
+    },
+    {
+      "name": "Mobile navigation",
+      "kind": "nav",
+      "refersTo": "navigation-selected",
+      "description": "Five compact destinations and one black selected circle.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><button aria-label=\"Overview\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z\"/></svg></button><button aria-label=\"Transactions\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 12h4l3-8 4 16 3-8h4\"/></svg></button><button aria-label=\"Groups\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4\"/></svg></button><button aria-label=\"Lending\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 5h6l2 2h10v13H3z\"/></svg></button><button aria-label=\"Settings\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 6h16M4 12h16M4 18h16\"/></svg></button></nav>",
+      "css": ".ds-nav{display:flex;justify-content:space-around;align-items:center;gap:8px;height:64px;padding:0 6px;background:#fff;border-radius:38px}.ds-nav button{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border:0;border-radius:50%;background:transparent;color:#171717;cursor:pointer}.ds-nav button[aria-current]{background:#171717;color:#fff}.ds-nav button:hover{opacity:.75}.ds-nav button:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-nav button:active{opacity:.6}"
     },
     {
       "name": "Surface panel",
       "kind": "card",
       "refersTo": "surface-panel",
-      "description": "Flat white container used by shared statistics and content.",
-      "html": "<div class=\"ds-panel\"><span>Income</span><strong>₹12,500.00</strong></div>",
-      "css": ".ds-panel{font-family:Roboto,sans-serif;padding:18px;border-radius:24px;background:#fff;color:#5e5269;font-size:14px} .ds-panel strong{display:block;margin-top:8px;color:#16764d;font-size:20px;font-weight:600;letter-spacing:-.4px}"
+      "description": "Flat white container on the neutral page canvas.",
+      "html": "<section class=\"ds-panel\">Wallet details</section>",
+      "css": ".ds-panel{font-family:Roboto,sans-serif;background:#fff;color:#171717;border-radius:24px;padding:18px;font-size:15px}"
     },
     {
-      "name": "Filter chip",
-      "kind": "chip",
-      "refersTo": "choice-selected",
-      "description": "Lavender selected filter with muted plum labels; Flutter provides state feedback.",
-      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Food &amp; drink</button>",
-      "css": ".ds-chips{display:flex;flex-wrap:wrap;gap:8px} .ds-chip{font-family:Roboto,sans-serif;font-size:14px;padding:10px 14px;border:1px solid #eeecf1;border-radius:999px;color:#5e5269;background:#fff;cursor:pointer} .ds-chip[aria-pressed=true]{background:#d9c9f6;color:#5e5269} .ds-chip:hover{filter:brightness(.96)} .ds-chip:focus-visible{outline:2px solid #8054b5;outline-offset:2px} .ds-chip:active{filter:brightness(.9)}"
-    },
-    {
-      "name": "Mobile navigation",
-      "kind": "nav",
-      "refersTo": "navigation-mobile",
-      "description": "Full-width labeled white mobile navigation; native state rendering and safe-area insets are approximated.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Wallet workspace\"><button class=\"ds-destination\" aria-current=\"page\"><span class=\"ds-indicator\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M3 10 12 3l9 7v11h-6v-7H9v7H3Z\"/></svg></span><span>Overview</span></button><button class=\"ds-destination\"><span class=\"ds-indicator\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2ZM9 7h6M9 11h6M9 15h6\"/></svg></span><span>Transactions</span></button><button class=\"ds-destination\"><span class=\"ds-indicator\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"M3 6h7l2 2h9v12H3Z\"/></svg></span><span>Groups</span></button><button class=\"ds-destination\"><span class=\"ds-indicator\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" aria-hidden=\"true\"><path d=\"m2 9 5-5 5 2 5-2 5 5-4 4-4-4-3 2-4-3-3 5m3 0 7 7 6-6\"/></svg></span><span>Lending</span></button></nav>",
-      "css": ".ds-nav{display:flex;width:100%;height:76px;background:#fff;border-top:1px solid #eeecf1}.ds-destination{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;background:transparent;color:#5e5269;font-family:Roboto,sans-serif;font-size:11px;cursor:pointer}.ds-indicator{display:flex;justify-content:center;align-items:center;width:64px;height:32px;border-radius:16px}.ds-destination[aria-current]{color:#8054b5;font-weight:600}.ds-destination[aria-current] .ds-indicator{background:rgba(217,201,246,.45)}.ds-destination:hover .ds-indicator{background:rgba(128,84,181,.08)}.ds-destination:focus-visible{outline:2px solid #8054b5;outline-offset:-2px}.ds-destination:active{background:#eeecf1}"
-    },
-    {
-      "name": "Balance panel",
+      "name": "Balance inset",
       "kind": "card",
       "refersTo": "balance-panel",
-      "description": "Shared soft diagonal wash for overview and detail values.",
-      "html": "<section class=\"ds-balance\"><p>Wallet balance</p><strong>₹24,500.00</strong></section>",
-      "css": ".ds-balance{background:linear-gradient(135deg,#f4c7e4 0%,#d9c9f6 30%,#ffffff 80%);color:#383044;border-radius:26px;padding:24px;font-family:Roboto,sans-serif}.ds-balance p{margin:0 0 16px;font-size:14px;font-weight:500}.ds-balance strong{display:block;font-size:38px;font-weight:600;letter-spacing:-1.2px}"
+      "description": "CSS approximation of the Flutter radial painter; color remains confined to the upper inset.",
+      "html": "<section class=\"ds-balance\"><div class=\"ds-glow\"><p>Wallet balance</p><strong>\u20b956,475.00</strong></div></section>",
+      "css": ".ds-balance{font-family:Roboto,sans-serif;padding:12px;border-radius:24px;background:#fff;color:#171717}.ds-glow{padding:14px 18px 16px;border-radius:20px;background:radial-gradient(ellipse at 32% -20%,#f49ccd,transparent 70%),radial-gradient(ellipse at 69% -19%,#a183ea,transparent 68%),#fff}.ds-glow p{margin:0 0 8px;font-size:14px;font-weight:400}.ds-glow strong{font-size:42px;font-weight:500;letter-spacing:-1.3px}"
     },
     {
       "name": "Selection row",
       "kind": "custom",
       "refersTo": "selection-row",
-      "description": "Primary-label variant for category/group browsing; standard form and detail rows use an inline icon, label, and value.",
-      "html": "<button class=\"ds-selection\"><span class=\"ds-selection-icon\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 7h16v13H4zM8 7V5a4 4 0 0 1 8 0v2\"/></svg></span><span><strong>Groceries</strong><small>Food &amp; drink</small></span><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"m9 6 6 6-6 6\"/></svg></button>",
-      "css": ".ds-selection{display:flex;align-items:center;gap:14px;width:100%;border:0;border-radius:18px;padding:18px 16px;background:#fff;color:#383044;text-align:left;font-family:Roboto,sans-serif;cursor:pointer}.ds-selection-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:42px;height:42px;border-radius:14px;background:rgba(128,84,181,.08);color:#8054b5}.ds-selection strong{display:block;font-size:15px;font-weight:500}.ds-selection small{display:block;font-size:12px;color:#5e5269;margin-top:5px}.ds-selection>svg{margin-left:auto;color:#5e5269}.ds-selection:hover{background:#faf9fc}.ds-selection:focus-visible{outline:2px solid #8054b5;outline-offset:2px}.ds-selection:active{background:#eeecf1}"
-    },
-    {
-      "name": "Flow tabs",
-      "kind": "custom",
-      "refersTo": "flow-tab-selected",
-      "description": "Inline direction choices with a violet selected underline. Native ink and focus are approximated.",
-      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\">Expense</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\">Income</button></div>",
-      "css": ".ds-tabs{display:flex}.ds-tab{flex:1;min-height:50px;padding:14px 8px;border:0;border-bottom:1px solid #eeecf1;background:transparent;color:#5e5269;font-family:Roboto,sans-serif;font-size:14px;cursor:pointer}.ds-tab[aria-selected=true]{color:#8054b5;border-bottom:2px solid #8054b5;font-weight:600}.ds-tab:hover{background:rgba(128,84,181,.04)}.ds-tab:focus-visible{outline:2px solid #8054b5;outline-offset:-2px}.ds-tab:active{background:rgba(128,84,181,.08)}"
+      "description": "Primary-label variant for category selection; normal form rows also show their chosen value.",
+      "html": "<button class=\"ds-row\"><span class=\"ds-badge\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M6 7h12l3 14H3L6 7zM9 7V5a3 3 0 0 1 6 0v2\"/></svg></span><span>Groceries<small>Food &amp; drink</small></span><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-row{font-family:Roboto,sans-serif;display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:0;border-radius:18px;background:#fff;color:#171717;text-align:left;font-size:15px;cursor:pointer}.ds-badge{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#f6f6f6}.ds-row small{display:block;margin-top:5px;color:#686868;font-size:12px}.ds-row>svg{margin-left:auto;color:#686868}.ds-row:hover{background:#f6f6f6}.ds-row:focus-visible{outline:2px solid #171717;outline-offset:2px}.ds-row:active{background:#eee}"
     }
   ],
   "narrative": {
     "northStar": "The Wallet Workspace",
-    "overview": "The Wallet Workspace is a light interface for local personal finance on Android and iOS. A neutral canvas and white rounded surfaces support soft pink-to-violet balance panels, violet primary actions, and prominent amounts. Short labels and recognizable category icons keep everyday entry quiet and direct.\n\nFlutter Material 3 supplies native interaction, focus, validation, and navigation behavior. The original wallet-and-bars identity uses matching violet and pink. This record follows the implemented lib/ui system and the user’s 3 October 2026 reference, which supersedes the earlier blue direction.",
+    "overview": "The Wallet Workspace uses a light neutral canvas, white rounded surfaces, black text and controls, and thin outline icons. Pink and violet light concentrate in the upper balance inset; everyday lists and forms remain neutral. The reference image supplied on 3 October 2026 supersedes the earlier violet-wide direction, including its prohibitions against black primary buttons and circular navigation selection.\n\nThis record is extracted from the Flutter implementation in lib/ui/theme.dart, reference_surfaces.dart, shared.dart, app.dart, ledger_pages.dart, forms.dart, category_picker.dart, details.dart, and settings.dart. Native Material behavior supplies focus, touch feedback, validation, and routing.",
     "keyCharacteristics": [
-      "Light neutral canvas, white surfaces, and soft gradient financial focal points.",
-      "Large exact amounts and compact supporting metadata.",
-      "Full-width labeled white navigation, lavender selection, and contextual page actions.",
-      "Explicit category hierarchy, recognizable icons, and adaptive selection layouts."
+      "Neutral chrome with white cards and black interaction anchors.",
+      "Localized pink-violet glow and immersive patterned onboarding.",
+      "Regular headings, prominent exact amounts, and compact metadata.",
+      "Consistent Lucide 300 outline icons and adaptive navigation."
     ],
     "rules": [
       {
-        "name": "The Cash Direction Rule",
-        "body": "Cash entering the wallet uses green; cash leaving uses red. Keep the signed amount and explicit loan movement description together, so color never carries the meaning alone.",
+        "name": "The Localized Light Rule",
+        "body": "Keep balance color inside the upper inset, fading into white before the neutral action row. Reserve immersive color and diamond geometry for onboarding.",
         "section": "colors"
       },
       {
         "name": "The Exact Amount Rule",
-        "body": "Keep currency, sign, and amount together without abbreviation or ellipsis. Use the shared money formatter and move row amounts below the text when space or text scaling requires it.",
+        "body": "Keep currency, sign, and amount together without abbreviation or ellipsis. Use the shared money formatter and move row amounts below their labels when space or text scaling requires it.",
         "section": "typography"
       },
       {
         "name": "The Flat Surface Rule",
-        "body": "Use contrast between the neutral canvas and white panels to organize content. Keep permanent surfaces and page actions free of decorative shadows.",
+        "body": "Separate permanent surfaces with neutral tone, whitespace, and rounded clipping. Do not add decorative shadows to cards, primary actions, or navigation.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do retain the selected wallet in the app shell and money-entry forms.",
-      "Do reuse BalancePanel, SurfacePanel, SelectionRow, IconBadge, Stats, EntryTile, and PageBody for related screens.",
-      "Do use labeled navigation, underline FlowTabs, and the meaningful lending balance choices in their established contexts.",
-      "Do expose parent context for child categories and preserve the selection when a picker is dismissed.",
-      "Do use concise labels and reveal optional notes through the existing expansion control.",
-      "Do preserve native keyboard, date-picker, Back, focus, and validation behavior.",
-      "Do explain destructive effects in the confirmation dialog."
+      "Do use black primary buttons and the small black selected navigation circle.",
+      "Do reuse BalancePanel, BalanceGlow, SurfacePanel, SelectionRow, IconBadge, EntryTile, and PageBody.",
+      "Do retain thin Lucide 300 icons across navigation, categories, actions, and form rows.",
+      "Do keep signed amounts and explanatory labels together so money direction never relies on color alone.",
+      "Do preserve category parent context, native focus and validation, and larger-text reflow."
     ],
     "donts": [
-      "Don't restore black split controls, black primary actions, floating navigation pills, or the superseded blue identity.",
-      "Don't use color alone to identify money direction or loan status.",
-      "Don't replace the hierarchical category route with a long flat dropdown.",
-      "Don't add decorative charts, marketing copy, or extra cards without information that needs them.",
+      "Don't restore purple-tinted page chrome, violet primary buttons, or broad black split tabs.",
+      "Don't spread the balance glow across ordinary form, detail, or settings cards.",
+      "Don't add fake banking actions, balances, or decorative charts to imitate the reference.",
       "Don't abbreviate or ellipsize financial amounts.",
-      "Don't turn loan advances, repayments, or transfers into ordinary income or spending."
+      "Don't replace the category hierarchy with a long flat dropdown."
     ]
   }
 }

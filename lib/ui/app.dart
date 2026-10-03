@@ -1,3 +1,4 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_controller.dart';
@@ -6,6 +7,9 @@ import 'ledger_pages.dart';
 import 'settings.dart';
 import 'shared.dart';
 import 'theme.dart';
+import 'reference_surfaces.dart';
+
+import 'package:intl/intl.dart';
 
 class FinanceApp extends StatelessWidget {
   final AppController controller;
@@ -30,10 +34,10 @@ class _AppShellState extends State<AppShell> {
   int tab = 0;
   static const labels = ['Overview', 'Transactions', 'Groups', 'Lending'];
   static const icons = [
-    Icons.home_outlined,
-    Icons.receipt_long_outlined,
-    Icons.folder_outlined,
-    Icons.handshake_outlined,
+    LucideIcons.house300,
+    LucideIcons.receiptText300,
+    LucideIcons.folder300,
+    LucideIcons.handCoins300,
   ];
   @override
   Widget build(BuildContext context) => ListenableBuilder(
@@ -42,45 +46,101 @@ class _AppShellState extends State<AppShell> {
       final app = widget.app, wallet = widget.app.wallet;
       final expanded = MediaQuery.sizeOf(context).width >= 760;
       final body = wallet == null
-          ? PageBody(
-              children: [
-                const SizedBox(height: 48),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: BrandMark(size: 96),
-                ),
-                const SizedBox(height: 28),
-                Text(
-                  'Make room for your money.',
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Every wallet. Every expense. Just on your device.',
-                  style: TextStyle(color: AppTheme.muted),
-                ),
-                const SizedBox(height: 32),
-                FilledButton.icon(
-                  onPressed: () => push(context, WalletForm(app: app)),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Create your first wallet'),
-                ),
-                if (app.data.wallets.any((w) => w.archived))
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: OutlinedButton(
-                      onPressed: () => push(context, WalletsPage(app: app)),
-                      child: const Text('Manage archived wallets'),
+          ? LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: BalanceGlow(
+                      immersive: true,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 40, 24, 32),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: constraints.maxHeight * .55),
+                            DefaultTextStyle(
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: AppTheme.text,
+                                fontSize: 40,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: -1.2,
+                                height: 1.25,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    spacing: 12,
+                                    children: [
+                                      const Text('Personal'),
+                                      Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: AppTheme.overlay,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          LucideIcons.wallet300,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Text('Finance, all\nin one place.'),
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            const SizedBox(height: 32),
+                            Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    'Get started',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                ),
+                                IconButton.filled(
+                                  tooltip: 'Create your first wallet',
+                                  onPressed: () =>
+                                      push(context, WalletForm(app: app)),
+                                  icon: const Icon(LucideIcons.arrowRight300),
+                                  style: IconButton.styleFrom(
+                                    minimumSize: const Size(52, 52),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (app.data.wallets.any((w) => w.archived))
+                              TextButton(
+                                onPressed: () =>
+                                    push(context, WalletsPage(app: app)),
+                                child: const Text('Manage archived wallets'),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-              ],
+                ),
+              ),
             )
           : KeyedSubtree(
               key: ValueKey(wallet.id),
               child: IndexedStack(
                 index: tab,
                 children: [
-                  OverviewPage(app: app),
+                  OverviewPage(
+                    app: app,
+                    onTransactions: () => setState(() => tab = 1),
+                  ),
                   TransactionsPage(app: app),
                   GroupsPage(app: app),
                   LendingPage(app: app),
@@ -88,10 +148,11 @@ class _AppShellState extends State<AppShell> {
               ),
             );
       return Scaffold(
-        appBar: AppBar(
-          title: wallet == null
-              ? const Text('Manavalan Finance')
-              : PopupMenuButton<int>(
+        appBar: wallet == null
+            ? null
+            : AppBar(
+                toolbarHeight: 84,
+                title: PopupMenuButton<int>(
                   tooltip: 'Switch wallet',
                   onSelected: (id) async {
                     if (id == -1) {
@@ -121,7 +182,10 @@ class _AppShellState extends State<AppShell> {
                             const SizedBox(width: 12),
                             Expanded(child: Text('${w.name} · ${w.currency}')),
                             if (w.id == wallet.id)
-                              const Icon(Icons.check, color: AppTheme.accent),
+                              const Icon(
+                                LucideIcons.check300,
+                                color: AppTheme.accent,
+                              ),
                           ],
                         ),
                       ),
@@ -140,31 +204,46 @@ class _AppShellState extends State<AppShell> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
-                          iconFor(wallet.icon),
-                          color: walletColor(wallet.color),
-                        ),
-                        const SizedBox(width: 10),
                         Flexible(
-                          child: Text(
-                            wallet.name,
-                            overflow: TextOverflow.ellipsis,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                wallet.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: -.6,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                DateFormat('EEEE, d MMMM')
+                                    .format(DateTime.now()),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppTheme.muted,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Icon(Icons.expand_more),
+                        const Icon(LucideIcons.chevronDown300),
                       ],
                     ),
                   ),
                 ),
-          actions: [
-            IconButton(
-              tooltip: 'Settings',
-              onPressed: () => push(context, SettingsPage(app: app)),
-              icon: const Icon(Icons.settings_outlined),
-            ),
-          ],
-        ),
+                actions: [
+                  IconButton(
+                    tooltip: 'Manage wallets',
+                    onPressed: () => push(context, WalletsPage(app: app)),
+                    icon: const Icon(LucideIcons.wallet300),
+                  ),
+                ],
+              ),
         body: SafeArea(
           top: false,
           child: Column(
@@ -178,10 +257,29 @@ class _AppShellState extends State<AppShell> {
                         selectedIndex: tab,
                         onDestinationSelected: (v) => setState(() => tab = v),
                         labelType: NavigationRailLabelType.all,
+                        trailing: IconButton(
+                          tooltip: 'Settings',
+                          onPressed: () =>
+                              push(context, SettingsPage(app: app)),
+                          icon: const Icon(LucideIcons.menu300),
+                        ),
                         destinations: List.generate(
                           4,
                           (i) => NavigationRailDestination(
                             icon: Icon(icons[i]),
+                            selectedIcon: Container(
+                              width: 52,
+                              height: 52,
+                              decoration: const BoxDecoration(
+                                color: AppTheme.text,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                icons[i],
+                                color: Colors.white,
+                                size: 23,
+                              ),
+                            ),
                             label: Text(labels[i]),
                           ),
                         ),
@@ -194,53 +292,60 @@ class _AppShellState extends State<AppShell> {
           ),
         ),
         bottomNavigationBar: !expanded && wallet != null
-            ? DecoratedBox(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  border: Border(top: BorderSide(color: AppTheme.surface)),
-                ),
-                child: NavigationBarTheme(
-                  data: NavigationBarThemeData(
-                    backgroundColor: Colors.white,
-                    surfaceTintColor: Colors.transparent,
-                    indicatorColor: AppTheme.lavender.withValues(alpha: .45),
-                    indicatorShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    iconTheme: WidgetStateProperty.resolveWith(
-                      (states) => IconThemeData(
-                        color: states.contains(WidgetState.selected)
-                            ? AppTheme.accent
-                            : AppTheme.muted,
-                        size: 23,
+            ? SafeArea(
+                top: false,
+                minimum: const EdgeInsets.fromLTRB(28, 6, 28, 12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(38),
+                  child: NavigationBarTheme(
+                    data: NavigationBarThemeData(
+                      backgroundColor: Colors.white,
+                      surfaceTintColor: Colors.transparent,
+                      indicatorColor: Colors.transparent,
+                      indicatorShape: const CircleBorder(),
+                      height: 64,
+                      labelBehavior:
+                          NavigationDestinationLabelBehavior.alwaysHide,
+                      iconTheme: WidgetStateProperty.resolveWith(
+                        (states) => IconThemeData(
+                          color: states.contains(WidgetState.selected)
+                              ? Colors.white
+                              : AppTheme.text,
+                          size: 22,
+                        ),
                       ),
                     ),
-                    labelTextStyle: WidgetStateProperty.resolveWith(
-                      (states) => TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 11,
-                        fontWeight: states.contains(WidgetState.selected)
-                            ? FontWeight.w600
-                            : FontWeight.w400,
-                        color: states.contains(WidgetState.selected)
-                            ? AppTheme.accent
-                            : AppTheme.muted,
-                      ),
-                    ),
-                    height: 76,
-                    labelBehavior:
-                        NavigationDestinationLabelBehavior.alwaysShow,
-                  ),
-                  child: NavigationBar(
-                    selectedIndex: tab,
-                    onDestinationSelected: (v) => setState(() => tab = v),
-                    destinations: List.generate(
-                      4,
-                      (i) => NavigationDestination(
-                        icon: Icon(icons[i]),
-                        label: labels[i],
-                        tooltip: labels[i],
-                      ),
+                    child: NavigationBar(
+                      selectedIndex: tab,
+                      onDestinationSelected: (v) => v == 4
+                          ? push(context, SettingsPage(app: app))
+                          : setState(() => tab = v),
+                      destinations: [
+                        for (var i = 0; i < 4; i++)
+                          NavigationDestination(
+                            icon: Icon(icons[i]),
+                            selectedIcon: Container(
+                              width: 52,
+                              height: 52,
+                              decoration: const BoxDecoration(
+                                color: AppTheme.text,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                icons[i],
+                                color: Colors.white,
+                                size: 23,
+                              ),
+                            ),
+                            label: labels[i],
+                            tooltip: labels[i],
+                          ),
+                        const NavigationDestination(
+                          icon: Icon(LucideIcons.menu300),
+                          label: 'Settings',
+                          tooltip: 'Settings',
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_controller.dart';
@@ -81,7 +82,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
           }
         },
         trailing: browse && categories.any((s) => s.parentId == c.id)
-            ? Icons.chevron_right_rounded
+            ? LucideIcons.chevronRight300
             : null,
       );
       return Scaffold(
@@ -91,7 +92,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
               ? null
               : IconButton(
                   tooltip: 'All categories',
-                  icon: const Icon(Icons.arrow_back_rounded),
+                  icon: const Icon(LucideIcons.arrowLeft300),
                   onPressed: () => setState(() {
                     parent = null;
                     search.clear();
@@ -100,7 +101,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
           actions: [
             IconButton(
               tooltip: 'Close categories',
-              icon: const Icon(Icons.close_rounded),
+              icon: const Icon(LucideIcons.x300),
               onPressed: () => Navigator.pop(context),
             ),
           ],
@@ -114,14 +115,14 @@ class _CategoryPickerState extends State<CategoryPicker> {
                 onChanged: (_) => setState(() {}),
                 decoration: const InputDecoration(
                   hintText: 'Search categories',
-                  prefixIcon: Icon(Icons.search_rounded),
+                  prefixIcon: Icon(LucideIcons.search300),
                 ),
               ),
               const SizedBox(height: 18),
               if (query.isNotEmpty) ...[
                 if (matches.isEmpty)
                   const EmptyState(
-                    icon: Icons.search_off_rounded,
+                    icon: LucideIcons.searchX300,
                     title: 'No categories found',
                     detail: 'Try another name or create a category.',
                   ),
@@ -154,7 +155,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
                   primaryLabel: true,
                   label: widget.filter ? 'All categories' : 'Uncategorised',
                   value: '',
-                  icon: Icons.category_outlined,
+                  icon: LucideIcons.shapes300,
                   onTap: () => choose(null),
                 ),
                 if (recent.isNotEmpty && !widget.filter) ...[
@@ -261,7 +262,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
               const SizedBox(height: 24),
               if (!widget.filter)
                 OutlinedButton.icon(
-                  icon: const Icon(Icons.add_rounded),
+                  icon: const Icon(LucideIcons.plus300),
                   label: Text(
                     current == null ? 'New category' : 'New subcategory',
                   ),
@@ -309,8 +310,8 @@ class CategoryOption extends StatelessWidget {
     icon: categoryIcon(category, app.data),
     color: categoryColor(category, app.data),
     trailing: selected
-        ? Icons.check_circle_rounded
-        : trailing ?? Icons.chevron_right_rounded,
+        ? LucideIcons.circleCheck300
+        : trailing ?? LucideIcons.chevronRight300,
     onTap: onTap,
   );
 }
@@ -333,7 +334,7 @@ class GroupPicker extends StatelessWidget {
           primaryLabel: true,
           label: 'No group',
           value: 'Keep this transaction on its own',
-          icon: Icons.receipt_long_outlined,
+          icon: LucideIcons.receiptText300,
           onTap: () => Navigator.pop(context, const GroupChoice(null)),
         ),
         const SectionTitle('Your groups'),
@@ -349,8 +350,8 @@ class GroupPicker extends StatelessWidget {
                   '${app.entries.where((e) => e.groupId == g.id).length} transactions',
               icon: iconFor(g.icon),
               trailing: selected == g.id
-                  ? Icons.check_circle_rounded
-                  : Icons.chevron_right,
+                  ? LucideIcons.circleCheck300
+                  : LucideIcons.chevronRight300,
               onTap: () => Navigator.pop(context, GroupChoice(g.id)),
             ),
           ),
@@ -362,7 +363,7 @@ class GroupPicker extends StatelessWidget {
               Navigator.pop(context, GroupChoice(id));
             }
           },
-          icon: const Icon(Icons.add),
+          icon: const Icon(LucideIcons.plus300),
           label: const Text('New group'),
         ),
       ],

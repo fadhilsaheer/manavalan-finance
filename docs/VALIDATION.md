@@ -87,3 +87,31 @@ The independent finish review returned **ship** after one correction batch:
 The reviewer confirmed substantive replacement of the rejected Groups, Lending and navigation compositions. No material findings remain.
 
 Final release builds passed: Android APK 53.9 MB (local debug signing) and iOS device app 18.5 MB (unsigned).
+
+
+## Direct reference match — 3 October 2026
+
+The user explicitly rejected the preceding violet-wide visual system and required closer matching to the supplied three-screen reference. Earlier review acceptance does not imply user acceptance.
+
+- Neutral #f6f6f6 canvas and black text; pink/violet illumination is localized to the balance surface and onboarding.
+- Replaced interface Material icons with consistent Lucide 300 outline icons, including categories, controls and navigation. Production and screenshot captures use the same packaged font assets.
+- Overview now follows the reference's balance/action shell, circular actions, horizontal wallet cards and individual white transaction rows. Existing monthly reports remain below the ledger preview.
+- Added real Expense/Income/Transfer/Lend shortcuts, direct wallet switching and history navigation. Income intent survives opening the entry form; balances can be concealed on the overview.
+- Mobile navigation uses a small selected black circle in a white bar; broad black split controls remain absent. Tablet rail and text scaling remain supported.
+- Created procedural onboarding light and diamond geometry; regenerated the original launcher/splash artwork with a pink-to-violet wallet and neutral background.
+- All 30 tests pass, including quick-action income intent, balance concealment, history routing, local-ledger regressions and 320×740 at 2× text. Static analysis is clean. Detector: no findings.
+
+
+Independent reference comparison identified and resolved onboarding color/geometry, headline composition and selected navigation size. The final visual correction pass retained the localized balance glow, neutral secondary screens and consistent outline icons. Android release APK (55.6 MB) and iOS device release app (22.0 MB, unsigned) built successfully after the corrections.
+
+
+Final independent verdict: **ship**.
+
+| Review finding | Final status |
+| --- | --- |
+| Onboarding directional color and layered tile geometry | Resolved |
+| Three-line headline, wallet motif and bottom action | Resolved |
+| Selected navigation disc size | Resolved |
+| Design documentation synchronization | Resolved |
+
+The final debug build was installed and launched on the already running iPhone 16 Plus simulator, retaining its existing wallet. The live runtime capture is `build/qa/simulator-live.png`. No material findings remain.

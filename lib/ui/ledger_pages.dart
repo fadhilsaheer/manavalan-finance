@@ -1,3 +1,4 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,15 +9,18 @@ import 'shared.dart';
 import 'theme.dart';
 import 'details.dart';
 import 'category_picker.dart';
+import 'settings.dart';
 
 class OverviewPage extends StatefulWidget {
   final AppController app;
-  const OverviewPage({super.key, required this.app});
+  final VoidCallback? onTransactions;
+  const OverviewPage({super.key, required this.app, this.onTransactions});
   @override
   State<OverviewPage> createState() => _OverviewPageState();
 }
 
 class _OverviewPageState extends State<OverviewPage> {
+  bool hidden = false;
   DateTime month = DateTime(DateTime.now().year, DateTime.now().month);
   @override
   Widget build(BuildContext context) {
@@ -43,30 +47,164 @@ class _OverviewPageState extends State<OverviewPage> {
       ..sort((a, b) => b.value.compareTo(a.value));
     return PageBody(
       children: [
-        const PageHeader('Overview'),
         BalancePanel(
           label: 'Wallet balance',
-          value: money(s.balance(w), w.currency),
-          footer: Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 8,
-              children: [
-                FilledButton.tonalIcon(
-                  onPressed: () => push(context, TransactionForm(app: app)),
-                  icon: const Icon(Icons.add_rounded, size: 18),
-                  label: const Text('Transaction'),
-                ),
-                TextButton.icon(
-                  onPressed: () => push(context, TransferForm(app: app)),
-                  icon: const Icon(Icons.swap_horiz_rounded, size: 18),
-                  label: const Text('Transfer'),
-                ),
-              ],
+          value: hidden ? '••••••' : money(s.balance(w), w.currency),
+          trailing: IconButton(
+            tooltip: hidden ? 'Show balance' : 'Hide balance',
+            icon: Icon(
+              hidden ? LucideIcons.eye300 : LucideIcons.eyeOff300,
+              size: 18,
             ),
+            onPressed: () => setState(() => hidden = !hidden),
+          ),
+          footer: Row(
+            children: [
+              _QuickAction(
+                'Expense',
+                LucideIcons.banknoteArrowUp300,
+                () => push(context, TransactionForm(app: app)),
+              ),
+              _QuickAction(
+                'Income',
+                LucideIcons.banknoteArrowDown300,
+                () => push(
+                  context,
+                  TransactionForm(app: app, initialKind: EntryKind.income),
+                ),
+              ),
+              _QuickAction(
+                'Transfer',
+                LucideIcons.arrowRightLeft300,
+                () => push(context, TransferForm(app: app)),
+              ),
+              _QuickAction(
+                'Lend',
+                LucideIcons.plus300,
+                () => push(context, LoanForm(app: app)),
+              ),
+            ],
           ),
         ),
+        SectionTitle(
+          'My wallets',
+          trailing: TextButton(
+            onPressed: () => push(context, WalletsPage(app: app)),
+            child: const Text('View all'),
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.textScalerOf(context).scale(1) > 1.3 ? 182 : 124,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: app.data.wallets
+                .where((wallet) => !wallet.archived)
+                .length,
+            separatorBuilder: (_, _) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final wallet = app.data.wallets
+                  .where((wallet) => !wallet.archived)
+                  .elementAt(index);
+              return SizedBox(
+                width: 160,
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(24),
+                    onTap: () async {
+                      try {
+                        await app.select(wallet.id);
+                      } catch (_) {
+                        if (context.mounted) {
+                          message(
+                            context,
+                            'Wait for the current save to finish.',
+                          );
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(iconFor(wallet.icon), size: 18),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  wallet.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              hidden
+                                  ? '••••'
+                                  : money(s.balance(wallet), wallet.currency),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            wallet.currency,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppTheme.muted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        SectionTitle(
+          'Transactions',
+          trailing: TextButton(
+            onPressed: widget.onTransactions,
+            child: const Text('View all'),
+          ),
+        ),
+        if (app.entries.isEmpty)
+          const EmptyState(
+            icon: LucideIcons.receiptText300,
+            title: 'Your ledger starts here',
+            detail: 'Your transactions will appear here.',
+          )
+        else ...[
+          Text(
+            prettyDay(app.entries.first.date),
+            style: const TextStyle(color: AppTheme.muted, fontSize: 12),
+          ),
+          const SizedBox(height: 12),
+          for (final entry in app.entries.take(3))
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SurfacePanel(
+                padding: EdgeInsets.zero,
+                child: EntryTile(
+                  app: app,
+                  entry: entry,
+                  onTap: () =>
+                      push(context, EntryDetail(app: app, entryId: entry.id)),
+                ),
+              ),
+            ),
+        ],
         const SizedBox(height: 18),
         Row(
           children: [
@@ -80,13 +218,13 @@ class _OverviewPageState extends State<OverviewPage> {
               tooltip: 'Previous month',
               onPressed: () =>
                   setState(() => month = DateTime(month.year, month.month - 1)),
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(LucideIcons.chevronLeft300),
             ),
             IconButton(
               tooltip: 'Next month',
               onPressed: () =>
                   setState(() => month = DateTime(month.year, month.month + 1)),
-              icon: const Icon(Icons.chevron_right),
+              icon: const Icon(LucideIcons.chevronRight300),
             ),
           ],
         ),
@@ -100,13 +238,13 @@ class _OverviewPageState extends State<OverviewPage> {
               _MonthlyTotal(
                 'Income',
                 money(income, w.currency),
-                Icons.south_west_rounded,
+                LucideIcons.arrowDownLeft300,
                 AppTheme.green,
               ),
               _MonthlyTotal(
                 'Spending',
                 money(expenses, w.currency),
-                Icons.north_east_rounded,
+                LucideIcons.arrowUpRight300,
                 AppTheme.red,
               ),
             ];
@@ -130,28 +268,6 @@ class _OverviewPageState extends State<OverviewPage> {
             style: const TextStyle(color: AppTheme.muted, fontSize: 13),
           ),
         ),
-        const SectionTitle('Recent activity'),
-        if (app.entries.isEmpty)
-          EmptyState(
-            icon: Icons.receipt_long_outlined,
-            title: 'Your ledger starts here',
-            detail: 'Your transactions will appear here.',
-          )
-        else
-          SurfacePanel(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Column(
-              children: [
-                for (final e in app.entries.take(5))
-                  EntryTile(
-                    app: app,
-                    entry: e,
-                    onTap: () =>
-                        push(context, EntryDetail(app: app, entryId: e.id)),
-                  ),
-              ],
-            ),
-          ),
         const SectionTitle('Lending'),
         Stats(
           children: [
@@ -255,7 +371,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
         TextField(
           decoration: const InputDecoration(
             hintText: 'Search transactions',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: Icon(LucideIcons.search300),
           ),
           onChanged: (v) => setState(() => query = v),
         ),
@@ -263,7 +379,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             onPressed: () => setState(() => showFilters = !showFilters),
-            icon: const Icon(Icons.tune_rounded, size: 19),
+            icon: const Icon(LucideIcons.slidersHorizontal300, size: 19),
             label: Text(
               'Filters${[kind, categoryValue, groupValue, range].where((v) => v != null).isEmpty ? '' : ' · ${[kind, categoryValue, groupValue, range].where((v) => v != null).length}'}',
             ),
@@ -326,7 +442,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
             spacing: 8,
             children: [
               OutlinedButton.icon(
-                icon: const Icon(Icons.date_range),
+                icon: const Icon(LucideIcons.calendarRange300),
                 label: Text(
                   range == null
                       ? 'All dates'
@@ -357,7 +473,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
         ),
         if (entries.isEmpty)
           const EmptyState(
-            icon: Icons.search_off_outlined,
+            icon: LucideIcons.searchX300,
             title: 'No matching transactions',
             detail: 'Try different filters or add a transaction.',
           ),
@@ -443,7 +559,7 @@ class _GroupsPageState extends State<GroupsPage> {
                       style: const TextStyle(color: AppTheme.accent),
                     ),
                     const Icon(
-                      Icons.expand_more_rounded,
+                      LucideIcons.chevronDown300,
                       color: AppTheme.accent,
                       size: 18,
                     ),
@@ -455,7 +571,7 @@ class _GroupsPageState extends State<GroupsPage> {
         ),
         if (groups.isEmpty)
           EmptyState(
-            icon: Icons.folder_open_rounded,
+            icon: LucideIcons.folderOpen300,
             title: archived ? 'No archived groups' : 'Your first group',
             detail: archived ? 'Archived ledgers will appear here.' : 'A trip, a project, or shared expenses. Keep related transactions in one place.',
             action: archived ? null : 'Create group',
@@ -487,7 +603,7 @@ class _GroupsPageState extends State<GroupsPage> {
                             ),
                           ),
                           const Icon(
-                            Icons.chevron_right_rounded,
+                            LucideIcons.chevronRight300,
                             color: AppTheme.muted,
                             size: 20,
                           ),
@@ -611,7 +727,7 @@ class _LendingPageState extends State<LendingPage> {
                 searching = !searching;
                 if (!searching) query = '';
               }),
-              icon: const Icon(Icons.search_rounded, size: 20),
+              icon: const Icon(LucideIcons.search300, size: 20),
             ),
             PopupMenuButton<String>(
               tooltip: 'Loan status',
@@ -638,7 +754,7 @@ class _LendingPageState extends State<LendingPage> {
                       ),
                     ),
                     const Icon(
-                      Icons.expand_more_rounded,
+                      LucideIcons.chevronDown300,
                       size: 18,
                       color: AppTheme.accent,
                     ),
@@ -655,14 +771,14 @@ class _LendingPageState extends State<LendingPage> {
               autofocus: true,
               decoration: const InputDecoration(
                 hintText: 'Search people',
-                prefixIcon: Icon(Icons.search_rounded),
+                prefixIcon: Icon(LucideIcons.search300),
               ),
               onChanged: (v) => setState(() => query = v),
             ),
           ),
         if (loans.isEmpty)
           EmptyState(
-            icon: Icons.people_outline_rounded,
+            icon: LucideIcons.users300,
             title: query.isNotEmpty
                 ? 'No matching people'
                 : status == 'settled'
@@ -737,7 +853,7 @@ class _LendingPageState extends State<LendingPage> {
                     ],
                   ),
                 ),
-                trailing: const Icon(Icons.chevron_right_rounded),
+                trailing: const Icon(LucideIcons.chevronRight300),
                 onTap: () => push(context, LoanDetail(app: app, loanId: l.id)),
               ),
             ),
@@ -763,15 +879,11 @@ class _DebtChoice extends StatelessWidget {
     button: true,
     selected: selected,
     child: Material(
-      color: selected
-          ? (rose ? const Color(0xffffedf4) : const Color(0xfff0eafa))
-          : Colors.white,
+      color: selected ? const Color(0xfff0f0f0) : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(22),
         side: BorderSide(
-          color: selected
-              ? (rose ? const Color(0xffb36691) : AppTheme.accent)
-              : AppTheme.surface,
+          color: selected ? const Color(0xffb5b5b5) : AppTheme.surface,
           width: 1,
         ),
       ),
@@ -784,8 +896,10 @@ class _DebtChoice extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
-                rose ? Icons.north_east_rounded : Icons.south_west_rounded,
-                color: rose ? const Color(0xffa24d7d) : AppTheme.accent,
+                rose
+                    ? LucideIcons.arrowUpRight300
+                    : LucideIcons.arrowDownLeft300,
+                color: AppTheme.text,
                 size: 22,
               ),
               const SizedBox(height: 20),
@@ -841,6 +955,35 @@ class _MonthlyTotal extends StatelessWidget {
               letterSpacing: -.5,
             ),
           ),
+        ),
+      ],
+    ),
+  );
+}
+
+class _QuickAction extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  const _QuickAction(this.label, this.icon, this.onTap);
+  @override
+  Widget build(BuildContext context) => Expanded(
+    child: Column(
+      children: [
+        IconButton.filledTonal(
+          onPressed: onTap,
+          tooltip: label,
+          style: IconButton.styleFrom(
+            backgroundColor: AppTheme.base,
+            foregroundColor: AppTheme.text,
+            minimumSize: const Size(48, 48),
+          ),
+          icon: Icon(icon, size: 21),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12, color: AppTheme.muted),
         ),
       ],
     ),

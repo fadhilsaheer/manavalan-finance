@@ -1,9 +1,11 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_controller.dart';
 import '../core/models.dart';
 import '../data/file_service.dart';
 import 'theme.dart';
+import 'reference_surfaces.dart';
 
 void message(BuildContext context, String text) {
   if (!context.mounted) return;
@@ -73,7 +75,7 @@ class PageBody extends StatelessWidget {
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 820),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(24, 12, 24, 96),
+        padding: const EdgeInsets.fromLTRB(18, 12, 18, 96),
         children: children,
       ),
     ),
@@ -97,7 +99,7 @@ class PageHeader extends StatelessWidget {
           IconButton.filledTonal(
             tooltip: action,
             style: IconButton.styleFrom(
-              backgroundColor: AppTheme.lavender.withValues(alpha: .4),
+              backgroundColor: AppTheme.mantle,
               foregroundColor: AppTheme.accent,
               minimumSize: const Size(48, 48),
               shape: RoundedRectangleBorder(
@@ -105,7 +107,7 @@ class PageHeader extends StatelessWidget {
               ),
             ),
             onPressed: onAction,
-            icon: const Icon(Icons.add_rounded),
+            icon: const Icon(LucideIcons.plus300),
           ),
       ],
     ),
@@ -201,7 +203,7 @@ class SelectionRow extends StatelessWidget {
     required this.icon,
     this.onTap,
     this.color = AppTheme.accent,
-    this.trailing = Icons.chevron_right_rounded,
+    this.trailing = LucideIcons.chevronRight300,
     this.primaryLabel = false,
   });
   @override
@@ -298,43 +300,56 @@ class SelectionRow extends StatelessWidget {
 
 class BalancePanel extends StatelessWidget {
   final String label, value;
-  final Widget? footer;
+  final Widget? footer, trailing;
   const BalancePanel({
     super.key,
     required this.label,
     required this.value,
     this.footer,
+    this.trailing,
   });
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(24),
-    decoration: BoxDecoration(
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [AppTheme.blush, AppTheme.lavender, Colors.white],
-        stops: [0, .3, .8],
-      ),
-      borderRadius: BorderRadius.circular(26),
-    ),
+  Widget build(BuildContext context) => SurfacePanel(
+    padding: const EdgeInsets.all(12),
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
-        const SizedBox(height: 16),
-        FittedBox(
-          fit: BoxFit.scaleDown,
-          alignment: Alignment.centerLeft,
-          child: Text(
-            value,
-            style: const TextStyle(
-              fontSize: 38,
-              fontWeight: FontWeight.w600,
-              letterSpacing: -1.2,
+        BalanceGlow(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 14, 18, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(label, style: const TextStyle(fontSize: 14)),
+                    ),
+                    ?trailing,
+                  ],
+                ),
+                const SizedBox(height: 8),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -1.3,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        if (footer != null) ...[const SizedBox(height: 18), footer!],
+        if (footer != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 14, bottom: 8),
+            child: footer!,
+          ),
       ],
     ),
   );
@@ -380,13 +395,13 @@ class EmptyState extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 72,
-            height: 72,
+            width: 56,
+            height: 56,
             decoration: BoxDecoration(
-              gradient: AppTheme.wash,
-              borderRadius: BorderRadius.circular(24),
+              color: AppTheme.base,
+              shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 32, color: AppTheme.accent),
+            child: Icon(icon, size: 26, color: AppTheme.accent),
           ),
           const SizedBox(height: 26),
           Text(title, style: Theme.of(context).textTheme.titleLarge),
@@ -400,7 +415,7 @@ class EmptyState extends StatelessWidget {
               padding: const EdgeInsets.only(top: 24),
               child: FilledButton.icon(
                 onPressed: onAction,
-                icon: const Icon(Icons.add_rounded, size: 18),
+                icon: const Icon(LucideIcons.plus300, size: 18),
                 label: Text(action!),
               ),
             ),
@@ -439,11 +454,8 @@ class IconBadge extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: 42,
     height: 42,
-    decoration: BoxDecoration(
-      color: color.withValues(alpha: .08),
-      borderRadius: BorderRadius.circular(14),
-    ),
-    child: Icon(icon, size: 21, color: color),
+    decoration: BoxDecoration(color: AppTheme.base, shape: BoxShape.circle),
+    child: Icon(icon, size: 20, color: AppTheme.text),
   );
 }
 
@@ -532,7 +544,7 @@ class EntryTile extends StatelessWidget {
       textAlign: TextAlign.end,
       softWrap: false,
       style: Theme.of(context).textTheme.titleMedium
-          ?.copyWith(color: entry.sign > 0 ? AppTheme.green : AppTheme.red),
+          ?.copyWith(color: AppTheme.text, fontSize: 14),
     );
     return Semantics(
       button: onTap != null,
@@ -556,10 +568,10 @@ class EntryTile extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 12),
                         child: IconBadge(
                           icon: loan != null
-                              ? Icons.handshake_outlined
+                              ? LucideIcons.handCoins300
                               : entry.kind.ordinary
                               ? categoryIcon(category, s)
-                              : Icons.swap_horiz_rounded,
+                              : LucideIcons.arrowRightLeft300,
                           color: entry.kind.ordinary
                               ? categoryColor(category, s)
                               : AppTheme.accent,
@@ -654,7 +666,7 @@ class DateField extends StatelessWidget {
       SelectionRow(
         label: label,
         value: value == null ? 'Not set' : prettyDay(dayKey(value!)),
-        icon: Icons.calendar_today_outlined,
+        icon: LucideIcons.calendarDays300,
         onTap: () => pick(context),
       ),
       if (optional && value != null)
@@ -705,7 +717,7 @@ class _IconLibraryState extends State<_IconLibrary> {
         TextField(
           decoration: const InputDecoration(
             hintText: 'Search icons',
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: Icon(LucideIcons.search300),
           ),
           onChanged: (v) => setState(() => query = v.toLowerCase()),
         ),

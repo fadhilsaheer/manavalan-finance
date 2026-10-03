@@ -1,3 +1,4 @@
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../core/app_controller.dart';
@@ -72,7 +73,7 @@ Widget amountField(
           hintStyle: TextStyle(
             fontSize: 46,
             fontWeight: FontWeight.w500,
-            color: Color(0xff81758f),
+            color: AppTheme.muted,
           ),
           filled: false,
           border: InputBorder.none,
@@ -96,7 +97,7 @@ Widget noteField(TextEditingController controller) => ExpansionTile(
   tilePadding: const EdgeInsets.symmetric(horizontal: 16),
   shape: const Border(),
   collapsedShape: const Border(),
-  leading: const Icon(Icons.notes_rounded, size: 20),
+  leading: const Icon(LucideIcons.alignLeft300, size: 20),
   title: const Text('Note', style: TextStyle(fontSize: 14)),
   children: [
     TextFormField(
@@ -263,7 +264,7 @@ class _WalletFormState extends State<WalletForm> {
             tooltip: 'Wallet colour ${i + 1}',
             onPressed: () => setState(() => color = i),
             icon: Icon(
-              color == i ? Icons.check_circle : Icons.circle,
+              color == i ? LucideIcons.circleCheck300 : LucideIcons.circle300,
               color: AppTheme.accents[i],
               size: 32,
             ),
@@ -428,11 +429,13 @@ class TransactionForm extends StatefulWidget {
   final AppController app;
   final Entry? existing;
   final int? groupId;
+  final EntryKind initialKind;
   const TransactionForm({
     super.key,
     required this.app,
     this.existing,
     this.groupId,
+    this.initialKind = EntryKind.expense,
   });
   @override
   State<TransactionForm> createState() => _TransactionFormState();
@@ -444,7 +447,7 @@ class _TransactionFormState extends State<TransactionForm> {
     text: widget.existing == null ? '' : moneyInput(widget.existing!.amount),
   );
   late final note = TextEditingController(text: widget.existing?.note ?? '');
-  late EntryKind kind = widget.existing?.kind ?? EntryKind.expense;
+  late EntryKind kind = widget.existing?.kind ?? widget.initialKind;
   late DateTime date = widget.existing == null
       ? DateTime.now()
       : DateTime.parse(widget.existing!.date);
@@ -493,12 +496,12 @@ class _TransactionFormState extends State<TransactionForm> {
           segments: const [
             ButtonSegment(
               value: EntryKind.expense,
-              icon: Icon(Icons.arrow_upward),
+              icon: Icon(LucideIcons.arrowUp300),
               label: Text('Expense'),
             ),
             ButtonSegment(
               value: EntryKind.income,
-              icon: Icon(Icons.arrow_downward),
+              icon: Icon(LucideIcons.arrowDown300),
               label: Text('Income'),
             ),
           ],
